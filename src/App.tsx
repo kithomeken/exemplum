@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 
 import './App.css';
+import './assets/css/beska.css'
+import "react-toastify/dist/ReactToastify.css"
+import './assets/icons/fontawesome_6_pro/css/all.css'
 
 import { ERR_404 } from './views/errors/ERR_404';
 import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
-import { authenticationRoutes, standardRoutes } from './routes/routes';
+import { authenticationRoutes, commonRoutes, postAuthRoutes, standardRoutes } from './routes/routes';
 import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
+import PostAuthRouteGuard from './lib/guards/PostAuthRouteGuard';
+import CommonRoutesGuard from './lib/guards/CommonRoutesGuard';
 
 interface RouteContextType {
     currentpage: string,
@@ -39,6 +44,34 @@ export default function App() {
                     <Route element={<AuthRoutesGuard />}>
                         {
                             authenticationRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<PostAuthRouteGuard />}>
+                        {
+                            postAuthRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<CommonRoutesGuard />} >
+                        {
+                            commonRoutes.map((route, index) => {
                                 return (
                                     <Route
                                         path={route.path}
