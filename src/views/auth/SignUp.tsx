@@ -9,10 +9,10 @@ import { getRedirectResult } from "firebase/auth";
 import { useAppSelector } from "../../store/hooks";
 import { Navigate, useLocation } from "react-router";
 import { TermsAndConditions } from "./TermsAndConditions";
-import { authenticationRoutes } from "../../routes/routes";
 import { Loading } from "../../components/modules/Loading";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import { APPLICATION, AUTH_ } from "../../global/ConstantsRegistry";
+import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
 import Rock_Band_Image from '../../assets/images/cbbd3439ac7db68a31864dfc93545a62.png'
 import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
@@ -250,12 +250,12 @@ export const SignUp = () => {
             postAuth: true
         }
 
-        // const postAuthenticatoinRoute: any = (
-        //     postAuthRoutes.find(
-        //         (routeName) => routeName.name === 'AUTH_IDENTITY_')
-        // )?.path
+        const postAuthenticatoinRoute: any = (
+            postAuthRoutes.find(
+                (routeName) => routeName.name === 'AUTH_IDENTITY_')
+        )?.path
 
-        // return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
+        return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
     }
 
     const authRedirectResult = async () => {

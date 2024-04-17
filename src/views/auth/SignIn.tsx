@@ -8,11 +8,11 @@ import { getRedirectResult } from "firebase/auth";
 import { Loading } from "../../components/modules/Loading";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import { AUTH_, APPLICATION } from "../../global/ConstantsRegistry";
+import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
 import Rock_Band_Image from '../../assets/images/a4f6dd9ebd724d8dcf29e1163ccf36cb.png'
 import { resetAuth0, Alt_FirebaseSSO_SignIn } from "../../store/auth/firebaseAuthActions";
 import { emailValidator, DeviceInfo, classNames } from "../../lib/modules/HelperFunctions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
-import { authenticationRoutes } from "../../routes/routes";
 
 export const SignIn = () => {
     const [state, setstate] = useState({
@@ -35,7 +35,7 @@ export const SignIn = () => {
 
     const signUpRoute: any = (
         authenticationRoutes.find(
-            (routeName) => routeName.name === 'AUTH_SIGN_UP'
+            (routeName) => routeName.name === 'SIGN_UP_'
         )
     )?.path
 
@@ -199,12 +199,12 @@ export const SignIn = () => {
             postAuth: true
         }
 
-        // const postAuthenticatoinRoute: any = (
-        //     postAuthRoutes.find(
-        //         (routeName) => routeName.name === 'AUTH_IDENTITY_')
-        // )?.path
+        const postAuthenticatoinRoute: any = (
+            postAuthRoutes.find(
+                (routeName) => routeName.name === 'AUTH_IDENTITY_')
+        )?.path
 
-        // return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
+        return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
     }
 
     const authRedirectResult = async () => {
@@ -249,7 +249,7 @@ export const SignIn = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Sign In Alt</title>
+                <title>Sign In</title>
             </Helmet>
 
             {
