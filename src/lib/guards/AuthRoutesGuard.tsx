@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { standardErrorRoutes } from '../../routes/errorRoutes';
 import { revokeAuthSession } from '../../store/auth/firebaseAuthActions';
 
-export default function AuthRoutesGuard() {
+const AuthRoutesGuard = () => {
     const location:any = useLocation();
     const dispatch: any = useDispatch();
 
@@ -47,3 +47,5 @@ export default function AuthRoutesGuard() {
 
     return <Outlet />;
 }
+
+export default AuthRoutesGuard;
