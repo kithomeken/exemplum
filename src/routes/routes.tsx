@@ -12,13 +12,13 @@ export const authenticationRoutes: Array<Routes_Interface> = [
         caseSensitive: true, 
         name: 'IDX_' 
     },
-    { 
+    {
         path: "/auth/sign-in", 
         element: <SignIn />, 
         caseSensitive: true, 
         name: 'SIGN_IN_' 
     },
-    { 
+    {
         path: "/auth/sign-up", 
         element: <SignUp />, 
         caseSensitive: true, 
