@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 import './App.css';
 
-import { ERR_404 } from './views/ERR_404';
-import AuthRoutesGuard from './lib/AuthRoutesGuard';
-import StandardRoutesGuard from './lib/StandardRoutesGuard';
-import { authRoutes, standardRoutes } from './routes/routes';
+import { ERR_404 } from './views/errors/ERR_404';
+import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
+import { authenticationRoutes, standardRoutes } from './routes/routes';
+import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
 
 interface RouteContextType {
     currentpage: string,
@@ -37,15 +37,16 @@ export default function App() {
             <RouterProvider>
                 <Routes>
                     <Route element={<AuthRoutesGuard />}>
-                        {authRoutes.map((route, index) => {
-                            return (
-                                <Route
-                                    path={route.path}
-                                    element={route.element}
-                                    key={index}
-                                />
-                            )
-                        })
+                        {
+                            authenticationRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
                         }
                     </Route>
 
