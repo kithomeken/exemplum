@@ -1,21 +1,17 @@
 import React from "react";
 import { Home } from "../views/Home";
-import { SignIn } from "../views/SignIn";
-import { SignUp } from "../views/SignUp";
+import { SignIn } from "../views/auth/SignIn";
+import { SignUp } from "../views/auth/SignUp";
+import { Routes_Interface } from "../lib/modules/routesInterface";
+import { Index } from "../views/Index";
 
-interface Routes_Interface {
-    name: string,
-    path: string;
-    element: any;
-    activeMenu?: string;
-    caseSensitive?: boolean;
-    meta?: {
-        resource?: string;
-        action?: string;
-    };
-}
-
-export const authRoutes: Array<Routes_Interface> = [
+export const authenticationRoutes: Array<Routes_Interface> = [
+    { 
+        path: "/", 
+        element: <Index />, 
+        caseSensitive: true, 
+        name: 'IDX_' 
+    },
     { 
         path: "/auth/sign-in", 
         element: <SignIn />, 
