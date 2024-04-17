@@ -42,6 +42,17 @@ export const ACCOUNT = {
     REQUEST_WITHDRAWAL: '/v1/account/entity/mpesa/transactions/withdrawal/request',
     REQUEST_APPROVAL: '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/approve',
     REQUEST_REJECTION: '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/reject',
+    
+    MSISDN_CHANGE:          '/v1/account/settings/artist/msisdn/change',
+    DSPLY_NAME_CHANGE:      '/v1/account/settings/artist/display_name/update',
+    ENTITY_CONTR_DATA:      '/v1/entity/contr/:uuid',
+    ENTITY_DETAILS:         '/v1/account/settings/entity/details',
+    GET_NOMINATED:          '/v1/account/settings/entity/nominated/member',
+    SET_NOMINATED:          '/v1/account/settings/entity/nominated/member/set-own',
+    NMNTD_MMBR_ACTION:      '/v1/account/settings/entity/nominated/member/action',
+    MEMBER_NOMINTATION:     '/v1/account/settings/entity/nominated/member/set-other',
+    EMAIL_HISTORY:          '/v1/account/settings/artist/email/history',
+    
     // Other routes to be reviewed later on
 };
 
