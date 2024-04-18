@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 
@@ -8,11 +9,12 @@ import './assets/icons/fontawesome_6_pro/css/all.css'
 
 import { ERR_404 } from './views/errors/ERR_404';
 import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
+import ErrorRoutesGuard from './lib/guards/ErrorRoutesGuard';
 import CommonRoutesGuard from './lib/guards/CommonRoutesGuard';
 import PostAuthRouteGuard from './lib/guards/PostAuthRouteGuard';
 import SettingsRoutesGuard from './lib/guards/SettingsRoutesGuard';
 import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
-import { authenticationRoutes, commonRoutes, postAuthRoutes, standardRoutes, standardSettingsRoutes } from './routes/routes';
+import { authenticationRoutes, commonRoutes, postAuthRoutes, standardErrorRoutes, standardRoutes, standardSettingsRoutes } from './routes/routes';
 
 interface RouteContextType {
     currentpage: string,
@@ -41,6 +43,8 @@ export default function App() {
     return (
         <Router basename='/'>
             <RouterProvider>
+                <ToastContainer />
+
                 <Routes>
                     <Route element={<AuthRoutesGuard />}>
                         {
@@ -101,6 +105,20 @@ export default function App() {
                     <Route element={<SettingsRoutesGuard />} >
                         {
                             standardSettingsRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<ErrorRoutesGuard />} >
+                        {
+                            standardErrorRoutes.map((route, index) => {
                                 return (
                                     <Route
                                         path={route.path}
