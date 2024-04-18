@@ -8,10 +8,11 @@ import './assets/icons/fontawesome_6_pro/css/all.css'
 
 import { ERR_404 } from './views/errors/ERR_404';
 import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
-import { authenticationRoutes, commonRoutes, postAuthRoutes, standardRoutes } from './routes/routes';
-import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
-import PostAuthRouteGuard from './lib/guards/PostAuthRouteGuard';
 import CommonRoutesGuard from './lib/guards/CommonRoutesGuard';
+import PostAuthRouteGuard from './lib/guards/PostAuthRouteGuard';
+import SettingsRoutesGuard from './lib/guards/SettingsRoutesGuard';
+import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
+import { authenticationRoutes, commonRoutes, postAuthRoutes, standardRoutes, standardSettingsRoutes } from './routes/routes';
 
 interface RouteContextType {
     currentpage: string,
@@ -86,6 +87,20 @@ export default function App() {
                     <Route element={<StandardRoutesGuard />} >
                         {
                             standardRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<SettingsRoutesGuard />} >
+                        {
+                            standardSettingsRoutes.map((route, index) => {
                                 return (
                                     <Route
                                         path={route.path}
