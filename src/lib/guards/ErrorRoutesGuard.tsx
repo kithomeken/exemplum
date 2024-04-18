@@ -22,20 +22,5 @@ export default function ErrorRoutesGuard() {
         }
     }
 
-    return (
-        <div>
-            <div className="flex h-screen">
-
-                <Header errorMode={true} />
-                
-                <div className="flex flex-col w-full mb-5">
-                    <div className="w-full overflow-y-auto">
-                        <div className="kiOAkj p-2" style={CONFIG_MARGIN_TOP}>
-                            <Outlet />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    return <Outlet />
 }
