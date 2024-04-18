@@ -1,14 +1,19 @@
+import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
+import { Entity } from "../views/settings/Entity";
+import { Invitation } from "../views/auth/Invitation";
+import { EntityPayIn } from "../views/home/EntityPayIn";
+import IdentityCheck from "../views/home/IdentityCheck";
+import { EmailActions } from "../views/auth/EmailActions";
+import { ChangeEmail } from "../views/settings/ChangeEmail";
+import { RedirectToHome } from "../views/home/RedirectToHome";
+import { EntityProfile } from "../views/settings/EntityProfile";
 import { Routes_Interface } from "../lib/modules/routesInterface";
 import { PostAuthentication } from "../views/auth/PostAuthentication";
-import { RedirectToHome } from "../views/home/RedirectToHome";
-import IdentityCheck from "../views/home/IdentityCheck";
 import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
 import { IdentityVerification } from "../views/home/IdentityVerification";
-import { Home } from "../views/home/Home";
-import { EntityPayIn } from "../views/home/EntityPayIn";
-import { EmailActions } from "../views/auth/EmailActions";
+import { AccountManagement } from "../views/settings/AccountManagement";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -22,6 +27,12 @@ export const authenticationRoutes: Array<Routes_Interface> = [
         element: <SignUp />, 
         caseSensitive: true, 
         name: 'SIGN_UP_' 
+    },
+    { 
+        path: "/auth/invitation/:hash", 
+        element: <Invitation />, 
+        caseSensitive: true, 
+        name: 'AUTH_INVITE_' 
     },
 ]
 
@@ -77,6 +88,12 @@ export const standardRoutes: Array<Routes_Interface> = [
         caseSensitive: true, 
         name: 'PERIPH_HOME_' 
     },
+    { 
+        path: "/u/default/account/profile", 
+        element: <AccountManagement />, 
+        caseSensitive: true, 
+        name: 'ACCOUNT_PROFILE' 
+    },
 ]
 
 export const standardErrorRoutes: Array<Routes_Interface> = [
@@ -93,5 +110,25 @@ export const administrativeRoutes: Array<Routes_Interface> = [
 ]
 
 export const standardSettingsRoutes: Array<Routes_Interface> = [
-   
+    {
+        path: "/u/settings/account/profile", 
+        element: <EntityProfile />, 
+        activeMenu: 'Y', 
+        caseSensitive: true, 
+        name: 'CNF_ACC_ID_' 
+    },
+    {
+        path: "/u/settings/email/change", 
+        element: <ChangeEmail />, 
+        activeMenu: 'Y', 
+        caseSensitive: true, 
+        name: 'CNF_EMAIL_CHNG_' 
+    },
+    {
+        path: "/u/settings/entity", 
+        element: <Entity />, 
+        activeMenu: 'Y', 
+        caseSensitive: true, 
+        name: 'CNF_ENTITY_' 
+    },
 ]
