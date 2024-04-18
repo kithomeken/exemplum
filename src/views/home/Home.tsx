@@ -13,9 +13,8 @@ import { Loading } from "../../components/modules/Loading"
 import StorageServices from "../../services/StorageServices"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { STORAGE_KEYS } from "../../global/ConstantsRegistry"
-import { standardErrorRoutes } from "../../routes/errorRoutes"
 import { setPRc0MetaStage } from "../../store/identityCheckActions"
-import { commonRoutes } from "../../routes/routes"
+import { commonRoutes, standardErrorRoutes } from "../../routes/routes"
 
 export const Home = () => {
     const [state, setstate] = useState({

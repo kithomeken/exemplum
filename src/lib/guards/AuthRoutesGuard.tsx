@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 
 import Auth from './Auth';
 import { useAppSelector } from '../../store/hooks';
-import { standardErrorRoutes } from '../../routes/errorRoutes';
+import { standardErrorRoutes } from '../../routes/routes';
 import { revokeAuthSession } from '../../store/auth/firebaseAuthActions';
 
 const AuthRoutesGuard = () => {

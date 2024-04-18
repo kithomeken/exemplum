@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../../store/hooks";
-import { standardErrorRoutes } from "../../routes/errorRoutes";
-import { revokeAuthSession } from "../../store/auth/firebaseAuthActions";
+
 import Auth from "./Auth";
+import { useAppSelector } from "../../store/hooks";
+import { standardErrorRoutes } from "../../routes/routes";
+import { revokeAuthSession } from "../../store/auth/firebaseAuthActions";
 
 const CommonRoutesGuard = () => {
     const dispatch: any = useDispatch();

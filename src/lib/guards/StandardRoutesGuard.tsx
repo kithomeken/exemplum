@@ -5,8 +5,8 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Auth from "./Auth";
 import { useAppSelector } from "../../store/hooks";
 import { Header } from "../../components/layouts/Header";
+import { standardErrorRoutes } from "../../routes/routes";
 import StorageServices from "../../services/StorageServices";
-import { standardErrorRoutes } from "../../routes/errorRoutes";
 import { revokeAuthSession } from "../../store/auth/firebaseAuthActions";
 import { CONFIG_MARGIN_TOP, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 
