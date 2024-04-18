@@ -14,6 +14,7 @@ import { PostAuthentication } from "../views/auth/PostAuthentication";
 import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
 import { IdentityVerification } from "../views/home/IdentityVerification";
 import { AccountManagement } from "../views/settings/AccountManagement";
+import { AccountSuspended } from "../views/errors/AccountSuspended";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -97,6 +98,12 @@ export const standardRoutes: Array<Routes_Interface> = [
 ]
 
 export const standardErrorRoutes: Array<Routes_Interface> = [
+    { 
+        path: "/u/artist/_/identity/account-suspended", 
+        element: <AccountSuspended />, 
+        caseSensitive: true, 
+        name: 'SUSP_ACC' 
+    },
     { 
         path: "/u/artist/_/identity/account-verification", 
         element: <IdentityVerification />, 
