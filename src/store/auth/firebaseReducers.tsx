@@ -83,6 +83,7 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
 
             return {
                 ...state,
+                sso: true,
                 processing: false,
                 authenticated: true,
                 identity: identityObject
