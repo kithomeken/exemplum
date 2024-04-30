@@ -89,12 +89,6 @@ export const standardRoutes: Array<Routes_Interface> = [
         caseSensitive: true, 
         name: 'PERIPH_HOME_' 
     },
-    { 
-        path: "/u/default/account/profile", 
-        element: <AccountManagement />, 
-        caseSensitive: true, 
-        name: 'ACCOUNT_PROFILE' 
-    },
 ]
 
 export const standardErrorRoutes: Array<Routes_Interface> = [
