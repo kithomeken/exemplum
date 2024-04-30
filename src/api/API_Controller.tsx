@@ -5,9 +5,9 @@ const baseURLs = {
         APP: 'http://localhost:3000'
     },
     production: {
-        FQDN: 'http://localhost:81/tippy/public',
-        API: 'http://localhost:81/tippy/public/api',
-        APP: 'http://localhost:3000'
+        FQDN: 'https://api.bigfan.theapplication.online',
+        API: 'https://api.bigfan.theapplication.online/api',
+        APP: 'https://bigfan.theapplication.online'
     }
 };
 

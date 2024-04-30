@@ -211,7 +211,7 @@ export const EntityProfile = () => {
         if (idenityData.provider_id === 'password') {
             let { show } = state
             show.displayName = !state.show.displayName
-    
+
             setstate({
                 ...state, show
             })
@@ -236,57 +236,55 @@ export const EntityProfile = () => {
                         )
                     ) : state.status === 'fulfilled' ? (
                         <div className="w-full mx-auto" style={CONFIG_MAX_WIDTH}>
-                            <div className="w-full gap-y-4 mb-4 md:gap-x-8 flex flex-col align-middle tems-center md:flex-row">
-                                <div className="w-24 h-24 flex flex-col mt-3 md:mt-0 justify-center align-middle items-center mx-auto">
+                            <h1 className="text-xl text-stone-700 font-medium leading-7 tracking-wider mb-3">
+                                Account
+
+                                <span className="block py-2 text-sm text-stone-500">
+                                    Manage your profile
+                                </span>
+                            </h1>
+
+                            <div className="w-full gap-y-4 mb-4 md:gap-x-4 flex flex-col align-middle tems-center md:flex-row">
+                                <div className="w-16 h-16 flex flex-col mt-3 md:mt-0 justify-center align-middle items-center mx-auto">
                                     {
                                         idenityData.photo_url ? (
-                                            <>
-                                                <img className="rounded-full h-24 w-24" src={idenityData.photo_url} alt={'photo_url'} />
-                                            </>
+                                            <img className="rounded-full h-16 w-16" src={idenityData.photo_url} alt={'photo_url'} />
                                         ) : (
-                                            <>
-                                                <div className={`w-20 h-20 flex items-center justify-center rounded-full ${getColorForLetter(auth0.identity.display_name.charAt(0))}`}>
-                                                    <span className="text-white text-3xl font-bold">
-                                                        {auth0.identity.display_name.charAt(0)}
-                                                    </span>
-                                                </div>
-                                            </>
+                                            <div className={`w-16 h-16 flex items-center justify-center rounded-full ${getColorForLetter(auth0.identity.display_name.charAt(0))}`}>
+                                                <span className="text-white text-3xl font-bold">
+                                                    {auth0.identity.display_name.charAt(0)}
+                                                </span>
+                                            </div>
                                         )
                                     }
                                 </div>
 
-                                <div className="flex-grow py-3">
-                                    {
-                                        idenityData.provider_id === 'password' ? (
-                                            <>
-                                                <span className="text-3xl bg-inherit text-stone-500">
-                                                    {idenityData.display_name}
-                                                </span>
+                                {
+                                    idenityData.provider_id === 'password' ? (
+                                        <div className="flex-grow">
+                                            <span className="text-2xl text-stone-500 text-center block md:text-start">
+                                                {auth0.identity.display_name}
+                                            </span>
 
-                                                <div className="flex flex-row align-middle pt-3 gap-x-3">
-                                                    <span className="text-sm flex-none shadow-none py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
-                                                        Change Avatar
-                                                    </span>
-
-                                                    <span onClick={showOrHideDisplayNameModal} className="text-sm flex-none shadow-none border-l-2 pl-3 py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
-                                                        Update Profile Name
-                                                    </span>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <span className="text-3xl bg-inherit text-stone-500">
-                                                    {idenityData.display_name}
+                                            <div className="flex flex-row align-middle gap-x-3 md:justify-normal justify-center">
+                                                <span className="text-sm flex-none shadow-none py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                    Change Avatar
                                                 </span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex-grow">
+                                            <span className="text-2xl bg-inherit text-stone-500 mb-1 block">
+                                                {auth0.identity.display_name}
+                                            </span>
 
-                                                <span className="flex w-full flex-row items-center text-sm gap-x-3 align-middle text-stone-600 pt-3">
-                                                    <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
-                                                    Google Account
-                                                </span>
-                                            </>
-                                        )
-                                    }
-                                </div>
+                                            <span className="flex w-full flex-row items-center text-sm gap-x-3 align-middle text-stone-600">
+                                                <img className="w-5 h-5" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+                                                Google Account
+                                            </span>
+                                        </div>
+                                    )
+                                }
                             </div>
 
 
@@ -297,7 +295,7 @@ export const EntityProfile = () => {
 
 
 
-                            <p className="text-xl text-amber-600 mb-3">
+                            <p className="text-lg text-stone-600 mb-3">
                                 {
                                     state.data.enTT.max === 1 ? (
                                         <>
@@ -315,7 +313,7 @@ export const EntityProfile = () => {
                                 {
                                     state.data.enTT.max === 1 ? (
                                         <>
-                                            Your appointed phone number that will receive withdrawal notifications, funds and confirmation of transactions.
+                                            This is your phone number that will receive withdrawal notifications, funds and confirmation of transactions.
                                         </>
                                     ) : (
                                         <>
@@ -327,13 +325,9 @@ export const EntityProfile = () => {
 
                             {
                                 state.data.enTT.max === 1 ? (
-                                    <div className="mb-2 py-2 border-y-2 border-stone-300 border-dashed rounded">
-                                        <span className="text-sm px-3 py-1 block bg-inherit text-stone-700 sm:w-auto sm:text-sm">
-                                            Current appointed number:
-                                        </span>
-
-                                        <div className="flex md:flex-row flex-col gap-y-1 md:pt-0 pt-3 w-full md:gap-x-3 align-middle md:items-center px-3">
-                                            <div className="md:py-2 basis-1/2 text-stone-500 whitespace-nowrap">
+                                    <div className="mb-2 py-2">
+                                        <div className="flex md:flex-row flex-col align-middle items-center md:pt-3 w-full md:gap-x-3 px-3">
+                                            <div className="w-full md:basis-1/3 text-stone-500 whitespace-nowrap py-1">
                                                 <PhoneInput
                                                     international
                                                     readOnly={true}
@@ -343,12 +337,12 @@ export const EntityProfile = () => {
                                                     value={state.data.nominated.msisdn}
                                                 />
                                             </div>
-                                        </div>
 
-                                        <div className="flex flex-row-reverse align-middle items-center py-1">
-                                            <span onClick={showOrHideMsisdnChangeModal} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
-                                                Change Phone Number
-                                            </span>
+                                            <div className="md:basis-1/2 py-1 w-full">
+                                                <span onClick={showOrHideMsisdnChangeModal} className="text-sm flex-none shadow-none bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                    Change Phone Number
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (

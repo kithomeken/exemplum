@@ -44,14 +44,10 @@ export const AccountManagement = () => {
                 <title>Account Management</title>
             </Helmet>
 
-            <div className={`w-full bg-gradient-to-r from-amber-100 to-emerald-100 h-16`}>
-                <div className="kiOAkj sttng_strp h-16 px-12"></div>
-            </div>
-
             <div className="flex flex-col w-full md:flex-row overflow-hidden">
                 <div className="flex-shrink-0 w-full md:w-56">
                     <div className="p-4">
-                        <h1 className="text-xl text-amber-600 font-medium tracking-wider">Settings</h1>
+                        <h1 className="text-xl text-stone-600 font-medium tracking-wider">Settings</h1>
                     </div>
                     
                     <nav className="flex flex-col px-3">
