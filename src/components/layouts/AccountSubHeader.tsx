@@ -6,10 +6,10 @@ import { Menu, Transition } from "@headlessui/react"
 import Crypto from "../../security/Crypto"
 import { useAppSelector } from "../../store/hooks"
 import StorageServices from "../../services/StorageServices"
+import { standardSettingsRoutes } from "../../routes/routes"
 import { STORAGE_KEYS } from "../../global/ConstantsRegistry"
 import { revokeAuthSession } from "../../store/auth/firebaseAuthActions"
 import { getColorForLetter } from "../../lib/modules/HelperFunctions"
-import { standardRoutes } from "../../routes/routes"
 
 interface headerProps {
     errorMode?: boolean,
@@ -26,8 +26,8 @@ export const AccountSubHeader: FC<headerProps> = ({ errorMode = false }) => {
     Identity = JSON.parse(Identity)
 
     const IdentityRoute: any = (
-        standardRoutes.find(
-            (routeName: { name: string }) => routeName.name === 'ACCOUNT_PROFILE'
+        standardSettingsRoutes.find(
+            (routeName: { name: string }) => routeName.name === 'CNF_ACC_ID_'
         )
     )?.path
 
