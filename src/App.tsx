@@ -11,10 +11,19 @@ import { ERR_404 } from './views/errors/ERR_404';
 import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
 import ErrorRoutesGuard from './lib/guards/ErrorRoutesGuard';
 import CommonRoutesGuard from './lib/guards/CommonRoutesGuard';
+import GenericRoutesGuard from './lib/guards/GenericRoutesGuard';
 import PostAuthRouteGuard from './lib/guards/PostAuthRouteGuard';
 import SettingsRoutesGuard from './lib/guards/SettingsRoutesGuard';
 import StandardRoutesGuard from './lib/guards/StandardRoutesGuard';
-import { authenticationRoutes, commonRoutes, postAuthRoutes, standardErrorRoutes, standardRoutes, standardSettingsRoutes } from './routes/routes';
+import { 
+    commonRoutes, 
+    genericRoutes, 
+    standardRoutes, 
+    postAuthRoutes, 
+    standardErrorRoutes, 
+    authenticationRoutes, 
+    standardSettingsRoutes 
+} from './routes/routes';
 
 interface RouteContextType {
     currentpage: string,
@@ -91,6 +100,20 @@ export default function App() {
                     <Route element={<StandardRoutesGuard />} >
                         {
                             standardRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<GenericRoutesGuard />} >
+                        {
+                            genericRoutes.map((route, index) => {
                                 return (
                                     <Route
                                         path={route.path}
