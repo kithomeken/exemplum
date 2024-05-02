@@ -343,7 +343,7 @@ export const Identity_00 = () => {
                             </div>
 
                             <div className="mx-auto py-3 text-center">
-                                <p className="text-sm text-stone-500">
+                                <p className="text-sm text-stone-500 pb-8 md:pb-0">
                                     © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
                                 </p>
                             </div>

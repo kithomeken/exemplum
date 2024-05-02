@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
@@ -10,11 +12,11 @@ import { ChangeEmail } from "../views/settings/ChangeEmail";
 import { RedirectToHome } from "../views/home/RedirectToHome";
 import { EntityProfile } from "../views/settings/EntityProfile";
 import { Routes_Interface } from "../lib/modules/routesInterface";
+import { AccountSuspended } from "../views/errors/AccountSuspended";
 import { PostAuthentication } from "../views/auth/PostAuthentication";
 import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
-import { IdentityVerification } from "../views/home/IdentityVerification";
 import { AccountManagement } from "../views/settings/AccountManagement";
-import { AccountSuspended } from "../views/errors/AccountSuspended";
+import { IdentityVerification } from "../views/home/IdentityVerification";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {

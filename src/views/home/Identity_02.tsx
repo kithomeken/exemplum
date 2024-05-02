@@ -75,8 +75,8 @@ export const Identity_02 = () => {
         e.preventDefault()
 
         if (!idC_State.processing) {
-            let {input} = state
-            let {errors} = state
+            let { input } = state
+            let { errors } = state
 
             if (input.msisdn.length < 13) {
                 errors.msisdn = "Kindly add a valid phone number"
@@ -100,7 +100,7 @@ export const Identity_02 = () => {
                 });
 
                 return
-            }            
+            }
 
             const identProps = {
                 dataDump: {
@@ -198,7 +198,7 @@ export const Identity_02 = () => {
                             </div>
 
                             <div className="mx-auto pb-3 pt-10 text-center">
-                                <p className="text-sm text-stone-500">
+                                <p className="text-sm text-stone-500 pb-8 md:pb-0">
                                     © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
                                 </p>
                             </div>
