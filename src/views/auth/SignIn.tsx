@@ -9,7 +9,7 @@ import { Loading } from "../../components/modules/Loading";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import { AUTH_, APPLICATION } from "../../global/ConstantsRegistry";
 import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
-import Rock_Band_Image from '../../assets/images/a4f6dd9ebd724d8dcf29e1163ccf36cb.png'
+import Rock_Band_Image from '../../assets/images/a4f6dd9ebd724d8dcf29e1163ccf36cb.svg'
 import { resetAuth0, Alt_FirebaseSSO_SignIn } from "../../store/auth/firebaseAuthActions";
 import { emailValidator, DeviceInfo, classNames } from "../../lib/modules/HelperFunctions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
@@ -254,7 +254,7 @@ export const SignIn = () => {
 
             {
                 state.status === 'pending' ? (
-                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center dark:bg-gray-800">
+                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center">
                         <div className="w-full form-group px-12 mb-14">
                             <div className="w-full">
                                 <div className="pt-10">
@@ -276,7 +276,7 @@ export const SignIn = () => {
                                     </div>
 
                                     <div className="w-full">
-                                        <button type="button" onClick={signInWithGoogle} className="w-full border-stone-400 py-2 dark:border-stone-700 text-stone-700 dark:text-stone-200 hover:border-stone-400 hover:text-stone-900 dark:hover:text-stone-300 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                        <button type="button" onClick={signInWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                             <span className="pl-2 block">
                                                 {
                                                     auth0.processing && auth0.provider === 'google' ? (
