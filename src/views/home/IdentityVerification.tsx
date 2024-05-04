@@ -155,8 +155,8 @@ export const IdentityVerification = () => {
                         */
                         <Navigate to={homePeripheralRoute} replace />
                     ) : (
-                        <div className="wrapper w-full overflow-auto h-screen">
-                            <section className="gx-container rounded-md h-screen sm:h-auto w-full" style={CONFIG_MAX_WIDTH}>
+                        <div className="wrapper w-full overflow-auto md:h-screen h-auto">
+                            <section className="gx-container rounded-md md:h-screen sm:h-auto w-full" style={CONFIG_MAX_WIDTH}>
                                 <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0">
                                     <div className="md:basis-1/2 md:px-6 px-6 w-full pt-8">
                                         <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
@@ -212,7 +212,7 @@ export const IdentityVerification = () => {
                                 </div>
 
                                 <div className="mx-auto md:py-3 py-6 text-center">
-                                    <p className="text-sm text-stone-500">
+                                    <p className="text-sm text-stone-500 pb-4">
                                         © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
                                     </p>
                                 </div>
