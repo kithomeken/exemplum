@@ -17,7 +17,8 @@ export const AUTH = {
     ID_META_02:   '/v1/identity/account/meta/msisdn',
     ARTIST_TYPES: '/v1/identity/account/meta/artist/types',
     ID_META_03:   '/v1/identity/account/meta/artist',
-    ENTITY_EXPANSION: '/v1/identity/account/meta/entity/expansion'
+    ENTITY_EXPANSION: '/v1/identity/account/meta/entity/expansion',
+    ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/confirmation',
 };
 
 export const SIGN_UP = {
