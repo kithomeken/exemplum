@@ -17,6 +17,7 @@ import { PostAuthentication } from "../views/auth/PostAuthentication";
 import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
 import { AccountManagement } from "../views/settings/AccountManagement";
 import { IdentityVerification } from "../views/home/IdentityVerification";
+import { Yeat } from "../views/home/Yeat";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -82,6 +83,13 @@ export const genericRoutes: Array<Routes_Interface> = [
         caseSensitive: true,
         name: 'ENTITY_0_'
     },
+    {
+        path: "/yeat",
+        element: <Yeat />,
+        caseSensitive: true,
+        name: 'YEAT_'
+    },
+
 ]
 
 export const standardRoutes: Array<Routes_Interface> = [
