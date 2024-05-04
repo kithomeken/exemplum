@@ -187,22 +187,6 @@ export const Identity_00 = () => {
                                 </span>
                             </div>
 
-                            <div className="w-full text-sm text-stone-600 float-right">
-                                <span className="block py-4 text-xl md:text-2xl">
-                                    Your request has been received!
-
-                                    <span className="text-lg pt-4 text-stone-500 block">
-                                        <span className="block pt-2">
-                                            We'll review your request and approve your account within 3 business days.
-
-                                            <span className="text-sm block pt-3 mt-3">
-                                                In case of any issue, reach out to our admin at <span className="text-amber-600">admin@email.com</span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </div>
-
                             {
                                 !entityHash && (
                                     specificObject && (
@@ -301,12 +285,12 @@ export const Identity_00 = () => {
                                                             </div>
                                                         </>
                                                     ) : (
-                                                        <div className="flex flex-col md:flex-row align-middle items-center md:gap-x-3 border-b-2 border-dashed">
-                                                            <div className="md:w-1/2 w-full">
+                                                        <div className="flex flex-col md:flex-col align-middle items-center md:gap-x-3 border-b-2 border-dashed">
+                                                            <div className="md:w-1/1 w-full">
                                                                 <img src={invitation} alt={"invitation"} width="auto" className="block text-center m-auto" />
                                                             </div>
 
-                                                            <div className="md:w-1/2">
+                                                            <div className="md:w-1/1">
                                                                 <span className="text-sm block text-stone-600 my-4 pb-2">
                                                                     Extend personalized invitations via email to your members to join our community.
                                                                 </span>
@@ -323,6 +307,33 @@ export const Identity_00 = () => {
                                     )
                                 )
                             }
+
+
+
+
+
+
+
+
+
+
+
+                            <div className="w-full text-sm text-stone-600 float-right">
+                                <span className="block py-4 text-xl md:text-2xl">
+                                    Your request has been received!
+
+                                    <span className="text-lg pt-4 text-stone-500 block">
+                                        <span className="block pt-2">
+                                            We'll review your request and approve your account within 3 business days.
+
+                                            <span className="text-sm block pt-3 mt-3">
+                                                In case of any issue, reach out to our admin at <span className="text-amber-600">admin@email.com</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+
 
                             <div className="mb-4 w-full flex flex-row-reverse py-4 px-3 md:px-0">
                                 {
@@ -349,7 +360,7 @@ export const Identity_00 = () => {
                             </div>
                         </div>
 
-                        <div className="md:basis-2/5 hidden md:block h-screen px-4 py-8">
+                        <div className="md:basis-2/5 hidden md:block h-screen px-4py-6">
                             <img className="h-full bg-amber-100 rounded-2xl" src={completed} alt={"completed"} loading="lazy" />
                         </div>
                     </div>
