@@ -6,7 +6,7 @@ import { AUTH } from "../../api/API_Registry";
 import { commonRoutes } from "../../routes/routes";
 import HttpServices from "../../services/HttpServices";
 import StorageServices from "../../services/StorageServices";
-import { classNames } from "../../lib/modules/HelperFunctions";
+import { classNames, encryptAndStoreLS } from "../../lib/modules/HelperFunctions";
 import { G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import completed from "../../assets/images/fd0b0ed18a34962f80d77c6e6ff42e7b.svg"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
@@ -61,8 +61,7 @@ export const Yeat = () => {
                 data.inVTd = payload.inVTd
                 data.identity = payload.identity
 
-                
-
+                encryptAndStoreLS(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.status)
                 show = data.inVTd.length > 0 ? true : false
             } else {
                 status = 'rejected'
@@ -230,10 +229,10 @@ export const Yeat = () => {
                             ) : state.status === 'fulfilled' ? (
                                 <>
                                     <div className="md:basis-3/5 md:px-6 px-8 w-full py-6">
-                                        <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
+                                        <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                                         <div className="flex flex-row align-middle items-center gap-x-3 pt-2">
-                                            <span className="fa-duotone text-amber-600 fa-badge-check fa-lg"></span>
+                                            <span className="fa-duotone text-orange-600 fa-badge-check fa-lg"></span>
 
                                             <span className="text-sm text-stone-500 md:text-start text-right block">
                                                 Profile completed
@@ -288,7 +287,7 @@ export const Yeat = () => {
                                                                     {
                                                                         state.httpStatus !== 200 ? (
                                                                             <>
-                                                                                <div className="mb-2 bg-sky-00 py-1 md:px-4 border-2 border-red-300 border-dashed rounded-md">
+                                                                                <div className="mb-2 bg-orange-00 py-1 md:px-4 border-2 border-red-300 border-dashed rounded-md">
                                                                                     <div className="flex md:flex-row flex-row align-middle items-center text-red-700 md:px-2 px-4">
                                                                                         <i className="fa-duotone fa-octagon-exclamation fa-2x mt-1 text-red-700 flex-none"></i>
 
@@ -312,7 +311,7 @@ export const Yeat = () => {
                                                                                             return (
                                                                                                 <div key={`KDE_${index}`} className="w-full py-3 flex flex-row align-middle items-center gap-x-3">
                                                                                                     <div className="flex-grow">
-                                                                                                        <input type="text" name="email" id="entity-1-email" autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-amber-600 focus:outline-amber-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`member${index + 1}@email.com`} value={contact.email} />
+                                                                                                        <input type="text" name="email" id="entity-1-email" autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-orange-600 focus:outline-orange-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`member${index + 1}@email.com`} value={contact.email} />
 
                                                                                                         {
                                                                                                             state.entityErrors[index].email.length > 0 &&
@@ -352,7 +351,7 @@ export const Yeat = () => {
                                                                                     </div>
 
                                                                                     <div className="pb-3 px-0 w-full flex flex-row-reverse align-middle items-middle">
-                                                                                        <button className="bg-amber-600  min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-amber-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-amber-700" type="submit">
+                                                                                        <button className="bg-orange-600  min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                                                             {
                                                                                                 state.posting ? (
                                                                                                     <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
@@ -372,7 +371,7 @@ export const Yeat = () => {
                                                                         {
                                                                             state.data.inVTd.length > 0 ? (
                                                                                 <div className="py-3 w-full">
-                                                                                    <span className="block text-base md:text-stone-600 pb-2 text-orange-500">
+                                                                                    <span className="block text-base d:text-stone-600 pb-1 text-orange-500">
                                                                                         Invited Members
                                                                                     </span>
 
@@ -397,14 +396,26 @@ export const Yeat = () => {
                                                                             ) : null
                                                                         }
 
-                                                                        <span className="text-sm pt-3 mt-3 text-stone-500 block">
-                                                                            In case of any issue, reach out to our admin at <span className="text-amber-600">admin@email.com</span>
+                                                                        <div className="mt-4 bg-orange-00 px-2 border-l-2 bg-orange-50 border-orange-300 border-dashed rounded-sm">
+                                                                            <div className="flex flex-row align-middle items-center text-orange-700 px-2">
+                                                                                <i className="fa-duotone fa-info-circle fa-xl mt-1 text-orange-700 flex-none"></i>
+
+                                                                                <div className="flex-auto ml-1 mt-1">
+                                                                                    <span className="text-sm pl-3 block py-2 text-orange-700">
+                                                                                        All member(s) invited above need to onboard for your request to be approved.
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <span className="text-sm pt-3 text-stone-500 block">
+                                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
                                                                         </span>
                                                                     </div>
                                                                 </>
                                                             ) : (
                                                                 <div className="w-full mb-3 pb-4 border-b-2 border-dashed">
-                                                                    <span className="text-amber-600 text-sm block cursor-pointer py-1.5 text-end hover:text-amber-700 hover:underline" onClick={showOrHideEntityInv}>
+                                                                    <span className="text-orange-600 text-sm block cursor-pointer py-1.5 text-end hover:text-orange-700 hover:underline" onClick={showOrHideEntityInv}>
                                                                         Invite to your members
                                                                     </span>
                                                                 </div>
@@ -413,21 +424,49 @@ export const Yeat = () => {
 
                                                         <div className="mx-auto py-3 text-center">
                                                             <p className="text-sm text-stone-500 md:pb-0">
-                                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </>
                                             ) : (
                                                 <>
+                                                    <div className="flex flex-col md:flex-col align-middle items-center md:gap-x-3">
+                                                        <div className="md:w-1/1 md:w-60 w-72">
+                                                            <img src={completed} alt={"completed"} width="auto" className="block text-center m-auto md:hidden" />
+                                                        </div>
 
+                                                        <div className="w-full text-sm text-stone-600 float-right">
+                                                            <span className="block py-4 text-lg md:text-2xl">
+                                                                Your request has been received!
+
+                                                                <span className="md:text-lg text-base pt-4 text-stone-500 block">
+                                                                    <span className="block pt-2">
+                                                                        We'll review your request and approve your account within 3 business days.
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="w-full block mb-3 pb-4 border-b-2 border-dashed">
+                                                            <span className="text-sm pt-3 mt-3 text-stone-500 block">
+                                                                In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="mx-auto py-3 text-center">
+                                                            <p className="text-sm text-stone-500 md:pb-0">
+                                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </>
                                             )
                                         }
                                     </div>
 
                                     <div className="md:basis-2/5 hidden md:block h-screen px-4 py-8">
-                                        <img className="h-full bg-amber-100 rounded-2xl" src={completed} alt={"completed"} loading="lazy" />
+                                        <img className="h-full bg-orange-100 rounded-2xl" src={completed} alt={"completed"} loading="lazy" />
                                     </div>
                                 </>
                             ) : (
