@@ -56,7 +56,7 @@ export default function App() {
                 <ToastContainer />
 
                 <Helmet>
-                    <meta name="theme-color" content="#FDE68A" />  
+                    <meta name="theme-color" content="#F59E0B" />  
                 </Helmet>
 
                 <Routes>
