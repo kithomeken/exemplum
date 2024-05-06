@@ -24,7 +24,7 @@ export const Yeat = () => {
         data: {
             M0lT: null,
             inVTd: null,
-            descr: null,
+            identity: null,
         },
         entity: [{
             email: '',
@@ -33,10 +33,6 @@ export const Yeat = () => {
             email: '',
         }]
     })
-
-    let specificObject: any = StorageServices.getLocalStorage(STORAGE_KEYS.ENTITY_TYPE)
-    let entityHash: any = StorageServices.getLocalStorage(STORAGE_KEYS.ENTITY_HASH)
-    specificObject = JSON.parse(specificObject)
 
     const homeRoute: any = (
         commonRoutes.find(
@@ -63,21 +59,21 @@ export const Yeat = () => {
 
                 data.M0lT = payload.M0lt
                 data.inVTd = payload.inVTd
-                data.descr = payload.descr
+                data.identity = payload.identity
+
+                
 
                 show = data.inVTd.length > 0 ? true : false
             } else {
                 status = 'rejected'
             }
         } catch (error) {
-            console.log(error);
-
             status = 'rejected'
             httpStatus = 500
         }
 
         setstate({
-            ...state, status, data, show
+            ...state, status, data, show, httpStatus
         })
     }
 
@@ -121,12 +117,13 @@ export const Yeat = () => {
     }
 
     const addPointOfContactHandler = () => {
+        let { data } = state
         let { entity } = state
         let { entityErrors } = state
         const { posting } = state
 
         if (!posting) {
-            if (entity.length < specificObject.max) {
+            if (entity.length < data.identity.pax) {
                 entity = state.entity.concat([{
                     email: '',
                 }])
@@ -249,7 +246,7 @@ export const Yeat = () => {
                                                     <div className="flex flex-col md:flex-col align-middle items-center md:gap-x-3">
                                                         <div className="md:w-1/1 md:w-60 w-72">
                                                             {
-                                                                state.data.inVTd.length === (specificObject.max - 1) ? (
+                                                                state.data.inVTd.length === (state.data.identity.pax - 1) ? (
                                                                     <img src={completed} alt={"completed"} width="auto" className="block text-center m-auto md:hidden" />
                                                                 ) : (
                                                                     <img src={invitation} alt={"invitation"} width="auto" className="block text-center m-auto" />
@@ -258,7 +255,7 @@ export const Yeat = () => {
                                                         </div>
 
                                                         {
-                                                            state.data.inVTd.length === (specificObject.max - 1) ? (
+                                                            state.data.inVTd.length === (state.data.identity.pax - 1) ? (
                                                                 <div className="w-full text-sm text-stone-600 float-right">
                                                                     <span className="block py-4 text-lg md:text-2xl">
                                                                         Your request has been received!
@@ -308,7 +305,7 @@ export const Yeat = () => {
 
                                                                     <div className="w-full block mb-3 pb-4 border-b-2 border-dashed">
                                                                         {
-                                                                            state.data.inVTd.length < (specificObject.max - 1) ? (
+                                                                            state.data.inVTd.length < (state.data.identity.pax - 1) ? (
                                                                                 <form className="w-full md:w-2/3 mx-0 block" onSubmit={onFormSubmitHandler}>
                                                                                     {
                                                                                         state.entity.map((contact: any, index: any) => {
@@ -344,7 +341,7 @@ export const Yeat = () => {
                                                                                         <div className="mb-3" id="poc_extra"></div>
 
                                                                                         {
-                                                                                            state.entity.length < (specificObject.max - 1) ? (
+                                                                                            state.entity.length < (state.data.identity.pax - 1) ? (
                                                                                                 <span className="text-blue-500 text-sm cursor-pointer" onClick={addPointOfContactHandler}>
                                                                                                     Invite another member
                                                                                                 </span>
@@ -375,7 +372,7 @@ export const Yeat = () => {
                                                                         {
                                                                             state.data.inVTd.length > 0 ? (
                                                                                 <div className="py-3 w-full">
-                                                                                    <span className="block text-base text-stone-600 pb-2 ">
+                                                                                    <span className="block text-base md:text-stone-600 pb-2 text-orange-500">
                                                                                         Invited Members
                                                                                     </span>
 
