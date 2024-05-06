@@ -13,7 +13,7 @@ export const STYLE = {
 * */
 export const APPLICATION = {
     NAME:       'Big Fan',
-    THEME:      '#FDE68A',
+    THEME:      '#F59E0B',
     URL:        API_Controller().APP,
     ERR_MSG:    'Something went wrong. Kindly try again later'
 }
