@@ -24,6 +24,7 @@ import {
     authenticationRoutes, 
     standardSettingsRoutes 
 } from './routes/routes';
+import { Helmet } from 'react-helmet';
 
 interface RouteContextType {
     currentpage: string,
@@ -53,6 +54,10 @@ export default function App() {
         <Router basename='/'>
             <RouterProvider>
                 <ToastContainer />
+
+                <Helmet>
+                    <meta name="theme-color" content="#FDE68A" />  
+                </Helmet>
 
                 <Routes>
                     <Route element={<AuthRoutesGuard />}>
