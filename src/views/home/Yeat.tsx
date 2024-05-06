@@ -1,19 +1,17 @@
 import { toast } from "react-toastify";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
+import { ERR_404 } from "../errors/ERR_404";
+import { ERR_500 } from "../errors/ERR_500";
 import { AUTH } from "../../api/API_Registry";
 import { commonRoutes } from "../../routes/routes";
 import HttpServices from "../../services/HttpServices";
-import StorageServices from "../../services/StorageServices";
-import { classNames, encryptAndStoreLS } from "../../lib/modules/HelperFunctions";
+import { Loading } from "../../components/modules/Loading";
+import { encryptAndStoreLS } from "../../lib/modules/HelperFunctions";
 import { G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import completed from "../../assets/images/fd0b0ed18a34962f80d77c6e6ff42e7b.svg"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry";
-import { Loading } from "../../components/modules/Loading";
-import { ERR_404 } from "../errors/ERR_404";
-import { ERR_500 } from "../errors/ERR_500";
 
 export const Yeat = () => {
     const [state, setstate] = useState({
@@ -33,11 +31,6 @@ export const Yeat = () => {
             email: '',
         }]
     })
-
-    const homeRoute: any = (
-        commonRoutes.find(
-            (routeName) => routeName.name === 'HOME_')
-    )?.path
 
     React.useEffect(() => {
         metaIdentityConfirmation()
