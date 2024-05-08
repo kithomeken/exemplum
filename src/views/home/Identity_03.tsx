@@ -34,6 +34,10 @@ export const Identity_03 = () => {
         artist_name: {
             checking: false,
             exists: false
+        },
+        entity: {
+            checking: false,
+            exists: false
         }
     })
 
@@ -77,6 +81,18 @@ export const Identity_03 = () => {
                     } else {
                         let { artist_name } = state
                         artist_name.checking = false
+                    }
+                    break;
+
+                case 'entity':
+                    if (output.error === '') {
+                        let { entity } = state
+                        entity.checking = true
+
+                        checkEntityAvailability()
+                    } else {
+                        let { entity } = state
+                        entity.checking = false
                     }
                     break;
 
@@ -130,6 +146,37 @@ export const Identity_03 = () => {
 
         setstate({
             ...state, artist_name, errors
+        })
+    }
+
+    const checkEntityAvailability = async () => {
+        let { entity } = state
+        let { errors } = state
+
+        try {
+            let { input } = state
+
+            let formData = new FormData()
+            formData.append('entity', input.entity)
+
+            const responseCheck: any = await HttpServices.httpPost(AUTH.PRE_META_E, formData)
+
+            if (responseCheck.data.available) {
+                errors.entity = ''
+                entity.exists = false
+            } else {
+                errors.entity = 'Band/Group name already exists'
+                entity.exists = true
+            }
+        } catch (error) {
+            errors.entity = 'Band/Group name already exists'
+            entity.exists = true
+        }
+
+        entity.checking = false
+
+        setstate({
+            ...state, entity, errors
         })
     }
 
@@ -373,7 +420,9 @@ export const Identity_03 = () => {
                                                                             )} onChange={onChangeHandler} value={state.input.entity} onBlur={onInputBlur} required />
                                                                         <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                                             {
-                                                                                state.errors.entity.length > 0 ? (
+                                                                                state.entity.checking ? (
+                                                                                    <span className="fa-duotone text-amber-500 fa-spinner-third fa-lg fa-spin"></span>
+                                                                                ) : state.errors.entity.length > 0 ? (
                                                                                     <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
                                                                                 ) : null
                                                                             }
@@ -439,7 +488,7 @@ export const Identity_03 = () => {
                             }
                         </div>
 
-                        <div className="md:basis-2/5 hidden md:block h-screen px-4py-6">
+                        <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
                             <img className="h-full bg-amber-100 rounded-2xl" src={artisticForm} alt={"i_am_an_artist"} loading="lazy" />
                         </div>
                     </div>
