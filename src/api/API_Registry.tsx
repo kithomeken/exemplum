@@ -9,15 +9,17 @@ export const CSRF_COOKIE_ROUTE = '/sanctum/csrf-cookie';
 ***************************/
 
 export const AUTH = {
-    FIREBASE_SSO: '/v1/identity/auth/firebase-sso',
-    META_CHECK:   '/v1/identity/account/meta/check',
-    PRE_META_01:  '/v1/identity/account/meta/identifier/check',
-    PRE_META_03:  '/v1/identity/account/meta/artist_name/check',
-    ID_META_01:   '/v1/identity/account/meta/display_name',
-    ID_META_02:   '/v1/identity/account/meta/msisdn',
-    ARTIST_TYPES: '/v1/identity/account/meta/artist/types',
-    ID_META_03:   '/v1/identity/account/meta/artist',
-    ENTITY_EXPANSION: '/v1/identity/account/meta/entity/expansion',
+    FIREBASE_SSO:       '/v1/identity/auth/firebase-sso',
+    META_CHECK:         '/v1/identity/account/meta/check',
+    PRE_META_01:        '/v1/identity/account/meta/identifier/check',
+    PRE_META_03:        '/v1/identity/account/meta/artist_name/check',
+    PRE_META_E:         '/v1/identity/account/meta/entity/check',
+    ID_META_01:         '/v1/identity/account/meta/display_name',
+    ID_META_02:         '/v1/identity/account/meta/msisdn',
+    ARTIST_TYPES:       '/v1/identity/account/meta/artist/types',
+    ID_META_03:         '/v1/identity/account/meta/artist',
+    ENTITY_EXPANSION:   '/v1/identity/account/meta/entity/expansion',
+    ENT_RE_EXPANSION:   '/v1/identity/account/meta/entity/expansion/retry',
     ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/confirmation',
 };
 
