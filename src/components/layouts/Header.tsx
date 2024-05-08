@@ -37,7 +37,7 @@ export const Header: FC<headerProps> = ({ showSettings = true, errorMode = false
                         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="hidden sm:block">
                                 <div className="flex space-x-4">
-                                    <Link to="/home" className="text-amber-500 mb-0 nunito font-bold px-0 py-2 rounded-md" aria-current="page">
+                                    <Link to="/home" className="text-orange-500 mb-0 nunito font-bold px-0 py-2 rounded-md" aria-current="page">
                                         <span className="text-2xl">
                                             {APPLICATION.NAME}
                                         </span>

@@ -56,7 +56,7 @@ export const BespokePanel: FC<Props> = ({ show, title, showOrHidePanel, componen
                                                 <div className="top-0 left-0 flex my-0.5 flex-row-reverse align-middle">
                                                     <button
                                                         type="button"
-                                                        className="rounded-md text-stone-500 hover:text-amber-600 focus:outline-none flex flex-row align-middle pr-3"
+                                                        className="rounded-md text-stone-500 hover:text-orange-600 focus:outline-none flex flex-row align-middle pr-3"
                                                         onClick={showOrHidePanel}
                                                     >
                                                         <span className="fas fa-times border-none text-xl"></span>
@@ -64,7 +64,7 @@ export const BespokePanel: FC<Props> = ({ show, title, showOrHidePanel, componen
                                                     </button>
 
                                                     <div className="flex-grow pl-2">
-                                                        <h2 className="text-xl text-amber-600">
+                                                        <h2 className="text-xl text-orange-600">
                                                             {title}
                                                         </h2>
                                                     </div>

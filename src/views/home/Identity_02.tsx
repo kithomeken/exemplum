@@ -118,7 +118,7 @@ export const Identity_02 = () => {
                 <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
                         <div className="md:basis-3/5 md:px-6 px-8 w-full md:h-screenpy-6">
-                            <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
+                            <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                             <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
                                 <div className="w-48 pt-4 mx-auto pb-3">
@@ -128,9 +128,9 @@ export const Identity_02 = () => {
 
                             <div className="w-32 md:float-start float-right">
                                 <div className="w-full py-4 grid grid-cols-3 gap-x-2">
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-400"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-400"></div>
                                 </div>
 
                                 <span className="text-sm text-stone-500 md:text-start text-right block">
@@ -181,7 +181,7 @@ export const Identity_02 = () => {
                                     </div>
 
                                     <div className="mb-3 pt-3 px-0">
-                                        <button className="bg-amber-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-amber-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-amber-700" type="submit">
+                                        <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                             {
                                                 idC_State.processing ? (
                                                     <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
@@ -199,7 +199,7 @@ export const Identity_02 = () => {
 
                             <div className="mx-auto pb-3 pt-10 text-center">
                                 <p className="text-sm text-stone-500">
-                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                 </p>
                             </div>
 
@@ -208,7 +208,7 @@ export const Identity_02 = () => {
                         </div>
 
                         <div className="md:basis-2/5 hidden md:block h-screen px-4py-6">
-                            <img className="h-full bg-amber-100 rounded-2xl" src={serviceCenter} alt={"pana_calling"} loading="lazy" />
+                            <img className="h-full bg-orange-100 rounded-2xl" src={serviceCenter} alt={"pana_calling"} loading="lazy" />
                         </div>
                     </div>
                 </section>

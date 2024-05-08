@@ -338,7 +338,7 @@ export const WithdrawModal: FC<props> = ({ show, showOrHide, account, entity }) 
                                             className={classNames(
                                                 state.errors.amount.length > 0 ?
                                                     'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                    'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-gray-400',
+                                                    'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-gray-400',
                                                 'block w-full rounded-md py-2 pl-3 pr-8 border border-gray-300 text-m'
                                             )} onChange={onChangeHandler} value={state.input.amount} onBlur={onInputBlur} required />
                                         <div className="absolute inset-y-0 right-0 flex items-center w-8">
@@ -361,7 +361,7 @@ export const WithdrawModal: FC<props> = ({ show, showOrHide, account, entity }) 
                             </div>
 
                             <div className="py-3 px-3 mb-2 md:basis-1/2 w-full border-2 border-gray-300 border-dashed rounded-md">
-                                <span className="text-amber-600 pb-2 block text-sm md:flex flex-row items-center">
+                                <span className="text-orange-600 pb-2 block text-sm md:flex flex-row items-center">
                                     Summary
                                 </span>
 

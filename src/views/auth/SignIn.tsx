@@ -268,7 +268,7 @@ export const SignIn = () => {
                         <section className="gx-container gx-900 bg-white shadow-md rounded-md h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
                                 <div className="md:basis-2/5 py-4 md:px-6 px-8 w-full">
-                                    <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block">{APPLICATION.NAME}</span>
+                                    <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block">{APPLICATION.NAME}</span>
 
                                     <div className="w-full py-6">
                                         <span className="text-stone-700 block text-lg">Sign In</span>
@@ -306,7 +306,7 @@ export const SignIn = () => {
                                             <div className="relative rounded shadow-sm">
                                                 <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off"
                                                     className={classNames(
-                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                         'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                                                     )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required />
 
@@ -333,16 +333,16 @@ export const SignIn = () => {
                                             <div className="relative mt-2 rounded shadow-sm">
                                                 <input type={state.pwdVisibility ? 'text' : 'password'} name="password" id="password" placeholder="********" autoComplete="off"
                                                     className={classNames(
-                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                         'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                                                     )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.password} required />
 
                                                 <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                     {
                                                         state.pwdVisibility ? (
-                                                            <span className="fa-duotone fa-eye text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                            <span className="fa-duotone fa-eye text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                         ) : (
-                                                            <span className="fa-duotone fa-eye-slash text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                            <span className="fa-duotone fa-eye-slash text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                         )
                                                     }
                                                 </div>
@@ -366,7 +366,7 @@ export const SignIn = () => {
                                         </div>
 
                                         <div className="pb-3 pt-3 flex justify-center">
-                                            <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-amber-500 text-white disabled:bg-amber-600 hover:bg-amber-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
+                                            <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
                                                 {
                                                     auth0.processing && auth0.provider === 'password' ? (
                                                         <span className="flex flex-row items-center">
@@ -383,13 +383,13 @@ export const SignIn = () => {
 
                                     <div className="mx-auto py-3 text-center">
                                         <p className="text-sm text-stone-500">
-                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                         </p>
                                     </div>
 
                                     <span className="text-stone-800 text-sm m-auto flex gap-x-2 py-2">
                                         <span>Don't have an account?</span>
-                                        <Link to={signUpRoute} className="text-amber-600 hover:text-amber-700 hover:underline">Sign Up</Link>
+                                        <Link to={signUpRoute} className="text-orange-600 hover:text-orange-700 hover:underline">Sign Up</Link>
                                     </span>
                                 </div>
 

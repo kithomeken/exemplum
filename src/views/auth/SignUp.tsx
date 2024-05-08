@@ -352,7 +352,7 @@ export const SignUp = () => {
                         <section className="gx-container gx-900 bg-white shadow-md rounded-md h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
                                 <div className="md:basis-2/5 py-4 md:px-6 px-8 w-full">
-                                    <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block">{APPLICATION.NAME}</span>
+                                    <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block">{APPLICATION.NAME}</span>
 
                                     <div className="w-full py-4">
                                         <span className="text-stone-700 block text-lg">Are you a star?</span>
@@ -390,7 +390,7 @@ export const SignUp = () => {
                                             <div className="relative rounded shadow-sm">
                                                 <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off"
                                                     className={classNames(
-                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                         'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                                                     )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required />
 
@@ -417,16 +417,16 @@ export const SignUp = () => {
                                             <div className="relative rounded shadow-sm">
                                                 <input type={state.pwdVisibility ? 'text' : 'password'} name="password" id="password" placeholder="********" autoComplete="off"
                                                     className={classNames(
-                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                         'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                                                     )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.password} required />
 
                                                 <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                     {
                                                         state.pwdVisibility ? (
-                                                            <span className="fa-duotone fa-eye text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                            <span className="fa-duotone fa-eye text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                         ) : (
-                                                            <span className="fa-duotone fa-eye-slash text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                            <span className="fa-duotone fa-eye-slash text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                         )
                                                     }
                                                 </div>
@@ -445,13 +445,13 @@ export const SignUp = () => {
                                             <div className="relative mt-2 rounded shadow-sm">
                                                 <input type={state.pwdVisibility ? 'text' : 'password'} name="confirm" id="confirm" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
                                                     className={classNames(
-                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                         'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                                                     )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.confirm} required />
                                             </div>
                                         </div>
 
-                                        <span onClick={showOrHidePasswordPolicy} className="text-stone-600 hover:text-amber-600 text-sm m-auto flex flex-row-reverse gap-x-1 align-middle items-center cursor-pointer">
+                                        <span onClick={showOrHidePasswordPolicy} className="text-stone-600 hover:text-orange-600 text-sm m-auto flex flex-row-reverse gap-x-1 align-middle items-center cursor-pointer">
                                             <span>Password policy</span>
                                             <span className="fa-regular fa-circle-info fa-lg"></span>
                                         </span>
@@ -470,14 +470,14 @@ export const SignUp = () => {
                                                 </div>
                                                 <div className="text-sm leading-6">
                                                     <p className="text-gray-500">
-                                                        I have read, understood, and agreed to the <span className="text-amber-600 cursor-pointer hover:text-amber-700 hover:underline" onClick={showOrHideTC}>Terms & Conditions</span>
+                                                        I have read, understood, and agreed to the <span className="text-orange-600 cursor-pointer hover:text-orange-700 hover:underline" onClick={showOrHideTC}>Terms & Conditions</span>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="pb-3 pt-3 flex justify-center">
-                                            <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-amber-500 text-white disabled:bg-amber-600 hover:bg-amber-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
+                                            <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
                                                 {
                                                     auth0.processing && auth0.provider === 'password' ? (
                                                         <span className="flex flex-row items-center">
@@ -494,7 +494,7 @@ export const SignUp = () => {
 
                                     <span className="text-stone-800 text-sm m-auto flex gap-x-2 py-2">
                                         <span>Already have an account?</span>
-                                        <Link to={signInRoute} className="text-amber-600 hover:text-amber-700 hover:underline">Sign In</Link>
+                                        <Link to={signInRoute} className="text-orange-600 hover:text-orange-700 hover:underline">Sign In</Link>
                                     </span>
                                 </div>
 

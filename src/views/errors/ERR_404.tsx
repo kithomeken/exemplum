@@ -53,7 +53,7 @@ export const ERR_404: FC<HTTP_Error_Interface> = ({ compact = false }) => {
                                                 <div className="space-y-3">
                                                     <div className="flex items-center justify-between">
                                                         <div className="text-sm m-auto ">
-                                                            <Link to="/home" className="font-medium text-center text-amber-600 hover:text-amber-700">
+                                                            <Link to="/home" className="font-medium text-center text-orange-600 hover:text-orange-700">
                                                                 <span className="flex items-center justify-between">
                                                                     <span>
                                                                         Back to safety

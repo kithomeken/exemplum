@@ -40,7 +40,7 @@ export const ListBoxZero: FC<Props> = ({
                     <div className="mt-1 relative" ref={listboxRef}>
                         <Listbox.Button
                             id={randomId}
-                            className="relative w-full _lsBnQY bg-white border border-gray-300 rounded-md shadow-sm p-1-5 pl-3 pr-8 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 sm:text-sm"
+                            className="relative w-full _lsBnQY bg-white border border-gray-300 rounded-md shadow-sm p-1-5 pl-3 pr-8 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                         >
                             {listButton}
                         </Listbox.Button>

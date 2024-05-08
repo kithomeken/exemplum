@@ -58,8 +58,8 @@ export const InformationalModal: FC<Props> = ({ title, details, show, showOrHide
                             }>
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div className="flex flex-row items-center align-middle pb-3 w-full gap-x-4">
-                                    <div className="flex-none flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 sm:mx-0 sm:h-10 sm:w-10">
-                                        <span className="fal fa-info-circle fa-2x text-amber-600"></span>
+                                    <div className="flex-none flex items-center justify-center h-12 w-12 rounded-full bg-orange-100 sm:mx-0 sm:h-10 sm:w-10">
+                                        <span className="fal fa-info-circle fa-2x text-orange-600"></span>
                                     </div>
 
                                     <div className="text-center sm:mt-0 sm:text-left">
@@ -78,7 +78,7 @@ export const InformationalModal: FC<Props> = ({ title, details, show, showOrHide
                                 </div>
                             </div>
                             <div className="bg-gray-100 px-4 py-3 sm:px-6 flex flex-row-reverse">
-                                <button type="button" className="w-1/2 inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-amber-600 font-medium text-white hover:bg-amber-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onClick={showOrHide}>
+                                <button type="button" className="w-1/2 inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-orange-600 font-medium text-white hover:bg-orange-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onClick={showOrHide}>
                                     Close
                                 </button>
                             </div>

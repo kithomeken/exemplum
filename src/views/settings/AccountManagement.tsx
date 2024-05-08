@@ -52,7 +52,7 @@ export const AccountManagement = () => {
                     
                     <nav className="flex flex-col px-3">
                         <button type="button" onClick={() => setActivateTab('profile')} className={classNames(
-                            state.activeTab === 'profile' ? 'text-amber-700 bg-amber-100' : 'text-slate-700 hover:bg-slate-100',
+                            state.activeTab === 'profile' ? 'text-orange-700 bg-orange-100' : 'text-slate-700 hover:bg-slate-100',
                             "text-sm items-center w-full text-left py-2 px-6 rounded-md my-1"
                         )}>
                             <span className="flex flex-row align-middle items-center">
@@ -65,7 +65,7 @@ export const AccountManagement = () => {
                         {
                             auth0.identity.provider === 'password' ? (
                                 <button type="button" onClick={() => setActivateTab('email')} className={classNames(
-                                    state.activeTab === 'email' ? 'text-amber-700 bg-amber-100' : 'text-slate-700 hover:bg-slate-100',
+                                    state.activeTab === 'email' ? 'text-orange-700 bg-orange-100' : 'text-slate-700 hover:bg-slate-100',
                                     "text-sm items-center w-full text-left py-2 px-6 rounded-md my-1"
                                 )}>
                                     <span className="flex flex-row align-middle items-center">
