@@ -10,6 +10,7 @@ import { Identity_02 } from "./Identity_02"
 import { Identity_01 } from "./Identity_01"
 import { AUTH } from "../../api/API_Registry"
 import { useAppSelector } from "../../store/hooks"
+import { STYLE } from "../../global/ConstantsRegistry"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import { resetIdentity, setPRc0MetaStage } from "../../store/identityCheckActions"
@@ -108,8 +109,16 @@ export const IdentityOnboarding = () => {
                         }
                     </>
                 ) : (
-                    <div className="w-full h-screen -mt-20 flex flex-col justify-center align-middle items-center">
-                        <Loading />
+                    <div className="wrapper w-full overflow-auto md:h-screen h-auto">
+                        <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center" style={STYLE.MAX_WIDTH}>
+                            <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
+                                <div className="w-full h-1/2 flex flex-col justify-center">
+                                    <div className="flex-grow pt-8">
+                                        <Loading />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 )
             }
