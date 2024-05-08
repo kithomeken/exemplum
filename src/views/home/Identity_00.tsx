@@ -261,7 +261,8 @@ export const Identity_00 = () => {
 
                 Object.keys(payload).forEach(function (key) {
                     let entityIndex = key.split('.')[1]
-                    entityErrors[entityIndex].email = 'This email has already been taken'
+                    let errorMsg = payload[key][0]
+                    entityErrors[entityIndex].email = errorMsg.replace('.' + entityIndex, '')
                 })
             }
         } catch (error) {
@@ -310,7 +311,7 @@ export const Identity_00 = () => {
             } else {
                 posting = false
                 const errorMsg = invitationResponse.data.error.message
-                
+
                 toast.warning(errorMsg, {
                     position: "top-right",
                     autoClose: 5000,
@@ -324,7 +325,7 @@ export const Identity_00 = () => {
         } catch (error) {
             posting = false
             console.log(error);
-            
+
             toast.error(APPLICATION.ERR_MSG, {
                 position: "top-right",
                 autoClose: 5000,
@@ -451,7 +452,7 @@ export const Identity_00 = () => {
                                                                                             return (
                                                                                                 <div key={`KDE_${index}`} className="w-full py-3 flex flex-row align-middle items-center gap-x-3">
                                                                                                     <div className="flex-grow">
-                                                                                                        <input type="text" name="email" id="entity-1-email" autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-orange-600 focus:outline-orange-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`member${index + 1}@email.com`} value={contact.email} />
+                                                                                                        <input type="email" name="email" id={`entity-${index}-email`} autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-orange-600 focus:outline-orange-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`member${index + 1}@email.com`} value={contact.email} />
 
                                                                                                         {
                                                                                                             state.entityErrors[index].email.length > 0 &&
