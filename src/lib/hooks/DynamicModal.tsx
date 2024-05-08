@@ -142,7 +142,7 @@ export const DynamicModal: FC<Props> = ({ show, size, showOrHideModal, title, on
                                         <div className="bg-white pt-5 pb-4 sm:py-6 sm:pb-4">
                                             <div className="w-full">
                                                 <div className="sm:col-span-8 lg:col-span-7 mb-3 px-4 sm:px-6">
-                                                    <h2 className="text-xl text-amber-600">
+                                                    <h2 className="text-xl text-orange-600">
                                                         {title}
                                                     </h2>
                                                 </div>
@@ -160,12 +160,12 @@ export const DynamicModal: FC<Props> = ({ show, size, showOrHideModal, title, on
                                                 <div className="flex flex-row-reverse items-center align-middle">
                                                     {
                                                         noAction ? (
-                                                            <button type="button" className="w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1-5 bg-amber-600 text-white disabled:bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-amber-500" onClick={showOrHideModal}>
+                                                            <button type="button" className="w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1-5 bg-orange-600 text-white disabled:bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-orange-500" onClick={showOrHideModal}>
                                                                 Done
                                                             </button>
                                                         ) : (
                                                             <>
-                                                                <button type="submit" className="w-auto min-w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1-5 bg-amber-600 text-white disabled:bg-amber-600 hover:bg-amber-700 focus:outline-none" disabled={posting}>
+                                                                <button type="submit" className="w-auto min-w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1-5 bg-orange-600 text-white disabled:bg-orange-600 hover:bg-orange-700 focus:outline-none" disabled={posting}>
                                                                     {
                                                                         posting ? (
                                                                             <span className="flex flex-row items-center h-5 justify-center">

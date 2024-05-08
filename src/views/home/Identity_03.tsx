@@ -248,7 +248,7 @@ export const Identity_03 = () => {
                 <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
                         <div className="md:basis-3/5 md:px-6 px-8 w-full md:h-screenpy-6">
-                            <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
+                            <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                             <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
                                 <div className="w-48 pt-4 mx-auto pb-3">
@@ -258,9 +258,9 @@ export const Identity_03 = () => {
 
                             <div className="w-32 md:float-start float-right">
                                 <div className="w-full py-4 grid grid-cols-3 gap-x-2">
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-amber-600"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
                                 </div>
 
                                 <span className="text-sm text-stone-500 md:text-start text-right block">
@@ -270,7 +270,7 @@ export const Identity_03 = () => {
 
                             <div className="w-full text-sm text-stone-600 float-right">
                                 <span className="block py-4 text-xl md:text-2xl">
-                                    Who is <span className="text-amber-600">{auth0.identity.display_name.split(' ')[1]}</span> as an artist?
+                                    Who is <span className="text-orange-600">{auth0.identity.display_name.split(' ')[1]}</span> as an artist?
 
                                     <span className="text-sm pt-4 pb-2 text-stone-500 block">
                                         Wrap up your artist profile and step into a world of possibilities
@@ -300,7 +300,7 @@ export const Identity_03 = () => {
                                                                 </div>
 
                                                                 <div className="grid-col-2">
-                                                                    <span className="block text-sm text-amber-600">
+                                                                    <span className="block text-sm text-orange-600">
                                                                         {state.data.entity.description}
                                                                     </span>
                                                                 </div>
@@ -314,15 +314,15 @@ export const Identity_03 = () => {
                                                                 </div>
 
                                                                 <div className="grid-col-2">
-                                                                    <span className="block text-sm text-amber-600">
+                                                                    <span className="block text-sm text-orange-600">
                                                                         {state.data.entity.name}
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div className="py-2 px-3 border-2 border-amber-300 border-dashed rounded-md mb-4 w-full">
-                                                            <div className="flex flex-row align-middle justify-center items-center text-amber-700 px-2 gap-x-3">
+                                                        <div className="py-2 px-3 border-2 border-orange-300 border-dashed rounded-md mb-4 w-full">
+                                                            <div className="flex flex-row align-middle justify-center items-center text-orange-700 px-2 gap-x-3">
                                                                 <span className="fa-duotone fa-info-circle fa-2x"></span>
 
                                                                 <div className="flex-auto">
@@ -386,7 +386,7 @@ export const Identity_03 = () => {
                                                                                         </span>
 
                                                                                         {selected ? (
-                                                                                            <span className="text-amber-600 absolute inset-y-0 right-0 flex items-center pr-4">
+                                                                                            <span className="text-orange-600 absolute inset-y-0 right-0 flex items-center pr-4">
                                                                                                 <i className="fad fa-check h-5 w-5"></i>
                                                                                             </span>
                                                                                         ) : null}
@@ -415,13 +415,13 @@ export const Identity_03 = () => {
                                                                             className={classNames(
                                                                                 state.errors.entity.length > 0 ?
                                                                                     'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                                    'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                                                    'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                                                 'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                                                             )} onChange={onChangeHandler} value={state.input.entity} onBlur={onInputBlur} required />
                                                                         <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                                             {
                                                                                 state.entity.checking ? (
-                                                                                    <span className="fa-duotone text-amber-500 fa-spinner-third fa-lg fa-spin"></span>
+                                                                                    <span className="fa-duotone text-orange-500 fa-spinner-third fa-lg fa-spin"></span>
                                                                                 ) : state.errors.entity.length > 0 ? (
                                                                                     <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
                                                                                 ) : null
@@ -457,7 +457,7 @@ export const Identity_03 = () => {
                                             </div>
 
                                             <div className="mb-3 pt-3 px-0">
-                                                <button className="bg-amber-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-amber-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-amber-700" type="submit">
+                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                     {
                                                         idC_State.processing ? (
                                                             <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
@@ -474,7 +474,7 @@ export const Identity_03 = () => {
 
                                         <div className="mx-auto py-3 text-center">
                                             <p className="text-sm text-stone-500">
-                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                             </p>
                                         </div>
                                     </div>
@@ -489,7 +489,7 @@ export const Identity_03 = () => {
                         </div>
 
                         <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                            <img className="h-full bg-amber-100 rounded-2xl" src={artisticForm} alt={"i_am_an_artist"} loading="lazy" />
+                            <img className="h-full bg-orange-100 rounded-2xl" src={artisticForm} alt={"i_am_an_artist"} loading="lazy" />
                         </div>
                     </div>
                 </section>

@@ -294,7 +294,7 @@ export const Invitation = () => {
                         <div className="md:px-4 px-4">
                             <header className="landing-header">
                                 <div className="landing pl-3 mb-0 text-left">
-                                    <span className="odyssey py-3 text-left text-amber-500 nunito block">{APPLICATION.NAME}</span>
+                                    <span className="odyssey py-3 text-left text-orange-500 nunito block">{APPLICATION.NAME}</span>
                                     <span className="text-stone-700 block text-left mt-0 mb-3">Hey there, you've been invited</span>
                                 </div>
                             </header>
@@ -330,9 +330,9 @@ export const Invitation = () => {
                                         </div>
 
                                         <div className="flex flex-row justify-center items-center align-middle py-2 px-10">
-                                            <div className="flex-grow border-b border-amber-300"></div>
+                                            <div className="flex-grow border-b border-orange-300"></div>
                                             <span className="flex-none text-stone-600 px-4">or</span>
-                                            <div className="flex-grow border-b border-amber-300"></div>
+                                            <div className="flex-grow border-b border-orange-300"></div>
                                         </div>
 
                                         <form className="space-y-3 shadow-none px-2 mb-3 md:w-4/5 md:px-6 m-auto" onSubmit={passwordSignUpFormHandler}>
@@ -342,7 +342,7 @@ export const Invitation = () => {
                                                 <div className="relative mt-2 rounded shadow-sm">
                                                     <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off" disabled={auth0.processing ? true : false}
                                                         className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                             'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                                         )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required style={{ height: '3rem' }} />
 
@@ -371,16 +371,16 @@ export const Invitation = () => {
                                                 <div className="relative mt-2 rounded shadow-sm">
                                                     <input type={state.pwdVisibility ? 'text' : 'password'} name="password" id="password" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
                                                         className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                             'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                                         )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.password} required style={{ height: '3rem' }} />
 
                                                     <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                         {
                                                             state.pwdVisibility ? (
-                                                                <span className="fa-duotone fa-eye text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                                <span className="fa-duotone fa-eye text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                             ) : (
-                                                                <span className="fa-duotone fa-eye-slash text-amber-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                                <span className="fa-duotone fa-eye-slash text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
                                                             )
                                                         }
                                                     </div>
@@ -401,14 +401,14 @@ export const Invitation = () => {
                                                 <div className="relative mt-2 rounded shadow-sm">
                                                     <input type={state.pwdVisibility ? 'text' : 'password'} name="confirm" id="confirm" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
                                                         className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                             'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                                         )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.confirm} required style={{ height: '3rem' }} />
                                                 </div>
                                             </div>
 
                                             <div className="pb-3 pt-3 flex justify-center">
-                                                <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-amber-500 text-white disabled:bg-amber-600 hover:bg-amber-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing} style={{ height: '3rem' }}>
+                                                <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing} style={{ height: '3rem' }}>
                                                     {auth0.processing ? (
                                                         <span className="flex flex-row items-center">
                                                             <i className="fad fa-spinner-third fa-xl fa-spin mr-2"></i>
@@ -432,7 +432,7 @@ export const Invitation = () => {
 
                             <div className="mx-auto py-3 text-center">
                                 <p className="text-sm">
-                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                 </p>
                             </div>
                         </div>

@@ -124,7 +124,7 @@ export const Entity = () => {
                     </div>
                 ) : state.status === 'fulfilled' ? (
                     <div className="w-full pt-6 h-full overflow-y-auto px-2 mx-auto" style={CONFIG_MAX_WIDTH}>
-                        <p className="text-2xl text-amber-600 mb-3">
+                        <p className="text-2xl text-orange-600 mb-3">
                             Entity Details
                         </p>
 
@@ -135,7 +135,7 @@ export const Entity = () => {
 
                             <div className="flex-none flex gap-3 md:flex-row py-4 pb-2 items-center text-slate-600">
                                 <span className="block text-sm text-stone-600">
-                                    Account: <span className="text-amber-600">{state.data.entity.account}</span>
+                                    Account: <span className="text-orange-600">{state.data.entity.account}</span>
                                 </span>
 
                                 <span className="bg-teal-200 text-teal-700 text-xs py-1 px-1.5 rounded">

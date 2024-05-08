@@ -23,13 +23,13 @@ export const InputWithLoadingIcon: FC<Props> = ({errorsName, inputValue, onInput
                         className={classNames(
                             errorsName.length > 0 ?
                                 'text-red-600 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 border border-stone-300  focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400',
+                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 border border-stone-300  focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400',
                             'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
                         )} onChange={onChangeHandler} value={inputValue} onBlur={onInputBlurHandler} required />
                     <div className="absolute inset-y-0 right-0 flex items-center w-8">
                         {
                             checkForStatus ? (
-                                <span className="fa-duotone text-amber-500 fa-spinner-third fa-lg fa-spin"></span>
+                                <span className="fa-duotone text-orange-500 fa-spinner-third fa-lg fa-spin"></span>
                             ) : errorsName.length > 0 ? (
                                 <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
                             ) : null

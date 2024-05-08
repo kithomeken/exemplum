@@ -207,7 +207,7 @@ export const MemberNominations: FC<props> = ({ reload, show, showOrHide }) => {
                                                                     />
                                                                 </div>
 
-                                                                <input type="radio" onChange={onChangeHandler} id={`member-${member.uuid}`} name="member" checked={state.input.member === member.uuid ? true : false} value={member.uuid} className="checked:bg-amber-500  peer" />
+                                                                <input type="radio" onChange={onChangeHandler} id={`member-${member.uuid}`} name="member" checked={state.input.member === member.uuid ? true : false} value={member.uuid} className="checked:bg-orange-500  peer" />
                                                             </div>
                                                         </label>
                                                     </div>

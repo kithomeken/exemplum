@@ -272,7 +272,7 @@ export const ChangeEmail = () => {
             </Helmet>
 
             <div className="w-full px-2">
-                <p className="text-2xl text-amber-600 mb-3">
+                <p className="text-2xl text-orange-600 mb-3">
                     Change Email
                 </p>
 
@@ -295,7 +295,7 @@ export const ChangeEmail = () => {
                                                 Current e-mail address:
                                             </span>
 
-                                            <span className="text-amber-600 mr-2">
+                                            <span className="text-orange-600 mr-2">
                                                 {auth0.identity.email}
                                             </span>
                                         </p>
@@ -358,14 +358,14 @@ export const ChangeEmail = () => {
                                                 ) : (
                                                     <>
                                                         <div className="w-12/12 py-3">
-                                                            <div className="rounded-md mb-2 border-0 border-amber-400 bg-amber-100 py-4 px-4">
-                                                                <div className="flex flex-row items-center align-middle text-amber-600">
-                                                                    <i className="fas fa-exclamation-circle fa-xl text-amber-600 flex-none"></i>
+                                                            <div className="rounded-md mb-2 border-0 border-orange-400 bg-orange-100 py-4 px-4">
+                                                                <div className="flex flex-row items-center align-middle text-orange-600">
+                                                                    <i className="fas fa-exclamation-circle fa-xl text-orange-600 flex-none"></i>
 
                                                                     <div className="flex-auto">
                                                                         <span className="text-sm pl-3 block">
                                                                             You can only change your email a maximum of 3 times.
-                                                                            <span className="text-amber-700 block">Email changes left - {emailChangesLeft()}</span>
+                                                                            <span className="text-orange-700 block">Email changes left - {emailChangesLeft()}</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -378,7 +378,7 @@ export const ChangeEmail = () => {
                                                                     <div className="relative mt-2 rounded shadow-sm">
                                                                         <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off" disabled={state.posting ? true : false}
                                                                             className={classNames(
-                                                                                'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                                                'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                                                 'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                                                             )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required />
                                                                     </div>
@@ -393,7 +393,7 @@ export const ChangeEmail = () => {
                                                                 </div>
 
                                                                 <div className="w-full">
-                                                                    <button type="submit" className="disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1.5 bg-amber-500 text-white disabled:bg-amber-600 hover:bg-amber-600 focus:outline-none flex items-center justify-center" disabled={state.posting}>
+                                                                    <button type="submit" className="disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-3 py-1.5 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={state.posting}>
                                                                         {
                                                                             state.posting ? (
                                                                                 <span className="flex flex-row items-center gap-x-2 px-2">
@@ -476,7 +476,7 @@ export const ChangeEmail = () => {
                                 </div>
 
                                 <div className="mt-3 text-center m-auto text-slate-600">
-                                    <span className="text-amber-600 mb-2 block">
+                                    <span className="text-orange-600 mb-2 block">
                                         Feature Not Supported
                                     </span>
 

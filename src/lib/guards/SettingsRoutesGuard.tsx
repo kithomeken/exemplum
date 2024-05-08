@@ -76,7 +76,7 @@ export default function SettingsRoutesGuard() {
                 to={settingsRoutes(sT0)}
                 className={classNames(
                     Ps0t === sT0
-                        ? "text-amber-700 bg-amber-100"
+                        ? "text-orange-700 bg-orange-100"
                         : "text-slate-700 hover:bg-slate-100",
                     "text-sm items-center w-full text-left py-2 px-6 rounded-md my-1"
                 )}

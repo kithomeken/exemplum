@@ -114,7 +114,7 @@ export const EmailActions = () => {
                             <img src={emptyBox} alt="broken_robot" width="auto" className="block text-center m-auto w-68" />
 
                             <div className="text-center m-auto text-slate-600 py-2 md:w-96">
-                                <span className="text-amber-600 mb-2 block">
+                                <span className="text-orange-600 mb-2 block">
                                     Verification Successful
                                 </span>
 

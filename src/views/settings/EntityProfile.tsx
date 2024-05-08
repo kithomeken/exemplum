@@ -267,7 +267,7 @@ export const EntityProfile = () => {
                                             </span>
 
                                             <div className="flex flex-row align-middle gap-x-3 md:justify-normal justify-center">
-                                                <span className="text-sm flex-none shadow-none py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                <span className="text-sm flex-none shadow-none py-1 bg-inherit text-orange-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
                                                     Change Avatar
                                                 </span>
                                             </div>
@@ -339,7 +339,7 @@ export const EntityProfile = () => {
                                             </div>
 
                                             <div className="md:basis-1/2 py-1 w-full">
-                                                <span onClick={showOrHideMsisdnChangeModal} className="text-sm flex-none shadow-none bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                <span onClick={showOrHideMsisdnChangeModal} className="text-sm flex-none shadow-none bg-inherit text-orange-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
                                                     Change Phone Number
                                                 </span>
                                             </div>
@@ -379,7 +379,7 @@ export const EntityProfile = () => {
                                                                         // Already approved
                                                                         state.data.Fb0C === 'Y' ? (
                                                                             <div className="flex flex-row-reverse align-middle items-center py-1">
-                                                                                <span className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-amber-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                                                <span className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-orange-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
                                                                                     Change Nominated Member
                                                                                 </span>
                                                                             </div>
@@ -406,9 +406,9 @@ export const EntityProfile = () => {
                                                             // User has an approval
                                                             state.posting ? (
                                                                 <div className="flex flex-row-reverse items-center py-1-5 px-3">
-                                                                    <span className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-amber-500 sm:w-auto sm:text-sm">Recording your action...
+                                                                    <span className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-orange-500 sm:w-auto sm:text-sm">Recording your action...
                                                                     </span>
-                                                                    <span className="fad text-amber-500 fa-spinner-third fa-xl block fa-spin"></span>
+                                                                    <span className="fad text-orange-500 fa-spinner-third fa-xl block fa-spin"></span>
                                                                 </div>
                                                             ) : (
                                                                 <div className="flex flex-row-reverse align-middle items-center py-1">

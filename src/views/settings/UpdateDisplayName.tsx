@@ -264,7 +264,7 @@ export const UpdateDisplayName: FC<Basic_Modal_Props> = ({ reload, show, showOrH
                                         className={classNames(
                                             state.errors.first_name.length > 0 ?
                                                 'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                             'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                         )} onChange={onChangeHandler} value={state.input.first_name} onBlur={onInputBlur} required />
                                     <div className="absolute inset-y-0 right-0 flex items-center w-8">
@@ -293,7 +293,7 @@ export const UpdateDisplayName: FC<Basic_Modal_Props> = ({ reload, show, showOrH
                                         className={classNames(
                                             state.errors.last_name.length > 0 ?
                                                 'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-amber-600 focus:outline-amber-500 hover:border-stone-400 border border-stone-300',
+                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                             'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
                                         )} onChange={onChangeHandler} value={state.input.last_name} onBlur={onInputBlur} required />
                                     <div className="absolute inset-y-0 right-0 flex items-center w-8">

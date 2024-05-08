@@ -39,7 +39,7 @@ export const WithdrawalRequest = () => {
                                 <div className="w-full text-sm">
                                     <div className="flex flex-col md:flex-row md:items-center">
                                         <div className="flex-grow">
-                                            <p className="text-2xl leading-7 mb-4 flex-auto text-amber-600">
+                                            <p className="text-2xl leading-7 mb-4 flex-auto text-orange-600">
                                                 
                                             </p>
                                         </div>

@@ -159,7 +159,7 @@ export const IdentityVerification = () => {
                             <section className="gx-container rounded-md md:h-screen sm:h-auto w-full" style={CONFIG_MAX_WIDTH}>
                                 <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0">
                                     <div className="md:basis-1/2 md:px-6 px-6 w-full pt-8">
-                                        <span className="text-2xl self-start text-amber-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
+                                        <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                                         <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
                                             <div className="w-60 pt-4 mx-auto pb-3">
@@ -176,7 +176,7 @@ export const IdentityVerification = () => {
                                                         A verification email was sent to <span className="text-slate-800">{firebaseAuth.currentUser.email}</span>, kindly check your email to complete the update.
 
                                                         <span className="text-sm block pt-3 mt-3">
-                                                            In case of any issue, reach out to our admin at <span className="text-amber-600">admin@email.com</span>
+                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
                                                         </span>
                                                     </span>
                                                 </span>
@@ -184,7 +184,7 @@ export const IdentityVerification = () => {
                                         </div>
 
                                         <div className="w-full flex flex-row-reverse pt-4 md:pb-8 pb-4 px-3 md:px-0 md:border-b-2 border-dashed">
-                                            <button onClick={resendEmailVerification} className="bg-amber-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-amber-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-amber-700" type="button">
+                                            <button onClick={resendEmailVerification} className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
                                                 {
                                                     state.process.type === 'resend' && state.process.state ? (
                                                         <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
@@ -213,7 +213,7 @@ export const IdentityVerification = () => {
 
                                 <div className="mx-auto md:py-3 py-6 text-center">
                                     <p className="text-sm text-stone-500 pb-4">
-                                        © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-amber-600 block">Tip by Tip.</span>
+                                        © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                     </p>
                                 </div>
                             </section>
