@@ -550,11 +550,11 @@ export const Identity_00 = () => {
 
                                                                                                                 {
                                                                                                                     state.posting && state.emailInvite === member.email ? (
-                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-green-500 hover:text-green-600">
+                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-orange-500 hover:text-orange-600">
                                                                                                                             <span className="inline-block py-0.5">Resending</span>
                                                                                                                         </span>
                                                                                                                     ) : (
-                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-green-500 hover:text-green-600">
+                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-orange-500 hover:text-orange-600">
                                                                                                                             <span className="inline-block py-0.5">Resend Invitation</span>
                                                                                                                         </span>
                                                                                                                     )
@@ -564,7 +564,7 @@ export const Identity_00 = () => {
                                                                                                     </div>
 
                                                                                                     <div className="shrink-0 md:w-auto sm:flex sm:flex-col sm:items-end w-full">
-                                                                                                        <p className="text-green-500 hover:text-green-600 w-full gap-x-2 text-sm cursor-pointer hidden md:flex" onClick={() => resendEntityInviationAction(member.email)}>
+                                                                                                        <p className="text-orange-500 hover:text-orange-600 w-full gap-x-2 text-sm cursor-pointer hidden md:flex" onClick={() => resendEntityInviationAction(member.email)}>
                                                                                                             {
                                                                                                                 state.posting && state.emailInvite === member.email ? (
                                                                                                                     <>
