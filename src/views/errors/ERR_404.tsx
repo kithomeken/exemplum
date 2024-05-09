@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import imageAsset from '../../assets/images/7070464_3275437.svg'
 import smallAsset from '../../assets/images/7117865_3371469.svg'
 import { HTTP_Error_Interface } from "../../lib/modules/Interfaces"
+import { STYLE } from "../../global/ConstantsRegistry"
 
 export const ERR_404: FC<HTTP_Error_Interface> = ({ compact = false }) => {
 
@@ -35,37 +36,34 @@ export const ERR_404: FC<HTTP_Error_Interface> = ({ compact = false }) => {
                             <title>Page Not Found</title>
                         </Helmet >
 
-                        <div className="bg-white items-center flex flex-col justify-content-center p-6">
-                            <section className="page_404 m-auto">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-sm-12">
-                                            <img className="m-auto px-4 pt-6 block text-center mb-5 max-w-sm" src={imageAsset} alt="404_page_not_found" />
-                                        </div>
+                        <div className="wrapper w-full overflow-auto md:h-screen h-auto">
+                            <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center" style={STYLE.MAX_WIDTH}>
+                                <div className="flex flex-col align-middle items-center w-full md:pb-0 pb-10">
+                                    <div className="md:w-3/5">
+                                        <img className="m-auto px-4 pt-6 block text-center mb-5 w-full" src={imageAsset} alt="404_page_not_found" />
+                                    </div>
 
-                                        <div className="col-sm-12 sm:max-w-sm md:max-w-md lg:max-w-lg text-center">
-                                            <div className="col-sm-10 col-sm-offset-1 text-center">
-                                                <p className="text-red-500 text-2xl mb-3">ERR_404: Page Not Found</p>
-                                                <p className="text-stone-600 mb-5 text-sm">
-                                                    Look's like you're lost in the digital wilderness. Let us Guide you back
-                                                </p>
+                                    <div className="max-w-sm md:max-w-md lg:max-w-lg text-center px-4">
+                                            <p className="text-red-500 md:text-2xl mb-3 text-lg">ERR_404: Page Not Found</p>
+                                            <p className="text-stone-600 mb-5 text-sm">
+                                                Look's like you're lost in the digital wilderness. Let us Guide you back
+                                            </p>
 
-                                                <div className="space-y-3">
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="text-sm m-auto ">
-                                                            <Link to="/home" className="font-medium text-center text-orange-600 hover:text-orange-700">
-                                                                <span className="flex items-center justify-between">
-                                                                    <span>
-                                                                        Back to safety
-                                                                    </span>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="text-sm m-auto ">
+                                                        <Link to="/home" className="font-medium text-center text-orange-600 hover:text-orange-700">
+                                                            <span className="flex items-center justify-between">
+                                                                <span>
+                                                                    Back to safety
                                                                 </span>
-                                                            </Link>
-                                                        </div>
+                                                            </span>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
+
                                 </div>
                             </section>
                         </div>
