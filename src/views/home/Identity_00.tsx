@@ -464,12 +464,12 @@ export const Identity_00 = () => {
 
                                                                                                     {
                                                                                                         index !== 0 ? (
-                                                                                                            <p className="text-red-500 hover:text-red-600 flex-none text-sm cursor-pointer" onClick={() => removePointOfContactHandler(index)}>
+                                                                                                            <button type="button" className="text-red-500 hover:text-red-600 flex-none text-sm cursor-pointer" onClick={() => removePointOfContactHandler(index)}>
                                                                                                                 <span className="hidden md:inline-block">Remove</span>
                                                                                                                 <span className="md:hidden">
                                                                                                                     <span className="fa-duotone sm:block hidden fa-trash-can fa-lg pr-2"></span>
                                                                                                                 </span>
-                                                                                                            </p>
+                                                                                                            </button>
                                                                                                         ) : (
                                                                                                             null
                                                                                                         )
@@ -485,9 +485,9 @@ export const Identity_00 = () => {
 
                                                                                         {
                                                                                             state.entity.length < (state.data.identity.pax - 1) ? (
-                                                                                                <span className="text-blue-500 text-sm cursor-pointer" onClick={addPointOfContactHandler}>
+                                                                                                <button type="button" className="text-blue-500 text-sm cursor-pointer" onClick={addPointOfContactHandler}>
                                                                                                     Invite another member
-                                                                                                </span>
+                                                                                                </button>
                                                                                             ) : (
                                                                                                 null
                                                                                             )
@@ -615,9 +615,9 @@ export const Identity_00 = () => {
                                                                 </>
                                                             ) : (
                                                                 <div className="w-full mb-3 pb-4 border-b-2 border-dashed">
-                                                                    <span className="text-orange-600 text-sm block cursor-pointer py-1.5 text-end hover:text-orange-700 hover:underline" onClick={showOrHideEntityInv}>
+                                                                    <button type="button" className="text-orange-600 text-sm block cursor-pointer py-1.5 float-end hover:text-orange-700 hover:underline" onClick={showOrHideEntityInv}>
                                                                         Invite to your members
-                                                                    </span>
+                                                                    </button>
                                                                 </div>
                                                             )
                                                         }
