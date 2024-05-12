@@ -3,20 +3,25 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, useLocation, useParams } from "react-router";
 
+import { ERR_404 } from "../errors/ERR_404";
+import { ERR_500 } from "../errors/ERR_500";
+import { PasswordPolicy } from "./PasswordPolicy";
 import { getRedirectResult } from "firebase/auth";
 import { useAppSelector } from "../../store/hooks";
+import { TermsAndConditions } from "./TermsAndConditions";
 import AxiosServices from "../../services/AxiosServices";
 import { Loading } from "../../components/modules/Loading"
 import StorageServices from "../../services/StorageServices";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
-import smallAsset from '../../assets/images/7117865_3371469.svg'
-import { APPLICATION, AUTH_, STORAGE_KEYS } from "../../global/ConstantsRegistry";
+import connecting from '../../assets/images/53059e12f79a42c5e4b259b50d1412c1.svg'
+import { APPLICATION, AUTH_, STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
-import { firebaseAuthActions, generateSanctumToken, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions";
+import { firebaseAuthActions, generateSanctumToken, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 
 export const Invitation = () => {
     const [state, setstate] = useState({
+        httpStatus: 200,
         status: 'pending',
         pwdVisibility: false,
         input: {
@@ -28,6 +33,11 @@ export const Invitation = () => {
             email: '',
             password: '',
             confirm: ''
+        },
+        show: {
+            email: false,
+            terms: false,
+            passwd: false,
         }
     })
 
@@ -88,7 +98,7 @@ export const Invitation = () => {
                         const props = {
                             deviceInfo: DeviceInfo(),
                         }
-                        
+
                         generateSanctumToken(dispatch, accessToken, props)
                     })
                     .catch(() => {
@@ -147,6 +157,39 @@ export const Invitation = () => {
             })
         }
     };
+
+    const toggleAlternativeSignUp = () => {
+        if (!auth0.processing) {
+            let { show } = state
+            show.email = !state.show.email
+
+            setstate({
+                ...state, show
+            })
+        }
+    }
+
+    const toggleTermsAndConditions = () => {
+        if (!auth0.processing) {
+            let { show } = state
+            show.terms = !state.show.terms
+
+            setstate({
+                ...state, show
+            })
+        }
+    }
+
+    const togglePasswordPolicy = () => {
+        if (!auth0.processing) {
+            let { show } = state
+            show.passwd = !state.show.passwd
+
+            setstate({
+                ...state, show
+            })
+        }
+    }
 
     const validateForm = () => {
         let valid = true
@@ -285,160 +328,242 @@ export const Invitation = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Invitation</title>
+                <title>Welcome to {APPLICATION.NAME}</title>
             </Helmet>
 
-            <div className="flex flex-col md:flex-row justify-center items-center dark:bg-gray-800">
-                <div className="wrapper w-full md:w-3/5 md:h-screen overflow-auto">
-                    <section className="gx-container">
-                        <div className="md:px-4 px-4">
-                            <header className="landing-header">
-                                <div className="landing pl-3 mb-0 text-left">
-                                    <span className="odyssey py-3 text-left text-orange-500 nunito block">{APPLICATION.NAME}</span>
-                                    <span className="text-stone-700 block text-left mt-0 mb-3">Hey there, you've been invited</span>
-                                </div>
-                            </header>
-
-                            {
-                                state.status === 'rejected' ? (
-                                    <div className="bg-white px-4 pt-6 pb-4">
-                                        <div className="flex flex-col pt-4 items-center">
-                                            <div className="mx-auto flex-shrink-0 flex items-center justify-center mb-3 sm:mx-0 w-48">
-                                                <img src={smallAsset} alt="broken_robot" width="auto" className="block text-center m-auto" />
-                                            </div>
-
-                                            <div className="mt-3 text-center m-auto text-slate-600">
-                                                <span className="text-red-600 mb-2 block">
-                                                    ERR_404: Resource Not Found
-                                                </span>
-
-                                                <div className="text-sm">
-                                                    The resource either does not exists or it was moved to a new location
-                                                </div>
-                                            </div>
-                                        </div>
+            <div className="wrapper w-full overflow-auto md:h-screen h-auto">
+                <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center" style={STYLE.MAX_WIDTH}>
+                    <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
+                        {
+                            state.status === 'rejected' ? (
+                                <div className="py-3 px-4 w-full">
+                                    <div className="flex items-center justify-center">
+                                        {
+                                            state.httpStatus === 404 ? (
+                                                <ERR_404
+                                                    compact={true}
+                                                />
+                                            ) : (
+                                                <ERR_500 />
+                                            )
+                                        }
                                     </div>
-                                ) : state.status === 'fulfilled' ? (
-                                    <>
-                                        <div className="px-3 py-4 text-sm mb-2">
-                                            <div className="flex items-center pt-1 justify-center dark:bg-gray-800">
-                                                <button type="button" onClick={signUpWithGoogle} className="gap-2 w-64 border-slate-300 dark:border-slate-700 text-stone-700 dark:text-stone-200 hover:border-stone-400 hover:text-slate-900 dark:hover:text-slate-300 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm px-4 py-2.5 focus:outline-none flex items-center justify-center" disabled={auth0.processing} style={{ height: '3rem' }}>
-                                                    <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
-                                                    <span className="pl-2">Sign up with Google</span>
-                                                </button>
+                                </div>
+                            ) : state.status === 'fulfilled' ? (
+                                <>
+                                    <div className="md:basis-3/5 md:px-6 px-6 w-full py-6 pb-6 flex flex-col">
+                                        <span className="text-2xl self-start text-stone-500 tracking-wider leading-7 block pt-3 md:pt-0">
+                                            Hi there,
+                                        </span>
+
+                                        <div className="flex flex-row align-middle items-center gap-x-3 pt-2 md:pb-3">
+                                            <span className="text-xl text-stone-500 md:text-start text-right block">
+                                                Step into <span className="text-orange-500">{APPLICATION.NAME}</span>.
+                                            </span>
+                                        </div>
+
+                                        <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
+                                            <div className="w-60 pt-4 mx-auto pb-3">
+                                                <img src={connecting} alt={"connecting_teams_rafiki"} width="auto" className="block text-center m-auto" />
                                             </div>
                                         </div>
 
-                                        <div className="flex flex-row justify-center items-center align-middle py-2 px-10">
-                                            <div className="flex-grow border-b border-orange-300"></div>
-                                            <span className="flex-none text-stone-600 px-4">or</span>
-                                            <div className="flex-grow border-b border-orange-300"></div>
-                                        </div>
+                                        <div className="w-full text-sm text-stone-600 float-right">
+                                            <span className="block py-4 text-lg md:text-xl">
+                                                You've been invited to join our community and we're thrilled to get you started
+                                                {/* We're thrilled to have you join our community and can't wait to get you started. */}
 
-                                        <form className="space-y-3 shadow-none px-2 mb-3 md:w-4/5 md:px-6 m-auto" onSubmit={passwordSignUpFormHandler}>
-                                            <div className="shadow-none space-y-px mb-4">
-                                                <label htmlFor="email" className="block text-sm leading-6 text-stone-700 mb-1">Email:</label>
+                                                <span className="text-base md:text-lg pt-4 text-stone-500 block">
+                                                    <span className="block">
+                                                        First things first, let's set up your account.
 
-                                                <div className="relative mt-2 rounded shadow-sm">
-                                                    <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off" disabled={auth0.processing ? true : false}
-                                                        className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                            'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
-                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required style={{ height: '3rem' }} />
-
-                                                </div>
-
-                                                {
-                                                    state.errors.email && (
-                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                            {state.errors.email}
-                                                        </span>
-                                                    )
-                                                }
-
-                                                {
-                                                    auth0.error && (
-                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                            {auth0.error}
-                                                        </span>
-                                                    )
-                                                }
-                                            </div>
-
-                                            <div className="shadow-none space-y-px mb-">
-                                                <label htmlFor="password" className="block text-sm leading-6 text-stone-700 mb-1">Password:</label>
-
-                                                <div className="relative mt-2 rounded shadow-sm">
-                                                    <input type={state.pwdVisibility ? 'text' : 'password'} name="password" id="password" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
-                                                        className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                            'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
-                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.password} required style={{ height: '3rem' }} />
-
-                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                         {
-                                                            state.pwdVisibility ? (
-                                                                <span className="fa-duotone fa-eye text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
-                                                            ) : (
-                                                                <span className="fa-duotone fa-eye-slash text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                            state.show.email ? null : (
+                                                                <span className="block text-sm py-2">Pick your preferred sign-in method</span>
                                                             )
                                                         }
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+
+                                        <div className="w-full py-3 block">
+                                            {
+                                                state.show.email ? (
+                                                    <div className="w-full block m-auto">
+                                                        <form className="w-full m-auto md:w-2/3 " onSubmit={passwordSignUpFormHandler}>
+                                                        <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
+
+                                                            <div className="shadow-none mb-3 pb-3">
+                                                                <div className="relative rounded shadow-sm">
+                                                                    <input type="email" name="email" id="email" placeholder="john.doe@email.com" autoComplete="off"
+                                                                        className={classNames(
+                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
+                                                                            'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
+                                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.email} required />
+
+                                                                </div>
+
+                                                                {
+                                                                    state.errors.email && (
+                                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
+                                                                            {state.errors.email}
+                                                                        </span>
+                                                                    )
+                                                                }
+
+                                                                {
+                                                                    auth0.error && (
+                                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
+                                                                            {auth0.error}
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                            </div>
+
+                                                            <div className="shadow-none mb-3 pb-3">
+                                                                <div className="relative rounded shadow-sm">
+                                                                    <input type={state.pwdVisibility ? 'text' : 'password'} name="password" id="password" placeholder="********" autoComplete="off"
+                                                                        className={classNames(
+                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
+                                                                            'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
+                                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.password} required />
+
+                                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
+                                                                        {
+                                                                            state.pwdVisibility ? (
+                                                                                <span className="fa-duotone fa-eye text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                                            ) : (
+                                                                                <span className="fa-duotone fa-eye-slash text-orange-600 fa-lg cursor-pointer" onClick={togglePasswordVisibility}></span>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                </div>
+
+                                                                {
+                                                                    state.errors.password && (
+                                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
+                                                                            {state.errors.password}
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                            </div>
+
+                                                            <div className="shadow-none space-y-px mb-3">
+                                                                <div className="relative mt-2 rounded shadow-sm">
+                                                                    <input type={state.pwdVisibility ? 'text' : 'password'} name="confirm" id="confirm" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
+                                                                        className={classNames(
+                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
+                                                                            'block w-full rounded-md py-2 pl-3 pr-8 text-sm'
+                                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.confirm} required />
+                                                                </div>
+                                                            </div>
+
+                                                            <span onClick={togglePasswordPolicy} className="text-stone-600 hover:text-orange-600 text-sm m-auto flex flex-row-reverse gap-x-1 align-middle items-center cursor-pointer">
+                                                                <span>Password policy</span>
+                                                                <span className="fa-regular fa-circle-info fa-lg"></span>
+                                                            </span>
+
+                                                            <div className="pt-3 flex justify-center">
+                                                                <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
+                                                                    {
+                                                                        auth0.processing && auth0.provider === 'password' ? (
+                                                                            <span className="flex flex-row items-center">
+                                                                                <i className="fad fa-spinner-third fa-xl fa-spin mr-2"></i>
+                                                                                <span>Signing u...</span>
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span>Sign Up</span>
+                                                                        )
+                                                                    }
+                                                                </button>
+                                                            </div>
+                                                        </form>
                                                     </div>
+                                                ) : (
+                                                    <div className="w-full md:w-1/2 mx-auto pb-4">
+                                                        <div className="w-full">
+                                                            <button type="button" onClick={signUpWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                                <span className="pl-2 block">
+                                                                    {
+                                                                        auth0.processing && auth0.provider === 'google' ? (
+                                                                            <span className="flex flex-row items-center justify-center align-middle text-stone-600 gap-x-4">
+                                                                                <i className="fad fa-spinner fa-xl fa-spin"></i>
+                                                                                <span className="tracking-wider">Signing you up</span>
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="flex items-center gap-x-3 px-4 justify-center align-middle">
+                                                                                <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+                                                                                <span className="tracking-wider">Sign up with Google</span>
+                                                                            </span>
+                                                                        )
+                                                                    }
+                                                                </span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div className="flex flex-row justify-center items-center align-middle py-6">
+                                                            <div className="flex-grow border-b border-stone-300"></div>
+                                                            <span className="flex-none text-stone-500 text-sm px-4">or</span>
+                                                            <div className="flex-grow border-b border-stone-300"></div>
+                                                        </div>
+
+                                                        <div className="w-full">
+                                                            <button type="button" onClick={toggleAlternativeSignUp} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                                <span className="pl-2 block">
+                                                                    <span className="flex items-center gap-x-3 px-4 justify-center align-middle">
+                                                                        <span className="tracking-wider">Continue with email</span>
+                                                                    </span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
+
+                                        <div className="text-sm pt-3 pb-2 w-full border-b-2 border-dashed">
+                                            <div className="relative flex gap-x-3 align-middle items-center py-1 px-2">
+                                                <div className="text-sm leading-6 text-center w-full">
+                                                    <p className="text-gray-600">
+                                                        By creating an account, you agree with our <span className="text-orange-600 cursor-pointer hover:text-orange-700 hover:underline" onClick={toggleTermsAndConditions}>Terms & Conditions</span>
+                                                    </p>
                                                 </div>
-
-                                                {
-                                                    state.errors.password && (
-                                                        <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                            {state.errors.password}
-                                                        </span>
-                                                    )
-                                                }
                                             </div>
+                                        </div>
 
-                                            <div className="shadow-none space-y-px pb-3">
-                                                <label htmlFor="confirm" className="block text-sm leading-6 text-stone-700 mb-1">Confirm Password:</label>
-
-                                                <div className="relative mt-2 rounded shadow-sm">
-                                                    <input type={state.pwdVisibility ? 'text' : 'password'} name="confirm" id="confirm" placeholder="********" autoComplete="off" disabled={auth0.processing ? true : false}
-                                                        className={classNames(
-                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-500 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                            'block w-full rounded-md py-2 pl-3 pr-8  text-sm'
-                                                        )} onChange={onChangeHandler} onBlur={onInputBlur} value={state.input.confirm} required style={{ height: '3rem' }} />
-                                                </div>
-                                            </div>
-
-                                            <div className="pb-3 pt-3 flex justify-center">
-                                                <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing} style={{ height: '3rem' }}>
-                                                    {auth0.processing ? (
-                                                        <span className="flex flex-row items-center">
-                                                            <i className="fad fa-spinner-third fa-xl fa-spin mr-2"></i>
-                                                            <span>Signing Up...</span>
-                                                        </span>
-                                                    ) : (
-                                                        <span>Sign Up</span>
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </>
-                                ) : (
-                                    <div className="w-full h-full flex flex-col justify-center">
-                                        <div className="flex-grow">
-                                            <Loading />
+                                        <div className="mx-auto py-3 text-center">
+                                            <p className="text-sm text-stone-500 md:pb-0">
+                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                            </p>
                                         </div>
                                     </div>
-                                )
-                            }
 
-                            <div className="mx-auto py-3 text-center">
-                                <p className="text-sm">
-                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+                                    <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
+                                        <img className="h-full bg-orange-100 rounded-2xl" src={connecting} alt={"connecting_teams_rafiki"} loading="lazy" />
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="w-full h-1/2 flex flex-col justify-center">
+                                    <div className="flex-grow pt-8">
+                                        <Loading />
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
+                </section>
             </div>
+
+            <TermsAndConditions
+                show={state.show.terms}
+                showOrHide={toggleTermsAndConditions}
+            />
+
+            <PasswordPolicy
+                show={state.show.passwd}
+                showOrHide={togglePasswordPolicy}
+            />
         </React.Fragment>
     )
 }
