@@ -317,7 +317,7 @@ export const Identity_01 = () => {
             <div className="wrapper w-full overflow-auto md:h-screen h-auto">
                 <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
-                        <div className="md:basis-3/5 md:px-6 px-8 w-full h-screenpy-6">
+                        <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
                             <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                             <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
@@ -341,13 +341,13 @@ export const Identity_01 = () => {
                             <div className={
                                 classNames(
                                     "w-full text-sm text-stone-600 float-right mb-4",
-                                    auth0.provider === 'google' && state.keepName ? "border-b-0" : "border-b-2 border-dashed"
+                                    auth0.provider === 'google' && state.keepName ? "border-b-0" : "border-b-0 border-dashed"
                                 )
                             }>
                                 <span className="block pt-4 text-xl md:text-2xl">
                                     Welcome aboard! 
 
-                                    <span className="text-sm text-stone-500 block">
+                                    <span className="text-sm text-stone-500 block py-2">
                                         First things first, share some details about yourself...
                                     </span>
                                 </span>

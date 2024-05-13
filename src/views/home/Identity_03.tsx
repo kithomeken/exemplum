@@ -247,7 +247,7 @@ export const Identity_03 = () => {
             <div className="wrapper w-full overflow-auto md:h-screen h-auto">
                 <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
-                        <div className="md:basis-3/5 md:px-6 px-8 w-full md:h-screenpy-6">
+                        <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
                             <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                             <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
@@ -282,63 +282,63 @@ export const Identity_03 = () => {
                                 state.status === 'rejected' ? (
                                     <></>
                                 ) : state.status === 'fulfilled' ? (
-                                    <div className="flex flex-col w-full mb-4">
-                                        <form className="space-y-4 mb-3 w-full text-sm md:w-3/5" onSubmit={artistEntityFormHandler}>
-                                            {
-                                                state.data.entity && (
-                                                    <>
-                                                        <div className="w-full mb-4">
-                                                            <span className="block text-stone-700 pb-3">
-                                                                Hey, we've discovered you've been included as a member on:
-                                                            </span>
+                                    <div className="flex flex-col w-full md:w-4/5 mb-4">
+                                        {
+                                            state.data.entity && (
+                                                <>
+                                                    <div className="w-full mb-4">
+                                                        <span className="block text-stone-700 pb-3">
+                                                            Hey, we've discovered you've been included as a member on:
+                                                        </span>
 
-                                                            <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
-                                                                <div className="grid-col-1">
-                                                                    <span className="block text-sm text-stone-600">
-                                                                        Artist Type:
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className="grid-col-2">
-                                                                    <span className="block text-sm text-orange-600">
-                                                                        {state.data.entity.description}
-                                                                    </span>
-                                                                </div>
+                                                        <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
+                                                            <div className="col-span-1">
+                                                                <span className="block text-sm text-stone-600">
+                                                                    Artist Type:
+                                                                </span>
                                                             </div>
 
-                                                            <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
-                                                                <div className="grid-col-1">
-                                                                    <span className="block text-sm text-stone-600">
-                                                                        Group Name:
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className="grid-col-2">
-                                                                    <span className="block text-sm text-orange-600">
-                                                                        {state.data.entity.name}
-                                                                    </span>
-                                                                </div>
+                                                            <div className="col-span-2">
+                                                                <span className="block text-sm text-orange-600">
+                                                                    {state.data.entity.description}
+                                                                </span>
                                                             </div>
                                                         </div>
 
-                                                        <div className="py-2 px-3 border-2 border-orange-300 border-dashed rounded-md mb-4 w-full">
-                                                            <div className="flex flex-row align-middle justify-center items-center text-orange-700 px-2 gap-x-3">
-                                                                <span className="fa-duotone fa-info-circle fa-2x"></span>
+                                                        <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
+                                                            <div className="col-span-1">
+                                                                <span className="block text-sm text-stone-600">
+                                                                    Group Name:
+                                                                </span>
+                                                            </div>
 
-                                                                <div className="flex-auto">
-                                                                    <span className="text-sm block text-gray-600">
-
-                                                                        <span className="block py-2">
-                                                                            Please note that as a result, the above aspects of your artist profile data are now fixed and cannot be changed.
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
+                                                            <div className="col-span-2">
+                                                                <span className="block text-sm text-orange-600">
+                                                                    {state.data.entity.name}
+                                                                </span>
                                                             </div>
                                                         </div>
-                                                    </>
-                                                )
-                                            }
+                                                    </div>
 
+                                                    <div className="py-2 px-3 border-2 border-orange-300 border-dashed rounded-md mb-4 w-full">
+                                                        <div className="flex flex-row align-middle justify-center items-center text-orange-700 px-2 gap-x-3">
+                                                            <span className="fa-duotone fa-info-circle fa-2x"></span>
+
+                                                            <div className="flex-auto">
+                                                                <span className="text-sm block text-gray-600">
+
+                                                                    <span className="block py-2">
+                                                                        Please note that the above aspects of your artist profile data are fixed and cannot be changed.
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )
+                                        }
+
+                                        <form className="space-y-4 mb-3 w-full text-sm md:w-4/5" onSubmit={artistEntityFormHandler}>
                                             {
                                                 !state.data.entity && (
                                                     <>

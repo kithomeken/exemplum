@@ -22,9 +22,8 @@ export const Identity_00 = () => {
         httpStatus: 200,
         status: 'pending',
         data: {
-            M0lT: null,
-            inVTd: null,
             identity: null,
+            beneficiaries: null,
         },
         entity: [{
             email: '',
@@ -54,12 +53,11 @@ export const Identity_00 = () => {
             if (response.data.success) {
                 status = 'fulfilled'
 
-                data.M0lT = payload.M0lt
-                data.inVTd = payload.inVTd
+                data.beneficiaries = payload.beneficiaries
                 data.identity = payload.identity
 
                 encryptAndStoreLS(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.status)
-                show = data.inVTd.length > 0 ? true : false
+                show = data.beneficiaries.length > 0 ? true : false
             } else {
                 status = 'rejected'
             }
@@ -376,12 +374,12 @@ export const Identity_00 = () => {
                                         </div>
 
                                         {
-                                            state.data.M0lT ? (
+                                            state.data.identity.pax > 1 ? (
                                                 <>
                                                     <div className="flex flex-col md:flex-col align-middle items-center md:gap-x-3">
                                                         <div className="md:w-1/1 md:w-60 w-72">
                                                             {
-                                                                state.data.inVTd.length === (state.data.identity.pax - 1) ? (
+                                                                state.data.beneficiaries.length === (state.data.identity.pax - 1) ? (
                                                                     <img src={completed} alt={"completed"} width="auto" className="block text-center m-auto md:hidden" />
                                                                 ) : (
                                                                     <img src={invitation} alt={"invitation"} width="auto" className={
@@ -395,7 +393,7 @@ export const Identity_00 = () => {
                                                         </div>
 
                                                         {
-                                                            state.data.inVTd.length === (state.data.identity.pax - 1) ? (
+                                                            state.data.beneficiaries.length === (state.data.identity.pax - 1) ? (
                                                                 <div className="w-full text-sm text-stone-600 float-right">
                                                                     <span className="block py-4 text-lg md:text-xl">
                                                                         Your request has been received!
@@ -445,7 +443,7 @@ export const Identity_00 = () => {
 
                                                                     <div className="w-full block mb-3 pb-4 border-b-2 border-dashed">
                                                                         {
-                                                                            state.data.inVTd.length < (state.data.identity.pax - 1) ? (
+                                                                            state.data.beneficiaries.length < (state.data.identity.pax - 1) ? (
                                                                                 <form className="w-full md:w-2/3 mx-0 block" onSubmit={onFormSubmitHandler}>
                                                                                     {
                                                                                         state.entity.map((contact: any, index: any) => {
@@ -529,63 +527,86 @@ export const Identity_00 = () => {
                                                                         }
 
                                                                         {
-                                                                            state.data.inVTd.length > 0 ? (
+                                                                            state.data.beneficiaries.length > 0 ? (
                                                                                 <div className="py-3 w-full">
                                                                                     <span className="block text-base d:text-stone-600 pb-1 text-orange-500">
                                                                                         Invited Members
                                                                                     </span>
 
                                                                                     {
-                                                                                        state.data.inVTd.map((member: any) => {
+                                                                                        state.data.beneficiaries.map((member: any, index: any) => {
                                                                                             return (
-                                                                                                <li key={`MMDR-${member.email}`} className="w-full flex md:flex-row flex-col align-middle items-center justify-between gap-x-6 py-2 md:px-3 md:hover:bg-stone-100">
+                                                                                                <li key={`MMDR-${member.email}`} className={`w-full flex md:flex-row flex-col align-middle items-center justify-between gap-x-6 py-3 md:py-2 md:px-3 md:hover:bg-stone-100 ${index === 0 ? 'border-t-0' : 'border-t'}`}>
                                                                                                     <div className="flex w-full md:w-auto min-w-0 gap-x-4 md:gap-x-4 align-middle items-center">
                                                                                                         <div className={`md:h-8 md:w-8 w-10 h-10 flex items-center justify-center uppercase text-white rounded-full ${getColorForLetter(member.email.charAt(0))}`}>
                                                                                                             {member.email.charAt(0)}
                                                                                                         </div>
 
                                                                                                         <div className="min-w-0 flex-auto">
-                                                                                                            <p className="truncate text-sm leading-5 text-gray-500" onClick={() => resendEntityInviationAction(member.email)}>
-                                                                                                                {member.email}
+                                                                                                            {
+                                                                                                                member.display_name === null || member.display_name === undefined ? (
+                                                                                                                    <p className="truncate text-sm leading-5 text-gray-500" onClick={() => resendEntityInviationAction(member.email)}>
+                                                                                                                        {member.email}
 
-                                                                                                                {
-                                                                                                                    state.posting && state.emailInvite === member.email ? (
-                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-orange-500 hover:text-orange-600">
-                                                                                                                            <span className="inline-block py-0.5">Resending</span>
+                                                                                                                        {
+                                                                                                                            state.posting && state.emailInvite === member.email ? (
+                                                                                                                                <span className="flex md:hidden gap-x-2 align-middle items-center text-blue-500 hover:text-blue-600">
+                                                                                                                                    <span className="inline-block py-0.5">Resending</span>
+                                                                                                                                </span>
+                                                                                                                            ) : (
+                                                                                                                                <span className="flex md:hidden gap-x-2 align-middle items-center text-blue-500 hover:text-blue-600">
+                                                                                                                                    <span className="inline-block py-0.5">Resend Invitation</span>
+                                                                                                                                </span>
+                                                                                                                            )
+                                                                                                                        }
+                                                                                                                    </p>
+                                                                                                                ) : (
+                                                                                                                    <p className="truncate text-sm leading-5 text-gray-500">
+                                                                                                                        {member.display_name}
+
+                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-emerald-500">
+                                                                                                                            <span className="fa-duotone sm:block hidden fa-badge-check fa-lg"></span>
+                                                                                                                            <span className="inline-block py-0.5">Onboarded</span>
                                                                                                                         </span>
-                                                                                                                    ) : (
-                                                                                                                        <span className="flex md:hidden gap-x-2 align-middle items-center text-orange-500 hover:text-orange-600">
-                                                                                                                            <span className="inline-block py-0.5">Resend Invitation</span>
-                                                                                                                        </span>
-                                                                                                                    )
-                                                                                                                }
-                                                                                                            </p>
+                                                                                                                    </p>
+                                                                                                                )
+                                                                                                            }
                                                                                                         </div>
                                                                                                     </div>
 
                                                                                                     <div className="shrink-0 md:w-auto sm:flex sm:flex-col sm:items-end w-full">
-                                                                                                        <p className="text-orange-500 hover:text-orange-600 w-full gap-x-2 text-sm cursor-pointer hidden md:flex" onClick={() => resendEntityInviationAction(member.email)}>
-                                                                                                            {
-                                                                                                                state.posting && state.emailInvite === member.email ? (
-                                                                                                                    <>
-                                                                                                                        <span className="md:hidden">
-                                                                                                                            <span className="fa-duotone sm:block hidden fa-spinner fa-spin fa-lg"></span>
-                                                                                                                        </span>
+                                                                                                        {
+                                                                                                            member.display_name === null || member.display_name === undefined ? (
+                                                                                                                <p className="text-blue-600 hover:text-blue-700 w-full gap-x-2 text-sm cursor-pointer hidden md:flex" onClick={() => resendEntityInviationAction(member.email)}>
+                                                                                                                    {
+                                                                                                                        state.posting && state.emailInvite === member.email ? (
+                                                                                                                            <>
+                                                                                                                                <span className="md:hidden">
+                                                                                                                                    <span className="fa-duotone sm:block hidden fa-spinner fa-spin fa-lg"></span>
+                                                                                                                                </span>
 
-                                                                                                                        <span className="hidden md:inline-block">Resending</span>
-                                                                                                                    </>
-                                                                                                                ) : (
-                                                                                                                    <>
-                                                                                                                        <span className="md:hidden">
-                                                                                                                            <span className="fa-duotone sm:block hidden fa-paper-plane fa-lg"></span>
-                                                                                                                        </span>
+                                                                                                                                <span className="hidden md:inline-block">Resending</span>
+                                                                                                                            </>
+                                                                                                                        ) : (
+                                                                                                                            <>
+                                                                                                                                <span className="md:hidden">
+                                                                                                                                    <span className="fa-duotone sm:block hidden fa-paper-plane fa-lg"></span>
+                                                                                                                                </span>
 
-                                                                                                                        <span className="hidden md:inline-block">Resend</span>
-                                                                                                                    </>
-                                                                                                                )
-                                                                                                            }
+                                                                                                                                <span className="hidden md:inline-block">Resend Email</span>
+                                                                                                                            </>
+                                                                                                                        )
+                                                                                                                    }
+                                                                                                                </p>
+                                                                                                            ) : (
+                                                                                                                <p className="text-emerald-600 w-full gap-x-2 text-sm cursor-pointer hidden md:flex align-middle items-center">
+                                                                                                                    <span className="fa-duotone sm:block hidden fa-badge-check fa-lg"></span>
 
-                                                                                                        </p>
+                                                                                                                    <span className="hidden md:inline-block">Onboarded</span>
+                                                                                                                </p>
+
+                                                                                                            )
+                                                                                                        }
                                                                                                     </div>
                                                                                                 </li>
                                                                                             )
