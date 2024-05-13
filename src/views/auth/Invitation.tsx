@@ -56,7 +56,8 @@ export const Invitation = () => {
     }, [])
 
     const checkInvitationValidity = async () => {
-        let {data} = state
+        let { data } = state
+        let { input } = state
         let { status } = state
 
         try {
@@ -68,10 +69,11 @@ export const Invitation = () => {
                 authRedirectResult()
                     .then(async (result) => {
                         if (!result) {
-                            data.beneficiary = ''
+                            input.email = valResponse.data.payload.beneficiary
+                            data.beneficiary = valResponse.data.payload.beneficiary
 
                             setstate({
-                                ...state, status: 'fulfilled', data
+                                ...state, status: 'fulfilled', data, input
                             })
 
                             dispatch(resetAuth0())
@@ -80,6 +82,7 @@ export const Invitation = () => {
 
                         const firebaseUser: any = result.user;
                         const accessToken = firebaseUser.accessToken;
+                        input.email = valResponse.data.payload.beneficiary
                         data.beneficiary = valResponse.data.payload.beneficiary
 
                         dispatch({
@@ -92,16 +95,17 @@ export const Invitation = () => {
                         });
 
                         setstate({
-                            ...state, status: 'fulfilled', data
+                            ...state, status: 'fulfilled', data, input
                         })
 
                         return
                     })
                     .catch(() => {
                         data.beneficiary = ''
+                        input.email = ''
 
                         setstate({
-                            ...state, status: 'fulfilled', data
+                            ...state, status: 'fulfilled', data, input
                         })
 
                         dispatch(resetAuth0())
@@ -224,7 +228,7 @@ export const Invitation = () => {
         return valid;
     };
 
-    const passwordSignUpFormHandler = (e: any) => {
+    const passwordEmailInvitationHandler = (e: any) => {
         e.preventDefault();
 
         if (!auth0.processing) {
@@ -232,6 +236,7 @@ export const Invitation = () => {
 
             if (passedValidation) {
                 dispatch(resetAuth0())
+
                 setstate({
                     ...state, errors: {
                         email: '',
@@ -240,7 +245,7 @@ export const Invitation = () => {
                     }
                 })
 
-                const signInProps = {
+                const invitationProps = {
                     identity: 'password',
                     deviceInfo: DeviceInfo(),
                     credentials: {
@@ -249,12 +254,12 @@ export const Invitation = () => {
                     }
                 }
 
-                dispatch(firebaseAuthActions(signInProps))
+                dispatch(firebaseAuthActions(invitationProps))
             }
         }
     };
 
-    const signUpWithGoogle = () => {
+    const invitationWithGoogle = () => {
         if (!auth0.processing) {
             dispatch(resetAuth0())
             setstate({
@@ -278,17 +283,20 @@ export const Invitation = () => {
     }
 
     if (auth0.sso) {
-        const state = {
+        let {data} = state
+
+        const auxState = {
+            beneficiary: data.beneficiary,
             from: locationState?.from,
             postAuth: true
         }
 
-        const postAuthenticatoinRoute: any = (
+        const postAuthenticationRoute: any = (
             postAuthRoutes.find(
                 (routeName) => routeName.name === 'AUTH_IDENTITY_')
         )?.path
 
-        return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
+        return <Navigate to={postAuthenticationRoute} replace state={auxState} />;
     }
 
     const authRedirectResult = async () => {
@@ -396,7 +404,7 @@ export const Invitation = () => {
                                             {
                                                 state.show.email ? (
                                                     <div className="w-full block m-auto">
-                                                        <form className="w-full m-auto md:w-2/3 " onSubmit={passwordSignUpFormHandler}>
+                                                        <form className="w-full m-auto md:w-2/3 " onSubmit={passwordEmailInvitationHandler}>
                                                             <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
 
                                                             <div className="shadow-none mb-3 pb-3">
@@ -488,7 +496,7 @@ export const Invitation = () => {
                                                 ) : (
                                                     <div className="w-full md:w-1/2 mx-auto pb-4">
                                                         <div className="w-full">
-                                                            <button type="button" onClick={signUpWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                            <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                                 <span className="pl-2 block">
                                                                     {
                                                                         auth0.processing && auth0.provider === 'google' ? (
