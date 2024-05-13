@@ -22,9 +22,8 @@ export const Identity_00 = () => {
         httpStatus: 200,
         status: 'pending',
         data: {
-            M0lT: null,
-            beneficiaries: null,
             identity: null,
+            beneficiaries: null,
         },
         entity: [{
             email: '',
@@ -54,7 +53,6 @@ export const Identity_00 = () => {
             if (response.data.success) {
                 status = 'fulfilled'
 
-                data.M0lT = payload.M0lt
                 data.beneficiaries = payload.beneficiaries
                 data.identity = payload.identity
 
@@ -376,7 +374,7 @@ export const Identity_00 = () => {
                                         </div>
 
                                         {
-                                            state.data.M0lT ? (
+                                            state.data.identity.pax > 1 ? (
                                                 <>
                                                     <div className="flex flex-col md:flex-col align-middle items-center md:gap-x-3">
                                                         <div className="md:w-1/1 md:w-60 w-72">
