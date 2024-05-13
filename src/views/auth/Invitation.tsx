@@ -8,22 +8,26 @@ import { ERR_500 } from "../errors/ERR_500";
 import { PasswordPolicy } from "./PasswordPolicy";
 import { getRedirectResult } from "firebase/auth";
 import { useAppSelector } from "../../store/hooks";
+import { postAuthRoutes } from "../../routes/routes";
 import { TermsAndConditions } from "./TermsAndConditions";
 import AxiosServices from "../../services/AxiosServices";
 import { Loading } from "../../components/modules/Loading"
 import StorageServices from "../../services/StorageServices";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import connecting from '../../assets/images/53059e12f79a42c5e4b259b50d1412c1.svg'
+import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { APPLICATION, AUTH_, STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions";
-import { firebaseAuthActions, generateSanctumToken, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 
 export const Invitation = () => {
     const [state, setstate] = useState({
         httpStatus: 200,
         status: 'pending',
         pwdVisibility: false,
+        data: {
+            beneficiary: '',
+        },
         input: {
             email: '',
             password: '',
@@ -41,26 +45,9 @@ export const Invitation = () => {
         }
     })
 
+    const params = useParams();
     const location = useLocation()
     const dispatch: any = useDispatch();
-
-    function parseQueryString(search: any) {
-        const params = {};
-
-        if (search) {
-            search
-                .slice(1) // Remove the leading '?'
-                .split('&') // Split by '&' to get individual key-value pairs
-                .forEach(pair => {
-                    const [key, value] = pair.split('='); // Split each pair by '=' to get key and value
-                    params[key] = decodeURIComponent(value || ''); // Decode URI component and assign to params
-                });
-        }
-
-        return params;
-    }
-
-    const params = useParams();
     const locationState: any = location.state
     const auth0: any = useAppSelector(state => state.auth0)
 
@@ -69,6 +56,8 @@ export const Invitation = () => {
     }, [])
 
     const checkInvitationValidity = async () => {
+        let { data } = state
+        let { input } = state
         let { status } = state
 
         try {
@@ -80,11 +69,21 @@ export const Invitation = () => {
                 authRedirectResult()
                     .then(async (result) => {
                         if (!result) {
+                            input.email = valResponse.data.payload.beneficiary
+                            data.beneficiary = valResponse.data.payload.beneficiary
+
+                            setstate({
+                                ...state, status: 'fulfilled', data, input
+                            })
+
+                            dispatch(resetAuth0())
                             return;
                         }
 
                         const firebaseUser: any = result.user;
                         const accessToken = firebaseUser.accessToken;
+                        input.email = valResponse.data.payload.beneficiary
+                        data.beneficiary = valResponse.data.payload.beneficiary
 
                         dispatch({
                             type: AUTH_.FIREBASE_TOKEN,
@@ -95,13 +94,20 @@ export const Invitation = () => {
                             },
                         });
 
-                        const props = {
-                            deviceInfo: DeviceInfo(),
-                        }
+                        setstate({
+                            ...state, status: 'fulfilled', data, input
+                        })
 
-                        generateSanctumToken(dispatch, accessToken, props)
+                        return
                     })
                     .catch(() => {
+                        data.beneficiary = ''
+                        input.email = ''
+
+                        setstate({
+                            ...state, status: 'fulfilled', data, input
+                        })
+
                         dispatch(resetAuth0())
                         return null;
                     });
@@ -222,7 +228,7 @@ export const Invitation = () => {
         return valid;
     };
 
-    const passwordSignUpFormHandler = (e: any) => {
+    const passwordEmailInvitationHandler = (e: any) => {
         e.preventDefault();
 
         if (!auth0.processing) {
@@ -230,6 +236,7 @@ export const Invitation = () => {
 
             if (passedValidation) {
                 dispatch(resetAuth0())
+
                 setstate({
                     ...state, errors: {
                         email: '',
@@ -238,7 +245,7 @@ export const Invitation = () => {
                     }
                 })
 
-                const signInProps = {
+                const invitationProps = {
                     identity: 'password',
                     deviceInfo: DeviceInfo(),
                     credentials: {
@@ -247,12 +254,12 @@ export const Invitation = () => {
                     }
                 }
 
-                dispatch(firebaseAuthActions(signInProps))
+                dispatch(firebaseAuthActions(invitationProps))
             }
         }
     };
 
-    const signUpWithGoogle = () => {
+    const invitationWithGoogle = () => {
         if (!auth0.processing) {
             dispatch(resetAuth0())
             setstate({
@@ -264,7 +271,6 @@ export const Invitation = () => {
                     email: '',
                     confirm: '',
                     password: '',
-
                 }
             })
 
@@ -276,14 +282,21 @@ export const Invitation = () => {
         }
     }
 
-    if (auth0.authenticated) {
-        const state = {
+    if (auth0.sso) {
+        let {data} = state
+
+        const auxState = {
+            beneficiary: data.beneficiary,
             from: locationState?.from,
             postAuth: true
         }
 
-        const redirectRoute = locationState?.from === undefined ? '/home' : locationState?.from
-        return <Navigate state={state} replace to={redirectRoute} />;
+        const postAuthenticationRoute: any = (
+            postAuthRoutes.find(
+                (routeName) => routeName.name === 'AUTH_IDENTITY_')
+        )?.path
+
+        return <Navigate to={postAuthenticationRoute} replace state={auxState} />;
     }
 
     const authRedirectResult = async () => {
@@ -391,8 +404,8 @@ export const Invitation = () => {
                                             {
                                                 state.show.email ? (
                                                     <div className="w-full block m-auto">
-                                                        <form className="w-full m-auto md:w-2/3 " onSubmit={passwordSignUpFormHandler}>
-                                                        <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
+                                                        <form className="w-full m-auto md:w-2/3 " onSubmit={passwordEmailInvitationHandler}>
+                                                            <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
 
                                                             <div className="shadow-none mb-3 pb-3">
                                                                 <div className="relative rounded shadow-sm">
@@ -483,7 +496,7 @@ export const Invitation = () => {
                                                 ) : (
                                                     <div className="w-full md:w-1/2 mx-auto pb-4">
                                                         <div className="w-full">
-                                                            <button type="button" onClick={signUpWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                            <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                                 <span className="pl-2 block">
                                                                     {
                                                                         auth0.processing && auth0.provider === 'google' ? (

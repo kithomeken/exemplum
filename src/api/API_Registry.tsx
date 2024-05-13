@@ -9,7 +9,8 @@ export const CSRF_COOKIE_ROUTE = '/sanctum/csrf-cookie';
 ***************************/
 
 export const AUTH = {
-    FIREBASE_SSO:       '/v1/identity/auth/firebase-sso',
+    SSO_BENEFACTORS:    '/v1/identity/auth/firebase/_/sso/benefactor',
+    SSO_BENEFICIARIES:  '/v1/identity/auth/firebase/_/sso/beneficiaries',
     META_CHECK:         '/v1/identity/account/meta/check',
     PRE_META_01:        '/v1/identity/account/meta/identifier/check',
     PRE_META_03:        '/v1/identity/account/meta/artist_name/check',
