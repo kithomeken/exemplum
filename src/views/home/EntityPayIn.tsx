@@ -192,7 +192,7 @@ export const EntityPayIn = () => {
             const apiResponse: any = await HttpServices.httpPost(ACCOUNT.STK_PUSH_NOFITICATION, formData)
             console.log('UBD3-23', apiResponse.data);
 
-            if (apiResponse.data.ResponseCode === '0') {
+            if (apiResponse.data.success) {
                 stkResponse = '0'
                 input.amount = ''
                 input.msisdn = ''
