@@ -56,7 +56,7 @@ export const Identity_00 = () => {
                 data.beneficiaries = payload.beneficiaries
                 data.identity = payload.identity
 
-                encryptAndStoreLS(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.status)
+                encryptAndStoreLS(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.quo)
                 show = data.beneficiaries.length > 0 ? true : false
             } else {
                 status = 'rejected'
