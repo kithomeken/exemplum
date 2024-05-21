@@ -9,13 +9,16 @@ import { BespokePanel } from "../../lib/hooks/BespokePanel"
 import { Basic_Modal_Props } from "../../lib/modules/Interfaces"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
 import { API_RouteReplace, classNames, humanReadableDate } from "../../lib/modules/HelperFunctions"
+import { DocumentView } from "./DocumentView"
 
 export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }) => {
     const [state, setstate] = useState({
+        document: '',
         posting: false,
         status: 'pending',
         show: {
-            rejection: false
+            rejection: false,
+            docView: false,
         },
         data: {
             entity: null,
@@ -183,6 +186,28 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
         })
     }
 
+    const toogleDocViewer = (doc: any) => {
+        let {show} = state
+        let {document} = state
+        
+        document = doc
+        show.docView = true
+
+        setstate({
+            ...state, document, show
+        })
+    }
+
+    const showOrHideDocViewModal = () => {
+        let {show} = state
+
+        show.docView = !state.show.docView
+        
+        setstate({
+            ...state, show
+        })
+    }
+
     return (
         <React.Fragment>
             <BespokePanel
@@ -269,13 +294,13 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                             !state.show.rejection ? (
                                                 state.data.request.status === 'P' ? (
                                                     <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
-                                                        <span onClick={showOrHideRejectionInput} className="text-sm flex-none shadow-none py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                        <button type="button" onClick={showOrHideRejectionInput} className="text-sm flex-none shadow-none py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                             Reject Request
-                                                        </span>
+                                                        </button>
 
-                                                        <span onClick={() => onboardingRequestAction('A')} className="text-sm flex-none shadow-none py-1 bg-inherit text-green-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                        <button type="button" onClick={() => onboardingRequestAction('A')} className="text-sm flex-none shadow-none py-1 bg-inherit text-green-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                             Approve Request
-                                                        </span>
+                                                        </button>
                                                     </div>
                                                 ) : (
                                                     <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
@@ -325,13 +350,13 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                 </div>
 
                                                 <div className="mb-2 flex flex-row md:w-12/12 align-middle items-center justify-center">
-                                                    <span onClick={showOrHideRejectionInput} className="text-sm flex-1 py-1 bg-inherit text-stone-500 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                    <button type="button" onClick={showOrHideRejectionInput} className="text-sm flex-1 py-1 bg-inherit text-stone-500 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                         Cancel
-                                                    </span>
+                                                    </button>
 
-                                                    <span onClick={() => onboardingRequestAction('R')} className="text-sm flex-1 text-right py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                    <button type="button" onClick={() => onboardingRequestAction('R')} className="text-sm flex-1 text-right py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                         Reject Request
-                                                    </span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         ) : null
@@ -454,7 +479,7 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                                                                 )
                                                                                             }
 
-                                                                                            <span className="text-right float-right text-amber-600">View</span>
+                                                                                            <button type="button" className="text-right float-right text-amber-600" onClick={() => toogleDocViewer(document.path)}>View</button>
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -482,6 +507,12 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                         }
                     </>
                 }
+            />
+
+            <DocumentView
+                show={state.show.docView}
+                uuid={state.document}
+                showOrHide={showOrHideDocViewModal}
             />
         </React.Fragment>
     )
