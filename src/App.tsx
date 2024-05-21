@@ -9,6 +9,7 @@ import './assets/icons/fontawesome_6_pro/css/all.css'
 
 import { ERR_404 } from './views/errors/ERR_404';
 import AuthRoutesGuard from './lib/guards/AuthRoutesGuard';
+import CoreRoutesGuard from './lib/guards/CoreRoutesGuard';
 import ErrorRoutesGuard from './lib/guards/ErrorRoutesGuard';
 import CommonRoutesGuard from './lib/guards/CommonRoutesGuard';
 import GenericRoutesGuard from './lib/guards/GenericRoutesGuard';
@@ -21,8 +22,9 @@ import {
     standardRoutes, 
     postAuthRoutes, 
     standardErrorRoutes, 
+    administrativeRoutes,
     authenticationRoutes, 
-    standardSettingsRoutes 
+    standardSettingsRoutes, 
 } from './routes/routes';
 import { Helmet } from 'react-helmet';
 
@@ -133,6 +135,20 @@ export default function App() {
                     <Route element={<SettingsRoutesGuard />} >
                         {
                             standardSettingsRoutes.map((route, index) => {
+                                return (
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </Route>
+
+                    <Route element={<CoreRoutesGuard />} >
+                        {
+                            administrativeRoutes.map((route, index) => {
                                 return (
                                     <Route
                                         path={route.path}
