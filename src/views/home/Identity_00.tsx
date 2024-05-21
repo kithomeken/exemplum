@@ -12,6 +12,7 @@ import completed from "../../assets/images/fd0b0ed18a34962f80d77c6e6ff42e7b.svg"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 import { classNames, emailValidator, encryptAndStoreLS, getColorForLetter } from "../../lib/modules/HelperFunctions";
+import StorageServices from "../../services/StorageServices";
 
 export const Identity_00 = () => {
     const [state, setstate] = useState({
@@ -56,7 +57,7 @@ export const Identity_00 = () => {
                 data.beneficiaries = payload.beneficiaries
                 data.identity = payload.identity
 
-                encryptAndStoreLS(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.quo)
+                StorageServices.setLocalStorage(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.quo)
                 show = data.beneficiaries.length > 0 ? true : false
             } else {
                 status = 'rejected'
