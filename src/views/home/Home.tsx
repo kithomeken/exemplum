@@ -76,7 +76,7 @@ export const Home = () => {
 
                     dispatch(setPRc0MetaStage(metaCheckProps))
 
-                    if (data.PRc0 === 'META_00' && data.OnBD === 'Gold') {
+                    if (data.PRc0 === 'META_00' && data.OnBD === 'GLD') {
                         /* 
                          * Onboarding was completed.
                          * Fetch identity verification status
@@ -102,7 +102,7 @@ export const Home = () => {
         } else {
             data.PRc0 = PRc0State
 
-            if (data.PRc0 === 'META_00' && data.OnBD === 'Gold') {
+            if (data.PRc0 === 'META_00' && data.OnBD === 'GLD') {
                 /* 
                  * Onboarding was completed.
                  * Fetch identity verification status
@@ -192,7 +192,7 @@ export const Home = () => {
                 ) : state.status === 'fulfilled' ? (
                     <>
                         {
-                            state.data.PRc0 === 'META_00' && state.data.OnBD === 'Gold' ? (
+                            state.data.PRc0 === 'META_00' && state.data.OnBD === 'GLD' ? (
                                 verified === '0' ? (
                                     /* 
                                      * Identity has been verified
