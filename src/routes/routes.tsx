@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Yeat } from "../views/home/Yeat";
 import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
@@ -7,17 +8,23 @@ import { Entity } from "../views/settings/Entity";
 import { Invitation } from "../views/auth/Invitation";
 import { EntityPayIn } from "../views/home/EntityPayIn";
 import IdentityCheck from "../views/home/IdentityCheck";
+import { AllEntities } from "../views/admin/AllEntities";
 import { EmailActions } from "../views/auth/EmailActions";
 import { ChangeEmail } from "../views/settings/ChangeEmail";
 import { RedirectToHome } from "../views/home/RedirectToHome";
+import { UserManagement } from "../views/admin/UserManagement";
 import { EntityProfile } from "../views/settings/EntityProfile";
+import { MpesaExceptions } from "../views/admin/MpesaExceptions";
 import { Routes_Interface } from "../lib/modules/routesInterface";
+import { TransactionPayIn } from "../views/admin/TransactionPayIn";
 import { AccountSuspended } from "../views/errors/AccountSuspended";
 import { PostAuthentication } from "../views/auth/PostAuthentication";
+import { AdminstrativeHome } from "../views/admin/AdministrativeHome";
 import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
-import { AccountManagement } from "../views/settings/AccountManagement";
+import { OnboardingRequests } from "../views/admin/OnboardingRequests";
+import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
+import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
 import { IdentityVerification } from "../views/home/IdentityVerification";
-import { Yeat } from "../views/home/Yeat";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -116,10 +123,6 @@ export const standardErrorRoutes: Array<Routes_Interface> = [
     },
 ]
 
-export const administrativeRoutes: Array<Routes_Interface> = [
-
-]
-
 export const standardSettingsRoutes: Array<Routes_Interface> = [
     {
         path: "/u/settings/account/profile", 
@@ -141,5 +144,64 @@ export const standardSettingsRoutes: Array<Routes_Interface> = [
         activeMenu: 'Y', 
         caseSensitive: true, 
         name: 'CNF_ENTITY_' 
+    },
+]
+
+export const administrativeRoutes: Array<Routes_Interface> = [
+    { 
+        path: "/default/a/home", 
+        element: <AdminstrativeHome />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_HOME_' 
+    },
+    { 
+        path: "/default/a/onboarding/requests", 
+        element: <OnboardingRequests />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_ONBOARDING_' 
+    },
+    { 
+        path: "/default/a/onboarding/entities", 
+        element: <AllEntities />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_ENTITIES_' 
+    },
+    { 
+        path: "/default/a/onboarding/user-management", 
+        element: <UserManagement />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_USERS_' 
+    },
+    { 
+        path: "/default/a/payments/requests", 
+        element: <WithdrawalRequests />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_PAYMENTS_' 
+    },
+    { 
+        path: "/default/a/transactions/payouts", 
+        element: <TransactionPayOuts />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_TXN_PAYOUTS_' 
+    },
+    { 
+        path: "/default/a/transactions/contributions", 
+        element: <TransactionPayIn />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_TXN_PAYIN_' 
+    },
+    { 
+        path: "/default/a/core/mpesa/exceptions", 
+        element: <MpesaExceptions />, 
+        activeMenu: 'N', 
+        caseSensitive: true, 
+        name: 'CORE_MPESA_EXCS_' 
     },
 ]
