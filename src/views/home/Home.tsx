@@ -101,6 +101,7 @@ export const Home = () => {
             }
         } else {
             data.PRc0 = PRc0State
+            data.OnBD = OnBDState
 
             if (data.PRc0 === 'META_00' && data.OnBD === 'GLD') {
                 /* 
