@@ -22,7 +22,8 @@ export const Home = () => {
         httpStatus: 200,
         status: 'pending',
         data: {
-            PRc0: null
+            PRc0: null,
+            OnBD: null,
         },
         process: {
             type: '',
@@ -52,17 +53,20 @@ export const Home = () => {
         let { status } = state
         let { httpStatus } = state
         const PRc0State = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_STATE)
+        const OnBDState = StorageServices.getLocalStorage(STORAGE_KEYS.ONBOARDING_STATUS)
 
-        if (PRc0State === null) {
+        if (PRc0State === null && OnBDState === null) {
             /* 
              * Fetch PRc0 state
             */
             try {
                 const metaCheckResp: any = await HttpServices.httpGet(AUTH.META_CHECK)
-                httpStatus = metaCheckResp.status
+                httpStatus = metaCheckResp.status                
 
                 if (metaCheckResp.data.success) {
                     data.PRc0 = metaCheckResp.data.payload.PRc0
+                    data.OnBD = metaCheckResp.data.payload.OnBD
+                    StorageServices.setLocalStorage(STORAGE_KEYS.ONBOARDING_STATUS, data.OnBD)
 
                     const metaCheckProps = {
                         dataDump: {
@@ -72,7 +76,7 @@ export const Home = () => {
 
                     dispatch(setPRc0MetaStage(metaCheckProps))
 
-                    if (data.PRc0 === 'META_00') {
+                    if (data.PRc0 === 'META_00' && data.OnBD === 'Gold') {
                         /* 
                          * Onboarding was completed.
                          * Fetch identity verification status
@@ -98,7 +102,7 @@ export const Home = () => {
         } else {
             data.PRc0 = PRc0State
 
-            if (data.PRc0 === 'META_00') {
+            if (data.PRc0 === 'META_00' && data.OnBD === 'Gold') {
                 /* 
                  * Onboarding was completed.
                  * Fetch identity verification status
@@ -188,7 +192,7 @@ export const Home = () => {
                 ) : state.status === 'fulfilled' ? (
                     <>
                         {
-                            state.data.PRc0 === 'META_00' ? (
+                            state.data.PRc0 === 'META_00' && state.data.OnBD === 'Gold' ? (
                                 verified === '0' ? (
                                     /* 
                                      * Identity has been verified
