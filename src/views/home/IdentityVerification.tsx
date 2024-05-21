@@ -157,7 +157,7 @@ export const IdentityVerification = () => {
                     ) : (
                         <div className="wrapper w-full overflow-auto md:h-screen h-auto">
                             <section className="gx-container rounded-md md:h-screen sm:h-auto w-full" style={CONFIG_MAX_WIDTH}>
-                                <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0">
+                                <div className="flex md:flex-row flex-col align-middle items-center w-full md:h-screen h-auto md:pb-0">
                                     <div className="md:basis-1/2 md:px-6 px-6 w-full pt-8">
                                         <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
