@@ -15,7 +15,7 @@ export const APPLICATION = {
     NAME:       'Big Fan',
     THEME:      '#F59E0B',
     URL:        API_Controller().APP,
-    ERR_MSG:    'Something went wrong. Kindly try again later'
+    ERR_MSG:    'There was an error processing your request.'
 }
 
 
