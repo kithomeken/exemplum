@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import React, { FC, useState } from "react"
 import PhoneInput from 'react-phone-number-input'
 
@@ -8,7 +9,8 @@ import { Loading } from "../../components/modules/Loading"
 import { BespokePanel } from "../../lib/hooks/BespokePanel"
 import { Basic_Modal_Props } from "../../lib/modules/Interfaces"
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
-import { API_RouteReplace, DateFormating, classNames, formatAmount } from "../../lib/modules/HelperFunctions"
+import { API_RouteReplace, DateFormating, classNames, formatAmount, getColorForLetter } from "../../lib/modules/HelperFunctions"
+import { APPLICATION } from "../../global/ConstantsRegistry";
 
 export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }) => {
     const [state, setstate] = useState({
@@ -185,18 +187,59 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
         }
     }
 
-    function getColorForLetter(letter) {
-        const colorGroups = [
-            ['A', 'B', 'C', 'D', 'E'],
-            ['F', 'G', 'H', 'I', 'J'],
-            ['K', 'L', 'M', 'N', 'O'],
-            ['P', 'Q', 'R', 'S', 'T'],
-            ['U', 'V', 'W', 'X', 'Y', 'Z']
-        ];
+    const retryPaymentRequest = () => {
+        let { posting } = state
 
-        const colors = ['bg-lime-500', 'bg-cyan-500', 'bg-rose-500', 'bg-teal-500', 'bg-fuchsia-500'];
-        const groupIndex = colorGroups.findIndex(group => group.includes(letter.toUpperCase()));
-        return groupIndex !== -1 ? colors[groupIndex] : 'bg-gray-500'; // Default to gray if not found
+        if (!posting) {
+            posting = true
+
+            setstate({
+                ...state, posting
+            })
+
+            retryFailedPaymentTransaction()
+        }
+    }
+
+    const retryFailedPaymentTransaction = async () => {
+        let { posting } = state
+
+        try {
+            let retryPaymentRoute = API_RouteReplace(ADMINISTRATION.RETRY_FAILED_PYMNT, ':uuid', uuid)
+            const retryResponse: any = await HttpServices.httpPost(retryPaymentRoute, null)
+
+            if (retryResponse.data.success) {
+                fetchPaymentDetails()
+            } else {
+                posting = false
+
+                toast.error(APPLICATION.ERR_MSG, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        } catch (error) {
+            posting = false
+
+            toast.error(APPLICATION.ERR_MSG, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+
+        setstate({
+            ...state, posting
+        })
     }
 
     return (
@@ -338,7 +381,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                     }
 
                                     {
-                                        state.data.trans === null || state.data.trans === undefined ? null : (
+                                        state.data.trans && (
                                             state.data.trans.resultCode === '0' ? (
                                                 <div className={`w-full py-2 px-6 bg-emerald-100 mt-3 transition-transform ease-in-out duration-500`}>
                                                     <div className="flex flex-row w-full align-middle items-center">
@@ -382,7 +425,16 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
 
                                                         <div className="basis-1/3 text-emerald-600 text-right">
                                                             <span className=" py-1 block mb-2 capitalize">
-                                                                {formatAmount(parseFloat(state.data.trans.amount))}
+                                                                <div className="w-full flex flex-row align-middle items-center">
+                                                                    <span className="text-stone-500 text-sm block">
+                                                                        Ksh.
+                                                                    </span>
+
+                                                                    <span className="px-1 text-sm block">
+                                                                        <span className="text-stone-600">{state.data.payment.nett.split('.')[0]}</span>
+                                                                        <span className="text-stone-400">.{state.data.payment.nett.split('.')[1]}</span>
+                                                                    </span>
+                                                                </div>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -429,26 +481,30 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
 
                                                         <div className="basis-1/2 text-red-600 text-right">
                                                             <span className=" py-1 block mb-2 capitalize">
-                                                                <i className="fa-duotone fa-circle-exclamation mr-2 fa-lg"></i>
+                                                                <i className="fa-duotone fa-circle-exclamation mr-2 fa-xl"></i>
                                                                 Failed
                                                             </span>
                                                         </div>
                                                     </div>
 
-                                                    <div className="flex flex-row w-full align-middle items-center">
-                                                        <div className="basis-2/3 text-gray-600 text-sm">
-                                                            <span className=" py-1 block mb-2">
-                                                                <span className="hidden md:inline-block">Receipt #:</span>
-                                                                <span className="md:hidden">Receipt #:</span>
-                                                            </span>
-                                                        </div>
+                                                    {
+                                                        state.data.trans.receipt && (
+                                                            <div className="flex flex-row w-full align-middle items-center">
+                                                                <div className="basis-2/3 text-gray-600 text-sm">
+                                                                    <span className=" py-1 block mb-2">
+                                                                        <span className="hidden md:inline-block">Receipt #:</span>
+                                                                        <span className="md:hidden">Receipt #:</span>
+                                                                    </span>
+                                                                </div>
 
-                                                        <div className="basis-1/3 text-red-600 text-right">
-                                                            <span className=" py-1 block mb-2 capitalize">
-                                                                {state.data.trans.receipt}
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                                <div className="basis-1/3 text-red-600 text-right">
+                                                                    <span className=" py-1 block mb-2 capitalize">
+                                                                        {state.data.trans.receipt}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    }
 
                                                     <div className="flex flex-row w-full align-middle items-center">
                                                         <div className="basis-2/3 text-gray-600 text-sm">
@@ -460,25 +516,38 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
 
                                                         <div className="basis-1/3 text-red-600 text-right">
                                                             <span className=" py-1 block mb-2 capitalize">
-                                                                {formatAmount(parseFloat(state.data.trans.amount))}
+                                                                <div className="w-full flex flex-row-reverse align-middle items-center gap-x-2">
+                                                                    <span className="text-base block">
+                                                                        <span className="text-stone-600">{state.data.payment.nett.split('.')[0]}</span>
+                                                                        <span className="text-stone-400">.{state.data.payment.nett.split('.')[1]}</span>
+                                                                    </span>
+
+                                                                    <span className="text-stone-500 text-sm block">
+                                                                        Ksh.
+                                                                    </span>
+                                                                </div>
                                                             </span>
                                                         </div>
                                                     </div>
 
-                                                    <div className="flex flex-row w-full align-middle items-center">
-                                                        <div className="basis-1/2 text-gray-600 text-sm">
-                                                            <span className=" py-1 block mb-2">
-                                                                <span className="hidden md:inline-block">Transaction Date:</span>
-                                                                <span className="md:hidden">Transaction Date:</span>
-                                                            </span>
-                                                        </div>
+                                                    {
+                                                        state.data.trans.tran_date && (
+                                                            <div className="flex flex-row w-full align-middle items-center">
+                                                                <div className="basis-1/2 text-gray-600 text-sm">
+                                                                    <span className=" py-1 block mb-2">
+                                                                        <span className="hidden md:inline-block">Transaction Date:</span>
+                                                                        <span className="md:hidden">Transaction Date:</span>
+                                                                    </span>
+                                                                </div>
 
-                                                        <div className="basis-1/2 text-red-600 text-right">
-                                                            <span className="block mb-2">
-                                                                {DateFormating(state.data.trans.tran_date)}
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                                <div className="basis-1/2 text-red-600 text-right">
+                                                                    <span className="block mb-2">
+                                                                        {DateFormating(state.data.trans.tran_date)}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    }
 
                                                     <div className="flex flex-col w-full align-middle items-center">
                                                         <div className="w-full text-gray-600 text-sm">
@@ -501,7 +570,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
 
                                     {
                                         state.posting ? (
-                                            <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 mb-3 border-b-2 border-dashed">
+                                            <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 mb-6 border-b-2 border-dashed">
                                                 <span className="text-sm flex-none shadow-none px-3 py-1.5 bg-inherit text-stone-500 sm:w-auto sm:text-sm">Recording your action...
                                                 </span>
                                                 <span className="fa-duotone text-stone-500 fa-spinner-third fa-xl block fa-spin"></span>
@@ -519,8 +588,16 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                         </span>
                                                     </div>
                                                 ) : (
-                                                    <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
-                                                    </div>
+                                                    state.data.trans.resultCode !== '0' ? (
+                                                        <div className="flex flex-row-reverse w-full align-middle items-center bg-orange-50 py-2 mb-6 px-6 transition-transform ease-in-out duration-500">
+                                                            <button type="button" onClick={retryPaymentRequest} className="block text-red-600 py-1 hover:underline">
+                                                                Retry Payment
+                                                            </button>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
+                                                        </div>
+                                                    )
                                                 )
                                             ) : (
                                                 <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3">
@@ -618,8 +695,8 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                     </div>
 
                                     <div className="pb-4 flex-grow px-6 py-3 overflow-y-auto">
-                                        <div className="py-3 px-4 mb-2 md:basis-1/2 w-full border-2 border-emerald-300 border-dashed rounded-md">
-                                            <span className="text-emerald-500 pb-2 block text-sm md:flex flex-row items-center">
+                                        <div className="py-3 px-4 mb-2 md:basis-1/2 w-full border-2 border-orange-300 border-dashed rounded-md">
+                                            <span className="text-orange-500 pb-2 block text-sm md:flex flex-row items-center">
                                                 Deductions and Fees Summary
                                             </span>
 
