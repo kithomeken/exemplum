@@ -12,16 +12,16 @@ import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/l
 
 export const EntityPayIn = () => {
     const [state, setstate] = useState({
-        stkResponse: 'pending',
         status: 'pending',
+        stkResponse: null,
         posting: false,
         data: {
             entity: null,
             limits: null,
         },
         input: {
-            amount: '',
-            msisdn: ''
+            amount: '1.00',
+            msisdn: '254724392070'
         },
         errors: {
             stkError: '',
@@ -167,7 +167,7 @@ export const EntityPayIn = () => {
 
             if (valid) {
                 setstate({
-                    ...state, posting: true
+                    ...state, posting: true, stkResponse: null
                 })
 
                 stkPushNotification()
@@ -193,23 +193,26 @@ export const EntityPayIn = () => {
             console.log('UBD3-23', apiResponse.data);
 
             if (apiResponse.data.success) {
-                stkResponse = '0'
-                input.amount = ''
-                input.msisdn = ''
+                // input.amount = ''
+                // input.msisdn = ''
+                const payload = apiResponse.data.payload
+
+                stkResponse = payload.status
+                errors.stkError = payload.status === 200 ? '' : payload.message
             } else {
-                stkResponse = '1'
-                errors.stkError = apiResponse.data.errorMessage
+                stkResponse = apiResponse.data.payload.status
+                errors.stkError = apiResponse.data.payload.message
             }
         } catch (error) {
             console.log(error);
-            stkResponse = '1'
+            stkResponse = 500
             errors.stkError = "Something went wrong, try again later"
         }
 
         posting = false
 
         setstate({
-            ...state, posting, stkResponse, input
+            ...state, posting, stkResponse, input, errors
         })
     }
 
@@ -256,43 +259,45 @@ export const EntityPayIn = () => {
                                             </div>
 
                                             {
-                                                state.stkResponse === '0' ? (
-                                                    <div className="w-12/12 py-3">
-                                                        <div className="rounded-md mb-2 border-0 border-green-400 bg-green-100 py-4 px-4">
-                                                            <div className="flex flex-row align-middle items-center text-green-700">
-                                                                <i className="fa-duotone fa-badge-check fa-2x mt-1 text-green-700 flex-none"></i>
+                                                state.stkResponse && (
+                                                    state.stkResponse === 200 ? (
+                                                        <div className="w-12/12 py-3">
+                                                            <div className="rounded-md mb-2 border-0 border-green-400 bg-green-100 py-4 px-4">
+                                                                <div className="flex flex-row align-middle items-center text-green-700">
+                                                                    <i className="fa-duotone fa-badge-check fa-2x mt-1 text-green-700 flex-none"></i>
 
-                                                                <div className="flex-auto ml-1 mt-1">
-                                                                    <span className="text-sm pl-3 block text-emerald-900 mb-1">
-                                                                        Request Processed
-                                                                    </span>
+                                                                    <div className="flex-auto ml-1 mt-1">
+                                                                        <span className="text-sm pl-3 block text-emerald-900 mb-1">
+                                                                            Request Processed
+                                                                        </span>
 
-                                                                    <span className="text-sm pl-3 block text-emerald-700">
-                                                                        Check your phone for the Mpesa prompt
-                                                                    </span>
+                                                                        <span className="text-sm pl-3 block text-emerald-700">
+                                                                            Check your phone for the Mpesa prompt
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ) : state.stkResponse === '1' ? (
-                                                    <div className="w-12/12 py-3">
-                                                        <div className="rounded-md mb-2 border-0 border-red-400 bg-red-100 py-4 px-4">
-                                                            <div className="flex flex-row align-middle items-center text-red-700">
-                                                                <i className="fa-duotone fa-info-circle fa-2x mt-1 text-red-700 flex-none"></i>
+                                                    ) : (
+                                                        <div className="w-12/12 py-3">
+                                                            <div className="rounded-md mb-2 border-0 border-red-400 bg-red-100 py-4 px-4">
+                                                                <div className="flex flex-row align-middle items-center text-red-700">
+                                                                    <i className="fa-duotone fa-info-circle fa-2x mt-1 text-red-700 flex-none"></i>
 
-                                                                <div className="flex-auto ml-1 mt-1">
-                                                                    <span className="text-sm pl-3 block text-red-900 mb-1">
-                                                                        Could not process request
-                                                                    </span>
+                                                                    <div className="flex-auto ml-1 mt-1">
+                                                                        <span className="text-sm pl-3 block text-red-900 mb-1">
+                                                                            Could not process request
+                                                                        </span>
 
-                                                                    <span className="text-sm pl-3 block text-red-700">
-                                                                        {state.errors.stkError}
-                                                                    </span>
+                                                                        <span className="text-sm pl-3 block text-red-700">
+                                                                            {state.errors.stkError}
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ) : null
+                                                    )
+                                                )
                                             }
 
                                             <div className="pb-2 md:basis-1/2 w-full pt-1 md:px-4">
