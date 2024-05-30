@@ -47,7 +47,7 @@ export const CoreSideBar: FC<Core_Side_B_Props> = ({ location }) => {
 
     return (
         <React.Fragment>
-            <div className="md:w-64 bg-white text-sm h-full fixed left-0 top-0 overflow-y-auto scroll-smooth scrollbar-thin mt-16 mb-16 border-r border-gray-300">
+            <div className="md:w-64 md:block hidden bg-white text-sm h-full fixed left-0 top-0 overflow-y-auto scroll-smooth scrollbar-thin mt-16 mb-16 border-r border-gray-300">
                 <div className="py-4 px-2">
                     <ul className="w-full">
                         <li className="text-stone-600 m-2 space-y-2 ">
