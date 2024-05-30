@@ -288,7 +288,7 @@ export const Identity_03 = () => {
                                                 <>
                                                     <div className="w-full mb-4">
                                                         <span className="block text-stone-700 pb-3">
-                                                            Hey, we've discovered you've been included as a member on:
+                                                            You've already been included as a member on:
                                                         </span>
 
                                                         <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
