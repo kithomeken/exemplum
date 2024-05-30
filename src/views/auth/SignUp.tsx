@@ -14,7 +14,7 @@ import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import { APPLICATION, AUTH_ } from "../../global/ConstantsRegistry";
 import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
 import Rock_Band_Image from '../../assets/images/cbbd3439ac7db68a31864dfc93545a62.svg'
-import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions";
+import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions";
 
@@ -200,7 +200,7 @@ export const SignUp = () => {
                     }
                 }
 
-                dispatch(firebaseAuthActions(signInProps))
+                dispatch(Alt_FirebaseSSO_SignIn(signInProps))
             }
         }
     };
@@ -240,7 +240,7 @@ export const SignUp = () => {
                 identity: 'google',
             }
 
-            dispatch(firebaseAuthActions(signUpProps))
+            dispatch(Alt_FirebaseSSO_SignIn(signUpProps))
         }
     }
 
