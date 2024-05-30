@@ -423,16 +423,16 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                             </span>
                                                         </div>
 
-                                                        <div className="basis-1/3 text-emerald-600 text-right">
+                                                        <div className="basis-1/3 text-right">
                                                             <span className=" py-1 block mb-2 capitalize">
-                                                                <div className="w-full flex flex-row align-middle items-center">
-                                                                    <span className="text-stone-500 text-sm block">
-                                                                        Ksh.
-                                                                    </span>
-
-                                                                    <span className="px-1 text-sm block">
+                                                                <div className="w-full flex flex-row-reverse align-middle items-center gap-x-2">
+                                                                    <span className="text-base block">
                                                                         <span className="text-stone-600">{state.data.payment.nett.split('.')[0]}</span>
                                                                         <span className="text-stone-400">.{state.data.payment.nett.split('.')[1]}</span>
+                                                                    </span>
+
+                                                                    <span className="text-stone-500 text-sm block">
+                                                                        Ksh.
                                                                     </span>
                                                                 </div>
                                                             </span>
@@ -450,21 +450,6 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                         <div className="basis-1/2 text-emerald-600 text-right">
                                                             <span className="block mb-2">
                                                                 {DateFormating(state.data.trans.tran_date)}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex flex-col w-full align-middle items-center">
-                                                        <div className="w-full text-gray-600 text-sm">
-                                                            <span className=" py-1 block mb-1">
-                                                                <span className="hidden md:inline-block">Result Description:</span>
-                                                                <span className="md:hidden">Originator Id:</span>
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="w-full text-emerald-600">
-                                                            <span className="block mb-2">
-                                                                {state.data.trans.resultDesc}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -588,15 +573,20 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                         </span>
                                                     </div>
                                                 ) : (
-                                                    state.data.trans.resultCode !== '0' ? (
-                                                        <div className="flex flex-row-reverse w-full align-middle items-center bg-orange-50 py-2 mb-6 px-6 transition-transform ease-in-out duration-500">
-                                                            <button type="button" onClick={retryPaymentRequest} className="block text-red-600 py-1 hover:underline">
-                                                                Retry Payment
-                                                            </button>
-                                                        </div>
-                                                    ) : (
+                                                    state.data.trans === null ? (
                                                         <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
                                                         </div>
+                                                    ) : (
+                                                        state.data.trans.resultCode !== '0' ? (
+                                                            <div className="flex flex-row-reverse w-full align-middle items-center bg-orange-50 py-2 mb-6 px-6 transition-transform ease-in-out duration-500">
+                                                                <button type="button" onClick={retryPaymentRequest} className="block text-red-600 py-1 hover:underline">
+                                                                    Retry Payment
+                                                                </button>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
+                                                            </div>
+                                                        )
                                                     )
                                                 )
                                             ) : (

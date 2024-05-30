@@ -97,24 +97,36 @@ export const WithdrawalRequests = () => {
             {
                 Header: 'Status',
                 id: 'g8F7A1kH5l',
-                accessor: (data: { status: any }) => (
+                accessor: (data: { status: any, txn: any }) => (
                     <span>
                         {
-                            data.status === 'A' ? (
-                                <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
-                                    <span className="hidden md:inline-block">Approved</span>
-                                    <span className="md:hidden">Approved</span>
-                                </span>
-                            ) : data.status === 'P' ? (
+                            data.status === 'P' ? (
                                 <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
                                     <span className="hidden md:inline-block">New Request</span>
                                     <span className="md:hidden">New</span>
                                 </span>
-                            ) : (
+                            ) : data.status === 'R' ? (
                                 <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
                                     <span className="hidden md:inline-block">Rejected</span>
                                     <span className="md:hidden">Rejected</span>
                                 </span>
+                            ) : (
+                                data.txn === '0' ? (
+                                    <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
+                                        <span className="hidden md:inline-block">Account Settled</span>
+                                        <span className="md:hidden">Paid</span>
+                                    </span>
+                                ) : data.txn === null ? (
+                                    <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
+                                        <span className="hidden md:inline-block">Approved</span>
+                                        <span className="md:hidden">Approved</span>
+                                    </span>
+                                ) : (
+                                    <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                        <span className="hidden md:inline-block">Payment Error</span>
+                                        <span className="md:hidden">Payment Error</span>
+                                    </span>
+                                )
                             )
                         }
                     </span>
