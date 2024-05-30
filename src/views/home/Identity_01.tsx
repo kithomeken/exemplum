@@ -552,7 +552,7 @@ export const Identity_01 = () => {
                             </div>
                         </div>
 
-                        <div className="md:basis-2/5 hidden md:block h-screen px-4py-6">
+                        <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
                             <img className="h-full bg-orange-100 rounded-2xl" src={smallAsset} alt={"hello_i'm_carol"} loading="lazy" />
                         </div>
                     </div>
