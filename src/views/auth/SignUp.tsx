@@ -348,7 +348,7 @@ export const SignUp = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="wrapper wrapper-background w-full overflow-auto h-screen">
+                    <div className="wrapper wrapper-background w-full overflow-auto h-screen md:p-6">
                         <section className="gx-container gx-900 bg-white shadow-md rounded-md h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
                                 <div className="md:basis-2/5 py-4 md:px-6 px-8 w-full">
