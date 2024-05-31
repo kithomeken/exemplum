@@ -6,7 +6,7 @@ import { ACCOUNT } from "../../api/API_Registry"
 import ReactTable from "../../lib/hooks/ReactTable"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
-import { API_RouteReplace, classNames, formatAmount, humanReadableDate } from "../../lib/modules/HelperFunctions"
+import { API_RouteReplace, DateFormating, classNames, formatAmount, humanReadableDate, minimalistDateFormat } from "../../lib/modules/HelperFunctions"
 
 export const MoneyOut = () => {
     const [state, setstate] = useState({
@@ -459,43 +459,97 @@ export const MoneyOut = () => {
                 id: 'FXd-Wc00',
                 accessor: (data: any) => (
                     <div className="px-0 w-full">
-                        <div className="flex flex-col md:flex-row">
-                            <div className="w-full flex flex-row md:pr-3 align-middle items-center pb-2 md:py-0.5 md:basis-1/2">
-                                <span className=" py-1 px-1.5 text-stone-500 text-xs">
-                                    Ksh.
+                        <div className="md:grid md:grid-cols-4 flex-col gap-x-3 md:gap-y-0 space-y-2 align-middle items-center justify-between w-full text-sm py-1 md:py-0">
+                            <span className="text-orange-600 md:block flex flex-row w-full md:mb-0 mb-1">
+                                <div className="basis-1/2 md:w-auto">
+                                    {
+                                        data.receipt === null ? (
+                                            <span>-</span>
+                                        ) : (
+                                            data.receipt
+                                        )
+                                    }
+                                </div>
+
+                                <span className="md:block mb-0 text-sm text-slate-500 text-start hidden">
+                                    {DateFormating(data.created_at)}
                                 </span>
 
-                                <span className=" py-1 px-1.5 text-2xl">
-                                    <span className="text-stone-700">{data.amount.split('.')[0]}</span>
-                                    <span className="text-stone-400">.{data.amount.split('.')[1]}</span>
-                                </span>
-
-                                <span className="block mb-0 text-sm text-slate-500 basis-1/2 text-right md:hidden">
-                                    {humanReadableDate(data.tran_date)}
-                                </span>
-                            </div>
-
-                            <div className="w-full flex flex-row align-middle items-center md:pl-3 md:py-1 md:basis-1/2">
-                                <div className="flex flex-row align-middle items-center w-full">
-                                    <div className="basis-1/2">
-                                        <span className="inline-flex items-center text-sm font-medium text-orange-600">
-                                            <span className="text-orange-600 mr-2 pr-2 md:mr-4 md:pr-4 border-r">
-                                                {data.receipt}
+                                <div className="md:w-auto basis-1/2 md:hidden">
+                                    {
+                                        data.result_code === null || data.result_code === undefined ? (
+                                            <span className="bg-yellow-100 text-yellow-800 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
+                                                <span className="hidden md:inline-block">Pending Payment</span>
+                                                <span className="md:hidden">Pending</span>
                                             </span>
+                                        ) : (
+                                            data.result_code === '0' ? (
+                                                <span className="bg-emerald-100 text-emerald-700 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
+                                                    <span className="hidden md:inline-block">Payment Fulfilled</span>
+                                                    <span className="md:hidden">Payment Fulfilled</span>
+                                                </span>
+                                            ) : (
+                                                <span className="bg-yellow-100 text-yellow-800 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
+                                                    <span className="hidden md:inline-block">Pending Payment</span>
+                                                    <span className="md:hidden">Pending Payment</span>
+                                                </span>
+                                            )
+                                        )
+                                    }
+                                </div>
+                            </span>
 
-                                            <span className="text-stone-600">
-                                                {data.msisdn}
-                                            </span>
+                            <span className="text-stone-600">
+                                {data.msisdn}
+                            </span>
 
-                                        </span>
-                                    </div>
+                            <div className="w-auto flex flex-col">
+                                <div className="flex flex-row align-middle items-center gap-x-1.5">
+                                    <span className="text-stone-500 text-xs">
+                                        Ksh.
+                                    </span>
+
+                                    <span className="text-lg">
+                                        <span className="text-stone-700">{data.amount.split('.')[0]}</span>
+                                        <span className="text-stone-400">.{data.amount.split('.')[1]}</span>
+                                    </span>
+                                </div>
+
+                                <div className="flex flex-row align-middle items-center gap-x-1.5">
+                                    <span className="text-stone-500 text-xs">
+                                        Ksh.
+                                    </span>
+
+                                    <span className="text-sm">
+                                        <span className="text-stone-500">{data.mpesa_b2c_fee}</span>
+                                    </span>
+                                    TXN Charge
                                 </div>
                             </div>
-                        </div>
 
-                        <span className="md:block mb-0 text-sm text-slate-500 basis-1/2 text-start hidden px-1.5">
-                            {humanReadableDate(data.tran_date)}
-                        </span>
+                            <div className="w-auto hidden md:block">
+                                {
+                                    data.result_code === null || data.result_code === undefined ? (
+                                        <span className="bg-yellow-100 text-stone-700 text-xs py-1 px-2 rounded inline-flex gap-x-2 align-middle items-center w-auto">
+                                            <span className="hidden md:inline-block">Pending Payment</span>
+                                            <span className="md:hidden">Pending</span>
+                                        </span>
+                                    ) : (
+                                        data.result_code === '0' ? (
+                                            <span className="bg-emerald-100 text-emerald-700 text-xs py-1 px-2 rounded inline-flex gap-x-2 align-middle items-center w-auto">
+                                                <span className="hidden md:inline-block">Payment Fulfilled</span>
+                                                <span className="md:hidden">Payment Fulfilled</span>
+                                            </span>
+                                        ) : (
+                                            <span className="bg-yellow-100 text-stone-700 text-xs py-1 px-2 rounded inline-flex gap-x-2 align-middle items-center w-auto">
+                                                <span className="hidden md:inline-block">Pending Payment</span>
+                                                <span className="md:hidden">Pending Payment</span>
+                                            </span>
+                                        )
+                                    )
+                                }
+                            </div>
+                        </div>
                     </div>
                 ),
             },
@@ -523,15 +577,15 @@ export const MoneyOut = () => {
 
                         {
                             state.data.requests.length < 1 ? (
-                                <div className="py-2 mb-3">
-                                    <div className="flex m-auto w-full md:w-1/2 flex-col md:flex-row md:space-x-4 justify-center px-6 py-4 border-2 border-stone-300 border-dashed rounded-md">
+                                <div className="mb-3">
+                                    <div className="flex m-auto w-full md:w- flex-col md:flex-row md:space-x-4 justify-center px-6 py-4 border-2 border-stone-300 border-dashed rounded-md">
                                         <div className="space-y-6 text-center">
                                             <div className="text-sm w-full text-stone-600">
-                                                <p className="pb-3 text-lg">
+                                                <p className="pb-2 text-lg">
                                                     No pending withdrawal requests found
                                                 </p>
                                                 <p className="text-sm text-gray-500 pb-1">
-                                                    Consider making a withdrawal today to access your hard-earned funds.
+                                                    Make a withdrawal today to access your funds.
                                                 </p>
                                             </div>
                                         </div>
@@ -545,7 +599,7 @@ export const MoneyOut = () => {
                         }
 
                         <div className="w-12/12">
-                            <p className="text-sm form-group text-gray-500">
+                            <p className="text-sm pt-3 form-group text-orange-500">
                                 Paid out withdrawal requets
                             </p>
                         </div>
