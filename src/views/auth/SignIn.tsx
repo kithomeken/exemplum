@@ -39,6 +39,12 @@ export const SignIn = () => {
         )
     )?.path
 
+    const forgotRoute: any = (
+        authenticationRoutes.find(
+            (routeName) => routeName.name === 'FORGOT_PWD_'
+        )
+    )?.path
+
     React.useEffect(() => {
         authRedirectResult()
             .then(async (result) => {
@@ -358,11 +364,11 @@ export const SignIn = () => {
                                         </div>
 
                                         <div className="text-sm pt-4 pb-1">
-                                            <a href="/auth/forgot-password" className="text-right block text-stone-600 hover:text-stone-700 hover:underline">
+                                            <Link to={forgotRoute} className="text-right block text-stone-600 hover:text-stone-700 hover:underline">
                                                 <span className="font-small">
                                                     Forgot password?
                                                 </span>
-                                            </a>
+                                            </Link>
                                         </div>
 
                                         <div className="pb-3 pt-3 flex justify-center">
