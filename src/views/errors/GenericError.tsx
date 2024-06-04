@@ -11,7 +11,7 @@ export const GenericError: FC<Generic_Error_Interface> = ({ description, title =
                     <img src={emptyBox} alt="broken_robot" width="auto" className="block text-center m-auto w-52" />
 
                     <div className="mt-3 text-center m-auto text-slate-600 py-4 md:w-96">
-                        <span className="text-orange-600 my-4 block">
+                        <span className="text-red-600 my-4 block text-xl">
                             {title}
                         </span>
 

@@ -482,7 +482,7 @@ export const SignUp = () => {
                                                     auth0.processing && auth0.provider === 'password' ? (
                                                         <span className="flex flex-row items-center">
                                                             <i className="fad fa-spinner-third fa-xl fa-spin mr-2"></i>
-                                                            <span>Signing u...</span>
+                                                            <span>Signing up...</span>
                                                         </span>
                                                     ) : (
                                                         <span>Sign Up</span>
