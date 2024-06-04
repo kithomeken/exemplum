@@ -16,6 +16,7 @@ import { UserManagement } from "../views/admin/UserManagement";
 import { EntityProfile } from "../views/settings/EntityProfile";
 import { MpesaExceptions } from "../views/admin/MpesaExceptions";
 import { Routes_Interface } from "../lib/modules/routesInterface";
+import { PasswordRecovery } from "../views/auth/PasswordRecovery";
 import { TransactionPayIn } from "../views/admin/TransactionPayIn";
 import { AccountSuspended } from "../views/errors/AccountSuspended";
 import { PostAuthentication } from "../views/auth/PostAuthentication";
@@ -38,6 +39,12 @@ export const authenticationRoutes: Array<Routes_Interface> = [
         element: <SignUp />, 
         caseSensitive: true, 
         name: 'SIGN_UP_' 
+    },
+    {
+        path: "/auth/password-recovery", 
+        element: <PasswordRecovery />, 
+        caseSensitive: true, 
+        name: 'FORGOT_PWD_' 
     },
     { 
         path: "/auth/invitation/:hash", 
