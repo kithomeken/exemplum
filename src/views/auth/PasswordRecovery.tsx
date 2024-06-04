@@ -167,7 +167,7 @@ export const PasswordRecovery = () => {
                             state.httpStatus === 200 ? (
                                 <>
                                     <div className="md:basis-2/3 md:px-6 px-6 w-full md:pt-8 flex flex-col text-center md:py-6 pt-8">
-                                        <Link to={"/"} className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0">{APPLICATION.NAME}</Link>
+                                        <span className="text-2xl text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0">Check Your Mail</span>
 
                                         <div className="flex flex-row w-full align-middle justitfy-between items-center">
                                             <div className="w-48 pt-4 mx-auto pb-3">
