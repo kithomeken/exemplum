@@ -85,6 +85,26 @@ export function Alt_FirebaseSSO_SignIn(propsIn: FirebaseProps) {
     }
 }
 
+export function Alt_FirebaseSSO_SignUp(propsIn: FirebaseProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const firebaseProps = { ...propsIn }
+
+        dispatch({
+            type: AUTH_.PROCESSING,
+            response: {
+                provider: firebaseProps.identity,
+                redirect: false,
+            },
+        });
+
+        if (firebaseProps.identity === 'password') {
+            emailPasswordSignUp(dispatch, firebaseProps)
+        } else {
+            googleProviderSignInWithPopUp(dispatch, firebaseProps)
+        }
+    }
+}
+
 async function googleProviderSignInWithPopUp(dispatch: any, firebaseProps: any) {
     firebaseAuth.useDeviceLanguage();
     const provider = new GoogleAuthProvider();
