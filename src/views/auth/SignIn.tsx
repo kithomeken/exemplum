@@ -54,6 +54,12 @@ export const SignIn = () => {
                     })
 
                     dispatch(resetAuth0())
+                    console.log(locationState);
+
+                    if (locationState.autoSignIn) {
+                        autoSignInHandler()
+                    }
+
                     return;
                 }
 
@@ -83,7 +89,7 @@ export const SignIn = () => {
                 dispatch(resetAuth0())
                 return null;
             });
-    }, [dispatch])
+    }, [dispatch, locationState])
 
     const onChangeHandler = (e: any) => {
         if (!auth0.processing) {
@@ -148,6 +154,23 @@ export const SignIn = () => {
 
         return valid;
     };
+
+    const autoSignInHandler = () => {
+        if (!auth0.processing) {
+            dispatch(resetAuth0())
+
+            const autoSignInProps = {
+                identity: 'password',
+                deviceInfo: DeviceInfo(),
+                credentials: {
+                    email: locationState.email,
+                    password: locationState.password,
+                }
+            }
+
+            dispatch(Alt_FirebaseSSO_SignIn(autoSignInProps))
+        }
+    }
 
     const passwordSignInFormHandler = (e: any) => {
         e.preventDefault();
@@ -270,7 +293,7 @@ export const SignIn = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="wrapper wrapper-background w-full overflow-auto h-screen md:p-6">
+                    <div className="wrapper md:align-middle align-baseline wrapper-background w-full overflow-auto h-screen md:p-6">
                         <section className="gx-container gx-900 bg-white shadow-md rounded-md h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
                                 <div className="md:basis-2/5 py-4 md:px-6 px-8 w-full">

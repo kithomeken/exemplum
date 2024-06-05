@@ -64,7 +64,7 @@ export const PostAuthentication = () => {
                 <title>Redirecting... </title>
             </Helmet>
 
-            <div className="wrapper">
+            <div className="wrapper md:align-middle align-baseline w-full h-screen">
                 <section className="gx-container">
                     <Loading />
                 </section>
