@@ -155,7 +155,7 @@ export const IdentityVerification = () => {
                         */
                         <Navigate to={homePeripheralRoute} replace />
                     ) : (
-                        <div className="wrapper w-full overflow-auto md:h-screen h-auto">
+                        <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
                             <section className="gx-container rounded-md md:h-screen sm:h-auto w-full" style={CONFIG_MAX_WIDTH}>
                                 <div className="flex md:flex-row flex-col align-middle items-center w-full md:h-screen h-auto md:pb-0">
                                     <div className="md:basis-1/2 md:px-6 px-6 w-full pt-8">
