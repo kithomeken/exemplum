@@ -98,24 +98,6 @@ export const PasswordRecovery = () => {
         }
     }
 
-    const resetAccountPassword = async () => {
-        let { input } = state
-        let { errors } = state
-
-        sendPasswordResetEmail(firebaseAuth, input.email)
-            .then((result: any) => {
-                // Password reset email sent!
-                // ..
-                console.log(result);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-                console.log(error);
-            });
-    }
-
     const passwordRecoveryCheck = async () => {
         let { input } = state
         let { errors } = state
@@ -152,6 +134,23 @@ export const PasswordRecovery = () => {
         setstate({
             ...state, httpStatus, errors, posting
         })
+    }
+
+    const resetAccountPassword = async () => {
+        let { input } = state
+
+        sendPasswordResetEmail(firebaseAuth, input.email)
+            .then((result: any) => {
+                // Password reset email sent!
+                // ..
+                console.log(result);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                console.log(error);
+            });
     }
 
     return (
