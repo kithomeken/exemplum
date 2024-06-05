@@ -12,6 +12,7 @@ export const AUTH = {
     SSO_BENEFACTORS:    '/v1/identity/auth/firebase/_/sso/benefactor',
     SSO_BENEFICIARIES:  '/v1/identity/auth/firebase/_/sso/beneficiaries',
     PASSWD_RECOVERY:    '/v1/identity/auth/account/_/password-recovery',
+    TOKEN_INVALIDATION: '/v1/identity/auth/account/_/access-token/invalidate',
     META_CHECK:         '/v1/identity/account/meta/check',
     PRE_META_01:        '/v1/identity/account/meta/identifier/check',
     PRE_META_03:        '/v1/identity/account/meta/artist_name/check',
