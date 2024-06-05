@@ -18,7 +18,7 @@ export const PostAuthentication = () => {
     const location = useLocation()
     const dispatch: any = useDispatch();
 
-    const locationState: any = location.state        
+    const locationState: any = location.state
     const auth0: any = useAppSelector(state => state.auth0)
 
     const postAuthProps = {
@@ -64,10 +64,8 @@ export const PostAuthentication = () => {
                 <title>Redirecting... </title>
             </Helmet>
 
-            <div className="wrapper md:align-middle align-baseline w-full h-screen">
-                <section className="gx-container">
-                    <Loading />
-                </section>
+            <div className="w-full h-screen flex flex-col justify-center align-middle items-center">
+                <Loading />
             </div>
         </React.Fragment>
     )
