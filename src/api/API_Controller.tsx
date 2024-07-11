@@ -4,7 +4,7 @@ const baseURLs = {
         API: 'https://api.bigfan.theapplication.online/api',
         APP: 'https://bigfan.theapplication.online'
     },
-    production: process.env.PRD_LVL === '0' ? {
+    production: process.env.PROD_LVL === '0' ? {
         FQDN: 'https://api-vrs.bigfan.co.ke',
         API: 'https://api-vrs.bigfan.co.ke/api',
         APP: 'https://bigfan.co.ke'
