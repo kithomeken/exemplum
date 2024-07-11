@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 const baseURLs = {
     development: {
         FQDN: 'https://api.bigfan.theapplication.online',
