@@ -86,7 +86,7 @@ export const AccountSubHeader: FC<headerProps> = ({ errorMode = false }) => {
                             leaveTo="transform opacity-0 scale-95"
                         >
                             <Menu.Items className={classNames(
-                                errorMode ? 'w-52 py-0' : 'w-64 py-2', 'origin-top-right absolute right-0 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+                                errorMode ? 'w-52 py-0' : 'w-52 py-1', 'origin-top-right absolute right-0 mt-3 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
                             )}>
                                 <div className="pb-">
                                     {
@@ -98,7 +98,7 @@ export const AccountSubHeader: FC<headerProps> = ({ errorMode = false }) => {
                                                             to={IdentityRoute}
                                                             className={classNames(
                                                                 active ? 'bg-slate-100 text-slate-800' : 'text-slate-700',
-                                                                'px-4 py-3 text-sm text-left w-full block mt-2'
+                                                                'px-4 py-3 text-sm text-left w-full block mt-1'
                                                             )}
                                                         >
                                                             <span className="flex flex-row align-middle items-center pl-1">
@@ -107,33 +107,12 @@ export const AccountSubHeader: FC<headerProps> = ({ errorMode = false }) => {
                                                                 </span>
 
                                                                 <span className="ml-2 flex-auto">
-                                                                    Manage Your Account
+                                                                    My Account
                                                                 </span>
                                                             </span>
                                                         </Link>
                                                     )}
                                                 </Menu.Item>
-
-                                                <Menu.Item>
-                                                    {({ active }) => (
-                                                        <button className={classNames(
-                                                            active ? 'bg-slate-100 text-slate-800' : 'text-slate-700',
-                                                            'px-4 py-3 text-sm text-left w-full block'
-                                                        )}
-                                                        >
-                                                            <span className="flex flex-row align-middle items-center pl-1">
-                                                                <span className="w-7">
-                                                                    <i className="fa-light m-auto fa-circle-question text-base"></i>
-                                                                </span>
-
-                                                                <span className="ml-2 flex-auto">
-                                                                    Help & Feedback
-                                                                </span>
-                                                            </span>
-                                                        </button>
-                                                    )}
-                                                </Menu.Item>
-
                                             </>
                                         ) : null
                                     }

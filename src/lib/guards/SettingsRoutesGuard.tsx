@@ -9,7 +9,7 @@ import { classNames } from "../modules/HelperFunctions";
 import { Header } from "../../components/layouts/Header";
 import StorageServices from "../../services/StorageServices";
 import { revokeAuthSession } from "../../store/auth/firebaseAuthActions";
-import { CONFIG_MARGIN_TOP, STORAGE_KEYS } from "../../global/ConstantsRegistry";
+import { APPLICATION, CONFIG_MARGIN_TOP, STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
 import { standardErrorRoutes, standardSettingsRoutes } from "../../routes/routes";
 
 export default function SettingsRoutesGuard() {
@@ -94,35 +94,21 @@ export default function SettingsRoutesGuard() {
 
                 <Header />
 
-                <div className="flex flex-col w-full h-screen">
-                    <div className="w-full overflow-y-auto" style={CONFIG_MARGIN_TOP}>
-                        <div className="kiOAkj">
-                            <div className="flex flex-col w-full md:flex-row overflow-hidden">
-                                <div className="flex-shrink-0 w-full md:w-56">
-                                    <div className="p-4">
-                                        <h1 className="text-xl text-stone-600 font-medium tracking-wider">
-                                            Settings
-                                        </h1>
-                                    </div>
+                <div className="flex flex-col w-full h-screen mx-auto" style={STYLE.MAX_WIDTH}>
+                    <div className="w-full flex-grow py-3 pt-16" style={CONFIG_MARGIN_TOP}>
+                        <main className="h-full px-4 overflow-y-auto">
+                            <div className="h-full mx-auto pb-16 px-2 py-2">
 
-                                    <nav className="flex flex-col px-3">
-                                        {Ps0tMenuLink("Account Profile", "CNF_ACC_ID_")}
-                                        {Ps0tMenuLink("Change Email", "CNF_EMAIL_CHNG_")}
-                                        {Ps0tMenuLink("Entity", "CNF_ENTITY_")}
-                                    </nav>
-                                </div>
+                                <Outlet />
 
-                                <div className="flex-1 overflow-hidden py-3 h-screen pt-20 -mt-16">
-                                    <main className="flex-1 h-full px-4 overflow-y-auto border-gray-200 md:border-l">
-                                        <div className="container h-full mx-auto border-t md:border-t-0 pb-16 px-2 py-2">
-
-                                            <Outlet />
-
-                                        </div>
-                                    </main>
+                                <div className="mx-auto md:py-4 py-6 text-center block w-full">
+                                    <p className="text-sm text-stone-500 pb-4">
+                                        <span className="text-orange-600">{APPLICATION.NAME}</span> © {new Date().getFullYear()}.
+                                        Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                    </p>
                                 </div>
                             </div>
-                        </div>
+                        </main>
                     </div>
                 </div>
             </div>

@@ -5,10 +5,11 @@ import { classNames } from "../../lib/modules/HelperFunctions"
 
 interface Props {
     menuItems: any,
+    title?: any,
     width?: any,
 }
 
-export const DropDown: FC<Props> = ({ menuItems, width }) => {
+export const DropDown: FC<Props> = ({ menuItems, title, width }) => {    
     return (
         <Menu as="div" className="relative inline-block text-left float-right ml-3">
             {({ open }) => (
@@ -18,12 +19,21 @@ export const DropDown: FC<Props> = ({ menuItems, width }) => {
                             className={
                                 classNames(
                                     open ? 'bg-gray-200' : null,
-                                    "flex justify-center w-7 rounded border-0 border-gray-300 shadow-sm py-1-5 bg-gray-100 text-sm font-medium text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-0 focus:ring-offset focus:ring-offset-gray-100 focus:ring-green-500 align-middle"
+                                    "flex justify-center rounded text-sm focus:outline-none focus:ring-0 focus:ring-offset focus:ring-offset-gray-100 focus:ring-green-500 align-middle"
                                 )
                             }>
-                            <div className='h-5 w-5'>
-                                <span className="far fa-ellipsis-h fa-xl text-gray-500 m-auto"></span>
-                            </div>
+
+                            {
+                                title === undefined ? (
+                                    <div className='h-5 w-5'>
+                                        <span className="far fa-ellipsis-h fa-xl text-gray-500 m-auto"></span>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {title}
+                                    </>
+                                )
+                            }
                         </Menu.Button>
                     </div>
 

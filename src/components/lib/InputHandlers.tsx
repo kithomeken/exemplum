@@ -38,7 +38,7 @@ export function G_onInputBlurHandler(event: any, posting: boolean, title: any, m
         let targetTitle = tName.charAt(0).toUpperCase() + tName.slice(1)
         targetTitle = targetTitle.replace('_', ' ')
 
-        const head = title === '' ? targetTitle : title + ' ' + tName.replace('_', ' ')
+        let head = title === '' ? targetTitle : title + ' ' + tName.replace('_', ' ')
 
         if (tValue.length < 1 && event.target.required) {
             /* 
@@ -48,6 +48,11 @@ export function G_onInputBlurHandler(event: any, posting: boolean, title: any, m
                 case 'amount':
                     input.error = 'Kindly add an amount'
                     break;
+
+                case 'identifier':
+                    head = title === 'ID' ? 'National ID' : 'Passport number'
+                    input.error = head + ' cannot be empty'
+                    break
 
                 default:
                     input.error = head + ' cannot be empty'
@@ -149,7 +154,24 @@ export function G_onInputBlurHandler(event: any, posting: boolean, title: any, m
                     input.error = 'Kindly add a valid phone number '
                     return input
                 }
+                break
 
+            case 'identifier':
+                tValue = tValue.toUpperCase()
+
+                if (title === 'ID') {
+                    const idRegex = /^\d{7,8}$/;
+
+                    if (!idRegex.test(tValue)) {
+                        input.error = 'Please provide a valid ' + head
+                    }
+                } else {
+                    const passportRegex = /^[A-Z0-9]{6,9}$/;
+
+                    if (!passportRegex.test(tValue)) {
+                        input.error = 'Please provide a valid ' + head
+                    }
+                }
                 break
 
             default:

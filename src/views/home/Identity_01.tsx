@@ -97,35 +97,11 @@ export const Identity_01 = () => {
 
     const onInputBlur = (e: any) => {
         if (!idC_State.processing) {
-            let output: any = G_onInputBlurHandler(e, idC_State.processing, '')
             let { input } = state
             let { errors }: any = state
 
-            switch (e.target.name) {
-                case 'identifier':
-                    let { identifier } = state
-                    output.value = output.value.toUpperCase()
-
-                    if (output.error.length > 1) {
-                        identifier.checking = false
-                        output.error = input.id_type === 'ID' ? 'National ID number cannot be empty' : 'Passport number cannot be empty';
-                    } else {
-                        if (state.input.id_type === 'ID') {
-                            if (isNaN(output.value)) {
-                                output.error = 'Kindly add a valid National ID number'
-                            }
-                        }
-
-                        if (output.error.length < 1) {
-                            identifier.checking = true
-                            checkIdentifierAvailability()
-                        }
-                    }
-                    break;
-
-                default:
-                    break;
-            }
+            let handlerTitle = e.target.name === 'identifier' ? input.id_type : ''
+            let output: any = G_onInputBlurHandler(e, idC_State.processing, handlerTitle)
 
             input[e.target.name] = output.value
             errors[e.target.name] = output.error
@@ -170,8 +146,8 @@ export const Identity_01 = () => {
                 })
 
                 return
-            } else if (fileSize > 1) {
-                errors[e.target.name] = 'Maximum file upload size is 1 MB'
+            } else if (fileSize > 2) {
+                errors[e.target.name] = 'Maximum file upload size is 2 MB'
                 input.docPhoto = null
                 input.docFile = null
 
@@ -345,7 +321,7 @@ export const Identity_01 = () => {
                                 )
                             }>
                                 <span className="block pt-4 text-xl md:text-2xl">
-                                    Welcome aboard! 
+                                    Welcome aboard!
 
                                     <span className="text-sm text-stone-500 block py-2">
                                         First things first, share some details about yourself...

@@ -27,6 +27,7 @@ export const Identity_00 = () => {
         data: {
             identity: null,
             beneficiaries: null,
+            onboardedMembers: 0,
         },
         entity: [{
             email: '',
@@ -60,9 +61,17 @@ export const Identity_00 = () => {
 
             if (response.data.success) {
                 status = 'fulfilled'
+                let onboardedMembers = 0
 
-                data.beneficiaries = payload.beneficiaries
+                Object.keys(data.beneficiaries).forEach(function (key) {
+                    if (data.beneficiaries[key].display_name !== null) {
+                        onboardedMembers = onboardedMembers + 1
+                    }
+                })
+
                 data.identity = payload.identity
+                data.onboardedMembers = onboardedMembers
+                data.beneficiaries = payload.beneficiaries
 
                 StorageServices.setLocalStorage(STORAGE_KEYS.ONBOARDING_STATUS, payload.identity.quo)
                 show = data.beneficiaries.length > 0 ? true : false
@@ -630,6 +639,21 @@ export const Identity_00 = () => {
                                                                                                     })
                                                                                                 }
 
+                                                                                                {
+                                                                                                    state.data.onboardedMembers < state.data.beneficiaries.length ? (
+                                                                                                        <div className="mt-4 bg-orange-00 px-2 md:py-2 border-l-2 bg-orange-50 border-orange-300 border-dashed rounded-sm mb-3">
+                                                                                                            <div className="flex flex-row align-middle items-center text-orange-700 px-2">
+                                                                                                                <i className="fa-duotone fa-info-circle fa-xl mt-1 text-orange-700 flex-none"></i>
+
+                                                                                                                <div className="flex-auto ml-1 mt-1">
+                                                                                                                    <span className="text-sm pl-3 block py-2 text-orange-700">
+                                                                                                                        All invited member(s) need to onboard for your request to be approved.
+                                                                                                                    </span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    ) : null
+                                                                                                }
 
                                                                                                 <div className="mt-4 bg-orange-00 px-2 md:py-2 border-l-2 bg-orange-50 border-orange-300 border-dashed rounded-sm mb-3">
                                                                                                     <div className="flex flex-row align-middle items-center text-orange-700 px-2">

@@ -26,6 +26,7 @@ import { OnboardingRequests } from "../views/admin/OnboardingRequests";
 import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
 import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
 import { IdentityVerification } from "../views/home/IdentityVerification";
+import { AccountManagement } from "../views/settings/AccountManagement";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -133,6 +134,13 @@ export const standardErrorRoutes: Array<Routes_Interface> = [
 export const standardSettingsRoutes: Array<Routes_Interface> = [
     {
         path: "/u/settings/account/profile", 
+        element: <AccountManagement />, 
+        activeMenu: 'Y', 
+        caseSensitive: true, 
+        name: 'CNF_ACC_ID_' 
+    },
+    {
+        path: "/u/settings/entity/profile", 
         element: <EntityProfile />, 
         activeMenu: 'Y', 
         caseSensitive: true, 
