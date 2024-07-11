@@ -5,9 +5,9 @@ const baseURLs = {
         APP: 'https://bigfan.theapplication.online'
     },
     production: {
-        FQDN: 'https://api.bigfan.theapplication.online',
-        API: 'https://api.bigfan.theapplication.online/api',
-        APP: 'https://bigfan.theapplication.online'
+        FQDN: 'https://api-vrs.bigfan.co.ke',
+        API: 'https://api-vrs.bigfan.co.ke/api',
+        APP: 'https://bigfan.co.ke'
     }
 };
 
