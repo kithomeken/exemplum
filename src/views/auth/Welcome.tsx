@@ -5,7 +5,7 @@ import { Loading } from "../../components/modules/Loading"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router"
 import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
-import smallAsset from "../../assets/images/7126211.svg"
+import smallAsset from "../../assets/images/illustration_178786105.svg"
 import { useAppSelector } from "../../store/hooks"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
 import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions"
@@ -245,7 +245,7 @@ export const Welcome = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Setup & Configuration</title>
+                <title>Big Fan Launch</title>
             </Helmet>
 
             {
@@ -258,11 +258,11 @@ export const Welcome = () => {
                         <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                             <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
                                 <div className="md:basis-3/5 md:px-6 px-8 w-full flex flex-col py-6 overflow-auto">
-                                    <span className="text-2xl self-start text-stone-500 tracking-wider leading-7 block pt-3 md:pt-0">
+                                    <span className="text-lg self-start text-stone-500 tracking-wider leading-7 block pt-3 md:pt-0">
                                         Hi there,
                                     </span>
 
-                                    <div className="flex flex-row align-middle items-center gap-x-3 pt-2 md:pb-3">
+                                    <div className="flex flex-row align-middle items-center gap-x-3 md:pb-3">
                                         <span className="text-xl text-stone-500 md:text-start text-start block">
                                             Welcome to <span className="text-orange-500">{APPLICATION.NAME}</span>.
                                         </span>
@@ -275,12 +275,16 @@ export const Welcome = () => {
                                     </div>
 
                                     <div className="w-full text-sm text-stone-600 float-right">
-                                        <span className="block py-4 text-lg md:text-xl">
-                                            Before we open the floor to the public, let's set up a few essential things.
+                                        <span className="block py-4 text-base md:text-lg">
+                                            Before we take off, let's run through some quick pre-flight checks to ensure everything is ready for a smooth launch.
 
                                             <span className="text-base md:text-lg pt-4 text-stone-500 block">
-                                                <span className="block">
-                                                    First things first, let's set up your account.
+                                                <span className=" text-base flex md:gap-x-2 md:flex-row flex-col gap-y-1 align-middle md:items-center">
+                                                    <span className="text-orange-600 text-sm">
+                                                        Pre-flight Check #1:
+                                                    </span>
+
+                                                    Let's set up your account.
                                                 </span>
                                             </span>
                                         </span>
@@ -288,8 +292,8 @@ export const Welcome = () => {
 
                                     {
                                         state.password.form ? (
-                                            <div className="w-full block m-auto border-t py-3">
-                                                <form className="w-full m-auto md:w-2/3 " /* onSubmit={passwordEmailInvitationHandler} */>
+                                            <div className="w-full block m-auto py-3">
+                                                <form className="w-full m-auto md:w-2/3 flex flex-col" /* onSubmit={passwordEmailInvitationHandler} */>
                                                     <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
 
                                                     <div className="shadow-none mb-3 pb-3">
@@ -357,10 +361,12 @@ export const Welcome = () => {
                                                         </div>
                                                     </div>
 
-                                                    <span onClick={togglePasswordPolicy} className="text-stone-600 hover:text-orange-600 text-sm m-auto flex flex-row-reverse gap-x-1 align-middle items-center cursor-pointer">
-                                                        <span>Password policy</span>
-                                                        <span className="fa-regular fa-circle-info fa-lg"></span>
-                                                    </span>
+                                                    <div className="w-full py-2">
+                                                        <span onClick={togglePasswordPolicy} className="text-stone-600 hover:text-orange-600 text-sm m-auto flex flex-row-reverse gap-x-1 align-middle items-center cursor-pointer">
+                                                            <span>Password policy</span>
+                                                            <span className="fa-regular fa-circle-info fa-lg"></span>
+                                                        </span>
+                                                    </div>
 
                                                     <div className="pt-3 flex justify-center">
                                                         <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
@@ -427,7 +433,7 @@ export const Welcome = () => {
                                 </div>
 
                                 <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                                    <img className="h-full rounded-2xl" src={smallAsset} alt={"hello_i'm_carol"} loading="lazy" />
+                                    <img className="h-full bg-orange-100 rounded-2xl" src={smallAsset} alt={"hello_i'm_carol"} loading="lazy" />
                                 </div>
                             </div>
                         </section>
