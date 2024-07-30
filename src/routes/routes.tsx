@@ -4,6 +4,7 @@ import { Yeat } from "../views/home/Yeat";
 import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
+import { Welcome } from "../views/auth/Welcome";
 import { Entity } from "../views/settings/Entity";
 import { Invitation } from "../views/auth/Invitation";
 import { EntityPayIn } from "../views/home/EntityPayIn";
@@ -25,8 +26,8 @@ import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
 import { OnboardingRequests } from "../views/admin/OnboardingRequests";
 import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
 import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
-import { IdentityVerification } from "../views/home/IdentityVerification";
 import { AccountManagement } from "../views/settings/AccountManagement";
+import { IdentityVerification } from "../views/home/IdentityVerification";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -50,6 +51,12 @@ export const authenticationRoutes: Array<Routes_Interface> = [
     { 
         path: "/auth/invitation/:hash", 
         element: <Invitation />, 
+        caseSensitive: true, 
+        name: 'AUTH_INVITE_' 
+    },
+    { 
+        path: "/welcome", 
+        element: <Welcome />, 
         caseSensitive: true, 
         name: 'AUTH_INVITE_' 
     },
