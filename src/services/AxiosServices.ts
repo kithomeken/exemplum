@@ -14,12 +14,23 @@ class AxiosServices {
             : null
     }
 
-    fetchData(route: any) {
+    async httpGet(url: any) {
         try {
-            const apiRoute = API_DOMAIN + route
-            return axios.get(apiRoute, this.axiosInstanceHeaders())
-        } catch (error) {
-            return (error.response !== undefined) ? error.response : error;
+            const options: any = null
+            const finalOptions = Object.assign(this.axiosInstanceHeaders(), options)
+            const POST_API_URL = API_DOMAIN + url
+
+            return await axios.get(POST_API_URL, finalOptions);
+        } catch (error: any) {
+            console.error('Axios.httpGet:', error);
+
+            const ERR = {
+                status: error.response?.status,
+                message: error.message,
+                code: error.code
+            }
+
+            return ERR;
         }
     }
 
