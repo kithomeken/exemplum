@@ -54,7 +54,6 @@ export const SignIn = () => {
                     })
 
                     dispatch(resetAuth0())
-                    console.log(locationState);
 
                     if (locationState.autoSignIn) {
                         autoSignInHandler()
