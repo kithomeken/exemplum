@@ -1,23 +1,11 @@
 const baseURLs = {
-    development: {
-        FQDN: 'https://api.bigfan.theapplication.online',
-        API: 'https://api.bigfan.theapplication.online/api',
-        APP: 'https://bigfan.theapplication.online'
-    },
-    production: process.env.PROD_LVL === '0' ? {
-        FQDN: 'https://api-vrs.bigfan.co.ke',
-        API: 'https://api-vrs.bigfan.co.ke/api',
-        APP: 'https://bigfan.co.ke'
-    } : {
-        FQDN: 'https://api.bigfan.theapplication.online',
-        API: 'https://api.bigfan.theapplication.online/api',
-        APP: 'https://bigfan.theapplication.online'
-    }
+    API: process.env.REACT_APP_API,
+    APP: process.env.REACT_APP_APP,
+    FQDN: process.env.REACT_APP_FQDN,
 };
 
 export const API_Controller = () => {
-    const environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
-    return baseURLs[environment];
+    return baseURLs;
 };
 
 export const { FQDN, API, APP } = API_Controller();
