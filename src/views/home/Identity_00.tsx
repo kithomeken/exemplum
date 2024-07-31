@@ -83,7 +83,6 @@ export const Identity_00 = () => {
                 status = 'rejected'
             }
         } catch (error) {
-            console.log(error);
             status = 'rejected'
             httpStatus = 500
         }
