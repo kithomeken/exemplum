@@ -63,7 +63,7 @@ export const Identity_00 = () => {
                 status = 'fulfilled'
                 let onboardedMembers = 0
 
-                Object.keys(data.beneficiaries).forEach(function (key) {
+                Object.keys(payload.beneficiaries).forEach(function (key) {
                     if (data.beneficiaries[key].display_name !== null) {
                         onboardedMembers = onboardedMembers + 1
                     }
@@ -83,6 +83,7 @@ export const Identity_00 = () => {
                 status = 'rejected'
             }
         } catch (error) {
+            console.log(error);
             status = 'rejected'
             httpStatus = 500
         }
