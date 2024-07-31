@@ -1,27 +1,28 @@
 import React from "react"
 import { Helmet } from "react-helmet"
-
-import { Loading } from "../../components/modules/Loading"
 import { useDispatch } from "react-redux"
-import { useLocation } from "react-router"
-import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
-import smallAsset from "../../assets/images/illustration_178786105.svg"
-import { useAppSelector } from "../../store/hooks"
-import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
-import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions"
-import { classNames } from "../../lib/modules/HelperFunctions"
-import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { getRedirectResult } from "firebase/auth"
-import AxiosServices from "../../services/AxiosServices"
-import { AUTH } from "../../api/API_Registry"
-import { PasswordPolicy } from "./PasswordPolicy"
 
-export const Welcome = () => {
+import { PasswordPolicy } from "./PasswordPolicy"
+import { useAppSelector } from "../../store/hooks"
+import { PREFLIGHT } from "../../api/API_Registry"
+import AxiosServices from "../../services/AxiosServices"
+import { Loading } from "../../components/modules/Loading"
+import { firebaseAuth } from "../../firebase/firebaseConfigs"
+import { classNames } from "../../lib/modules/HelperFunctions"
+import smallAsset from "../../assets/images/illustration_178786105.svg"
+import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
+import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions"
+import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+
+export const PreFlight = () => {
     const [state, setstate] = React.useState({
-        data: null,
         httpStatus: 200,
         redirect: false,
-        status: 'fulfilled',
+        status: 'pending',
+        data: {
+            inspection: null
+        },
         password: {
             form: false,
             policy: false,
@@ -39,60 +40,64 @@ export const Welcome = () => {
         },
     })
 
-    const location = useLocation()
     const dispatch: any = useDispatch();
-    const locationState: any = location.state
     const auth0: any = useAppSelector(state => state.auth0)
 
     React.useEffect(() => {
-        // verifySetup()
+        preflightInspection()
     }, [])
 
-    const verifySetup = async () => {
+    const preflightInspection = async () => {
         let { data } = state
         let { input } = state
         let { status } = state
 
         try {
-            const valResponse: any = await AxiosServices.httpPost(AUTH.SSO_BENEFICIARIES, null)
+            const preflightResp: any = await AxiosServices.httpGet(PREFLIGHT.COCKPIT_INSP)
+            const payload: any = preflightResp.data.payload
 
-            if (valResponse.data.success) {
+            if (preflightResp.data.success) {
                 authRedirectResult()
                     .then(async (result) => {
-                        if (!result) {
-                            input.email = valResponse.data.payload.beneficiary
-                            data.beneficiary = valResponse.data.payload.beneficiary
+                        if (!result) {                            
+                            data.inspection = payload.inspection
+                            status = data.inspection.cockpit === 'passed' ? 'fulfilled' : 'rejected'
 
                             setstate({
-                                ...state, status: 'fulfilled', data, input
+                                ...state, status, data
                             })
 
                             dispatch(resetAuth0())
                             return;
                         }
 
+                        data.inspection = payload.inspection
                         const firebaseUser: any = result.user;
-                        const accessToken = firebaseUser.accessToken;
-                        input.email = valResponse.data.payload.beneficiary
-                        data.beneficiary = valResponse.data.payload.beneficiary
 
-                        dispatch({
-                            type: AUTH_.FIREBASE_TOKEN,
-                            response: {
-                                accessToken: accessToken,
-                                refreshToken: firebaseUser.stsTokenManager.refreshToken,
-                                expirationTime: firebaseUser.stsTokenManager.expirationTime,
-                            },
-                        });
+                        if (data.inspection.cockpit === 'passed') {
+                            status = 'fulfilled'
+
+                            dispatch({
+                                type: AUTH_.FIREBASE_TOKEN,
+                                response: {
+                                    accessToken: firebaseUser.accessToken,
+                                    refreshToken: firebaseUser.stsTokenManager.refreshToken,
+                                    expirationTime: firebaseUser.stsTokenManager.expirationTime,
+                                },
+                            });
+                        } else {
+                            status = 'rejected'
+                        }
 
                         setstate({
-                            ...state, status: 'fulfilled', data, input
+                            ...state, status, data, input
                         })
 
                         return
                     })
-                    .catch(() => {
-                        data.beneficiary = ''
+                    .catch((error) => {
+                        console.log(error);
+                        
                         input.email = ''
 
                         setstate({
@@ -251,7 +256,7 @@ export const Welcome = () => {
             {
                 state.status === 'rejected' ? (
                     <>
-
+                        Rejected
                     </>
                 ) : state.status === 'fulfilled' ? (
                     <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
@@ -387,7 +392,7 @@ export const Welcome = () => {
                                         ) : (
                                             <div className="w-full md:w-1/2 mx-auto py-4">
                                                 <div className="w-full">
-                                                    <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                    <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:text-orange-600 hover:border-orange-600 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                         <span className="pl-2 block">
                                                             {
                                                                 auth0.processing && auth0.provider === 'google' ? (
@@ -397,7 +402,7 @@ export const Welcome = () => {
                                                                     </span>
                                                                 ) : (
                                                                     <span className="flex items-center gap-x-3 px-4 justify-center align-middle">
-                                                                        <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
+                                                                        <i className="fab fa-google fa-xl"></i>
                                                                         <span className="tracking-wider">Sign up with Google</span>
                                                                     </span>
                                                                 )
@@ -413,7 +418,7 @@ export const Welcome = () => {
                                                 </div>
 
                                                 <div className="w-full">
-                                                    <button type="button" onClick={toggleAlternativeSignUp} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                    <button type="button" onClick={toggleAlternativeSignUp} className="w-full border-stone-400 py-2 text-stone-700 hover:text-orange-600 hover:border-orange-600 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                         <span className="pl-2 block">
                                                             <span className="flex items-center gap-x-3 px-4 justify-center align-middle">
                                                                 <span className="tracking-wider">Continue with email</span>

@@ -4,8 +4,8 @@ import { Yeat } from "../views/home/Yeat";
 import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
-import { Welcome } from "../views/auth/Welcome";
 import { Entity } from "../views/settings/Entity";
+import { PreFlight } from "../views/auth/PreFlight";
 import { Invitation } from "../views/auth/Invitation";
 import { EntityPayIn } from "../views/home/EntityPayIn";
 import IdentityCheck from "../views/home/IdentityCheck";
@@ -55,8 +55,8 @@ export const authenticationRoutes: Array<Routes_Interface> = [
         name: 'AUTH_INVITE_' 
     },
     { 
-        path: "/welcome", 
-        element: <Welcome />, 
+        path: "/pre-flight/check", 
+        element: <PreFlight />, 
         caseSensitive: true, 
         name: 'AUTH_INVITE_' 
     },

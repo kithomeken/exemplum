@@ -5,6 +5,15 @@ export const AUTH_FORGOT_PASSWORD = '';
 export const CSRF_COOKIE_ROUTE = '/sanctum/csrf-cookie';
 
 /***************************
+* Pre-Flight API Routes
+***************************/
+
+export const PREFLIGHT = {
+    COCKPIT_INSP:       '/v1/pre-flight/inspection/cockpit',
+    COCKPIT_CAPTIAN:    '/v1/pre-flight/auth/firebase/_/sso/captain',
+}
+
+/***************************
 * Authentication API Routes
 ***************************/
 
