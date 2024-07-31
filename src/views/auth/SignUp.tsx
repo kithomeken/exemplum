@@ -360,7 +360,7 @@ export const SignUp = () => {
                                     </div>
 
                                     <div className="w-full">
-                                        <button type="button" onClick={signUpWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                        <button type="button" onClick={signUpWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                             <span className="pl-2 block">
                                                 {
                                                     auth0.processing && auth0.provider === 'google' ? (
