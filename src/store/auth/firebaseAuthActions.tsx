@@ -7,8 +7,8 @@ import {
     signInWithPopup,
 } from "firebase/auth";
 
-import { AUTH } from "../../api/API_Registry";
-import { AUTH_, STORAGE_KEYS } from "../../global/ConstantsRegistry";
+import { AUTH, PREFLIGHT } from "../../api/API_Registry";
+import { AUTH_, PREFLIGHT_, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 import AxiosServices from "../../services/AxiosServices";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import StorageServices from "../../services/StorageServices";
@@ -37,29 +37,6 @@ export function firebaseAuthActions(propsIn: FirebaseProps) {
         } else {
             firebaseAuth.useDeviceLanguage();
             const provider = new GoogleAuthProvider();
-            signInWithRedirect(firebaseAuth, provider)
-        }
-    }
-}
-
-export function firebaseSSO_SignIn(propsIn: FirebaseProps) {
-    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
-        const firebaseProps = { ...propsIn }
-
-        dispatch({
-            type: AUTH_.PROCESSING,
-            response: {
-                provider: firebaseProps.identity,
-                redirect: false,
-            },
-        });
-
-        if (firebaseProps.identity === 'password') {
-            emailPasswordSignIn(dispatch, firebaseProps)
-        } else {
-            const provider = new GoogleAuthProvider();
-
-            firebaseAuth.useDeviceLanguage();
             signInWithRedirect(firebaseAuth, provider)
         }
     }
@@ -105,7 +82,7 @@ export function Alt_FirebaseSSO_SignUp(propsIn: FirebaseProps) {
     }
 }
 
-async function googleProviderSignInWithPopUp(dispatch: any, firebaseProps: any) {
+async function googleProviderSignInWithPopUp(dispatch: any, _firebaseProps: any) {
     firebaseAuth.useDeviceLanguage();
     const provider = new GoogleAuthProvider();
     const popupResponse: any = await signInWithPopup(firebaseAuth, provider);
@@ -267,6 +244,34 @@ export async function benefactorSanctumToken(dispatch: any, accessToken: any, fi
     } catch (error) {
         dispatch({
             type: AUTH_.SANCTUM_EXCEPTION,
+            response: 'Something went wrong, try again...',
+        });
+    }
+}
+
+export async function preflightCockpitToken(dispatch: any, accessToken: any, firebaseProps: any) {
+    try {
+        let formData = new FormData()
+        formData.append('idToken', accessToken)
+        formData.append('device_name', firebaseProps.deviceInfo)
+        formData.append('hash', StorageServices.getLocalStorage(STORAGE_KEYS.ENTITY_HASH))
+
+        const apiResponse: any = await AxiosServices.httpPost(PREFLIGHT.COCKPIT_SSO, formData)
+
+        if (apiResponse.data.success) {
+            dispatch({
+                type: PREFLIGHT_.CKPIT_TOKEN,
+                response: apiResponse.data,
+            });
+        } else {
+            dispatch({
+                type: PREFLIGHT_.CKPIT_EXECPTION,
+                response: 'Something went wrong, try again...',
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: PREFLIGHT_.CKPIT_EXECPTION,
             response: 'Something went wrong, try again...',
         });
     }
