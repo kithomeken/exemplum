@@ -1,18 +1,17 @@
 import React from "react"
-
-import mainAsset from "../../assets/images/illustration_3647294.svg"
-import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
-import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
-import { Loading } from "../../components/modules/Loading"
-import { onAuthStateChanged, sendEmailVerification } from "firebase/auth"
-import { firebaseAuth } from "../../firebase/firebaseConfigs"
-import StorageServices from "../../services/StorageServices"
-import { useAppSelector } from "../../store/hooks"
-import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
-import { classNames } from "../../lib/modules/HelperFunctions"
-import { captainIdentityLog } from "../../store/identityCheckActions"
-import { useDispatch } from "react-redux"
 import { toast } from "react-toastify"
+import { useDispatch } from "react-redux"
+
+import { useAppSelector } from "../../store/hooks"
+import { Loading } from "../../components/modules/Loading"
+import StorageServices from "../../services/StorageServices"
+import { firebaseAuth } from "../../firebase/firebaseConfigs"
+import { classNames } from "../../lib/modules/HelperFunctions"
+import mainAsset from "../../assets/images/illustration_3647294.svg"
+import { captainIdentityLog } from "../../store/identityCheckActions"
+import { onAuthStateChanged, sendEmailVerification } from "firebase/auth"
+import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 
 export const CNF_gA = () => {
     const [state, setstate] = React.useState({
