@@ -1,10 +1,11 @@
-import { IDENTITY_, STORAGE_KEYS } from "../global/ConstantsRegistry";
+import { IDENTITY_, PREFLIGHT_, STORAGE_KEYS } from "../global/ConstantsRegistry";
 import StorageServices from "../services/StorageServices";
 
 const identityState = {
-    processing: false,
     error: null,
+    PFg0: 'CNF_gA',
     PRc0: 'META_00',
+    processing: false,
 }
 
 export const identityCheckReducer = (state = identityState, action: any) => {
@@ -14,7 +15,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0:
             const metaPRc0 = action.response.dataDump.PRc0
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, metaPRc0)
-            
+
             return {
                 ...state,
                 PRc0: metaPRc0
@@ -63,7 +64,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0_COMPLETED:
             const metaPRc0_Complete = action.response.PRc0
             console.log('COMP', metaPRc0_Complete);
-            
+
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, metaPRc0_Complete)
 
             return {
@@ -71,6 +72,15 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 processing: false,
                 PRc0: metaPRc0_Complete,
                 error: null,
+            }
+
+        case PREFLIGHT_.PFg0:
+            const metaPFg0 = action.response.dataDump.PFg0
+            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, metaPFg0)
+
+            return {
+                ...state,
+                PFg0: metaPFg0
             }
 
         default:
