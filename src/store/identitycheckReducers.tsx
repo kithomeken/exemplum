@@ -10,6 +10,8 @@ const identityState = {
 
 export const identityCheckReducer = (state = identityState, action: any) => {
     const metaPRc0State = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_STATE)
+    const metaPFg0State = StorageServices.getLocalStorage(STORAGE_KEYS.PFg0_STATE)
+    let metaErrMsg = null
 
     switch (action.type) {
         case IDENTITY_.PRc0:
@@ -38,8 +40,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             }
 
         case IDENTITY_.PRc0_UPDATE:
-            const currPRc0State = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_STATE)
-            const PRc0Code = currPRc0State.charAt(currPRc0State.length - 1);
+            const PRc0Code = metaPRc0State.charAt(metaPRc0State.length - 1);
             const nextPRc0 = 'META_0' + (parseInt(PRc0Code) + 1)
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, nextPRc0)
 
@@ -51,7 +52,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             }
 
         case IDENTITY_.PRc0_EXCEPTION:
-            let metaErrMsg = action.response
+            metaErrMsg = action.response
             console.log('PRc0_EXCEPTION: ', metaPRc0State);
 
             return {
@@ -81,6 +82,47 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             return {
                 ...state,
                 PFg0: metaPFg0
+            }
+
+        case PREFLIGHT_.RESET_:
+            return {
+                ...state,
+                error: null,
+                processing: false,
+                PFg0: metaPFg0State,
+            }
+
+        case PREFLIGHT_.PROCESSING:
+            return {
+                ...state,
+                error: null,
+                processing: true,
+                PFg0: metaPFg0State,
+            }
+
+        case PREFLIGHT_.PFg0_UPDATE:
+            const PFg0Code = metaPFg0State.charAt(metaPFg0State.length - 1);
+            const nextChar = String.fromCharCode(PFg0Code.charCodeAt(0) + 1);
+            
+            const nextPFg0 = 'CNF_g' + nextChar
+            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, nextPFg0)
+
+            return {
+                ...state,
+                error: null,
+                PFg0: nextPFg0,
+                processing: false,
+            }
+
+        case PREFLIGHT_.PFg0_EXCEPTION:
+            metaErrMsg = action.response
+            console.log('PFg0_EXCEPTION: ', metaPFg0State);
+
+            return {
+                ...state,
+                processing: false,
+                error: metaErrMsg,
+                PFg0: metaPFg0State,
             }
 
         default:
