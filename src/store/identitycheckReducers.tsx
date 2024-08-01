@@ -20,7 +20,8 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
             return {
                 ...state,
-                PRc0: metaPRc0
+                PRc0: metaPRc0,
+                PFg0: metaPFg0State,
             }
 
         case IDENTITY_.RESET_:
@@ -29,6 +30,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 error: null,
                 processing: false,
                 PRc0: metaPRc0State,
+                PFg0: metaPFg0State,
             }
 
         case IDENTITY_.PROCESSING:
@@ -37,6 +39,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 error: null,
                 processing: true,
                 PRc0: metaPRc0State,
+                PFg0: metaPFg0State,
             }
 
         case IDENTITY_.PRc0_UPDATE:
@@ -46,9 +49,10 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
             return {
                 ...state,
-                processing: false,
-                PRc0: nextPRc0,
                 error: null,
+                PRc0: nextPRc0,
+                processing: false,
+                PFg0: metaPFg0State,
             }
 
         case IDENTITY_.PRc0_EXCEPTION:
@@ -60,6 +64,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 processing: false,
                 error: metaErrMsg,
                 PRc0: metaPRc0State,
+                PFg0: metaPFg0State,
             }
 
         case IDENTITY_.PRc0_COMPLETED:
@@ -70,18 +75,20 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
             return {
                 ...state,
-                processing: false,
-                PRc0: metaPRc0_Complete,
                 error: null,
+                processing: false,
+                PFg0: metaPFg0State,
+                PRc0: metaPRc0_Complete,
             }
 
         case PREFLIGHT_.PFg0:
-            const metaPFg0 = action.response.dataDump.PFg0
+            const metaPFg0 = action.response.dataDump.PFg0            
             StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, metaPFg0)
 
             return {
                 ...state,
-                PFg0: metaPFg0
+                PFg0: metaPFg0,
+                PRc0: metaPRc0State,
             }
 
         case PREFLIGHT_.RESET_:
@@ -98,6 +105,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 error: null,
                 processing: true,
                 PFg0: metaPFg0State,
+                PRc0: metaPRc0State,
             }
 
         case PREFLIGHT_.PFg0_UPDATE:
@@ -112,6 +120,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 error: null,
                 PFg0: nextPFg0,
                 processing: false,
+                PRc0: metaPRc0State,
             }
 
         case PREFLIGHT_.PFg0_EXCEPTION:
@@ -123,6 +132,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 processing: false,
                 error: metaErrMsg,
                 PFg0: metaPFg0State,
+                PRc0: metaPRc0State,
             }
 
         default:
