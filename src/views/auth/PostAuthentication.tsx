@@ -2,13 +2,17 @@ import { Helmet } from "react-helmet"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { onAuthStateChanged } from "firebase/auth"
-import { useAppSelector } from "../../store/hooks"
 import { useLocation, Navigate } from "react-router"
 
+import { useAppSelector } from "../../store/hooks"
 import { Loading } from "../../components/modules/Loading"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { DeviceInfo } from "../../lib/modules/HelperFunctions"
-import { beneficiarySanctumToken, benefactorSanctumToken } from "../../store/auth/firebaseAuthActions"
+import {
+    beneficiarySanctumToken,
+    benefactorSanctumToken,
+    preflightCockpitToken
+} from "../../store/auth/firebaseAuthActions"
 
 export const PostAuthentication = () => {
     useEffect(() => {
@@ -21,10 +25,6 @@ export const PostAuthentication = () => {
     const locationState: any = location.state
     const auth0: any = useAppSelector(state => state.auth0)
 
-    const postAuthProps = {
-        deviceInfo: DeviceInfo(),
-    }
-
     const postFirebaseAuthentication = () => {
         onAuthStateChanged(firebaseAuth,
             currentUser => {
@@ -33,15 +33,24 @@ export const PostAuthentication = () => {
                 }
 
                 const firebaseUser: any = currentUser
-                if (locationState?.beneficiary) {
-                    const beneficiaryProps = {
-                        deviceInfo: DeviceInfo(),
-                        beneficiary: locationState?.beneficiary,
-                    }
+                const ssoTokens: any = {
+                    deviceInfo: DeviceInfo(),
+                }
 
-                    beneficiarySanctumToken(dispatch, firebaseUser.accessToken, beneficiaryProps)
+                if (locationState?.cockpit_SSO) {
+                    /* 
+                     * Pre-flight firebase SSO
+                     */
+                    preflightCockpitToken(dispatch, firebaseUser.accessToken, ssoTokens)
                 } else {
-                    benefactorSanctumToken(dispatch, firebaseUser.accessToken, postAuthProps)
+                    if (locationState?.beneficiary) {
+                        const beneficiary = locationState?.beneficiary
+                        ssoTokens.beneficiary = { beneficiary }
+
+                        beneficiarySanctumToken(dispatch, firebaseUser.accessToken, ssoTokens)
+                    } else {
+                        benefactorSanctumToken(dispatch, firebaseUser.accessToken, ssoTokens)
+                    }
                 }
             },
             error => {
