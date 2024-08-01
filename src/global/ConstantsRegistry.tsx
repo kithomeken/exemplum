@@ -73,6 +73,10 @@ export const IDENTITY_ = {
 
 export const PREFLIGHT_ = {
     PFg0:               'PFg0_SET',
+    RESET_:             'PFg0_RESET',
+    PFg0_UPDATE:        'PFg0_UPDATE',
+    PROCESSING:         'PFg0_EXECUTING',
+    PFg0_EXCEPTION:     'PFg0_EXCEPTION',
     CKPIT_TOKEN:        'CKPIT_TOKEN',
     CKPIT_EXECPTION:    'CKPIT_EXECPTION',
 }
