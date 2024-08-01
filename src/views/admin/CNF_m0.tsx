@@ -10,6 +10,7 @@ import HttpServices from "../../services/HttpServices";
 import { useAppSelector } from "../../store/hooks";
 import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
+import { CNF_gB } from "./CNF_gB";
 
 export const CNF_m0 = () => {
     const [state, setstate] = React.useState({
@@ -62,6 +63,9 @@ export const CNF_m0 = () => {
         switch (tab) {
             case "CNF_gA":
                 return <CNF_gA />
+
+            case "CNF_gB":
+                return <CNF_gB />
 
             default:
                 return
