@@ -12,6 +12,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import { AdminstrativeHome } from "./AdministrativeHome";
 import { PREFLIGHT } from "../../api/API_Registry";
+import { commonRoutes } from "../../routes/routes";
+import { Navigate } from "react-router-dom";
 
 export const PreflightCheck = () => {
     const [state, setstate] = useState({
@@ -24,6 +26,11 @@ export const PreflightCheck = () => {
 
     const dispatch: any = useDispatch();
     const [verified, setVerified] = useState('0')
+
+    const CNF_g_Route: any = (
+        commonRoutes.find(
+            (routeName) => routeName.name === 'CNF_m0_')
+    )?.path
 
     React.useEffect(() => {
         preflightProgressCheck()
@@ -150,9 +157,11 @@ export const PreflightCheck = () => {
                                     */
                                 <AdminstrativeHome />
                             ) : (
-                                <>
-                                    Pre-flight Configs
-                                </>
+                                /* 
+                                 * Pre-flight has not been completed. 
+                                 * Complete pre-flight first before any other action
+                                 */
+                                <Navigate to={CNF_g_Route} replace />
                             )
                         }
                     </>
