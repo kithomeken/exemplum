@@ -10,7 +10,8 @@ export const CSRF_COOKIE_ROUTE = '/sanctum/csrf-cookie';
 
 export const PREFLIGHT = {
     COCKPIT_INSP:       '/v1/pre-flight/inspection/cockpit',
-    COCKPIT_CAPTIAN:    '/v1/pre-flight/auth/firebase/_/sso/captain',
+    COCKPIT_SSO:        '/v1/pre-flight/auth/firebase/_/sso/captain',
+    INSPECTION_CHECK:   '/v1/pre-flight/inspection/meta/check',
 }
 
 /***************************
