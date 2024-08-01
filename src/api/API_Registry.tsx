@@ -12,6 +12,7 @@ export const PREFLIGHT = {
     COCKPIT_INSP:       '/v1/pre-flight/inspection/cockpit',
     COCKPIT_SSO:        '/v1/pre-flight/auth/firebase/_/sso/captain',
     INSPECTION_CHECK:   '/v1/pre-flight/inspection/meta/check',
+    CAPTAIN_IDENTITY:   '/v1/pre-flight/inspection/captain/identity-log',
 }
 
 /***************************
