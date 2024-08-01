@@ -6,7 +6,7 @@ import StorageServices from '../../services/StorageServices';
 import { STORAGE_KEYS } from '../../global/ConstantsRegistry';
 import { administrativeRoutes, standardRoutes } from '../../routes/routes';
 
-const IdentityCheck = () => {
+export const IdentityCheck = () => {
     const encryptedKeyString = StorageServices.getLocalStorage(STORAGE_KEYS.ACCOUNT_DATA);
 
     if (!encryptedKeyString) {
@@ -23,5 +23,3 @@ const IdentityCheck = () => {
 
     return <Navigate to={homeRoute} replace />;
 };
-
-export default IdentityCheck;
