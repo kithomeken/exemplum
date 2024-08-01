@@ -28,6 +28,7 @@ import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
 import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
 import { AccountManagement } from "../views/settings/AccountManagement";
 import { IdentityVerification } from "../views/home/IdentityVerification";
+import { CNF_m0 } from "../views/admin/CNF_m0";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -89,6 +90,12 @@ export const commonRoutes: Array<Routes_Interface> = [
         element: <IdentityOnboarding />,
         caseSensitive: true,
         name: 'IDENTITY_ONBRD_'
+    },
+    {
+        path: "/a/pre-flight/_/configurations",
+        element: <CNF_m0 />,
+        caseSensitive: true,
+        name: 'CNF_m0_'
     },
 ]
 
