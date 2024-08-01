@@ -13,11 +13,17 @@ import Rock_Band_Image from '../../assets/images/a4f6dd9ebd724d8dcf29e1163ccf36c
 import { resetAuth0, Alt_FirebaseSSO_SignIn } from "../../store/auth/firebaseAuthActions";
 import { emailValidator, DeviceInfo, classNames } from "../../lib/modules/HelperFunctions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
+import { PREFLIGHT } from "../../api/API_Registry";
+import AxiosServices from "../../services/AxiosServices";
 
 export const SignIn = () => {
     const [state, setstate] = useState({
         pwdVisibility: false,
         status: 'pending',
+        httpStatus: 200,
+        data: {
+            inspection: null
+        },
         input: {
             email: '',
             password: ''
@@ -45,50 +51,86 @@ export const SignIn = () => {
         )
     )?.path
 
+    const preflightRoute: any = (
+        authenticationRoutes.find(
+            (routeName) => routeName.name === 'PREFLIGHT_'
+        )
+    )?.path
+
     React.useEffect(() => {
-        authRedirectResult()
-            .then(async (result) => {
-                if (!result) {
-                    setstate({
-                        ...state, status: 'fulfilled'
+        preflightInspection()
+    }, [])
+
+    const preflightInspection = async () => {
+        let { data } = state
+        let { status } = state
+        let { httpStatus } = state
+
+        try {
+            const preflightResp: any = await AxiosServices.httpGet(PREFLIGHT.COCKPIT_INSP)
+            const payload: any = preflightResp.data.payload
+            httpStatus = preflightResp.status
+
+            if (preflightResp.data.success) {
+                authRedirectResult()
+                    .then(async (result) => {
+                        if (!result) {
+                            data.inspection = payload.inspection
+                            status = data.inspection.cockpit === 'passed' ? 'rejected' : 'fulfilled'
+
+                            setstate({
+                                ...state, status, data, httpStatus
+                            })
+
+                            dispatch(resetAuth0())
+
+                            if (locationState?.autoSignIn) {
+                                autoSignInHandler()
+                            }
+
+                            return;
+                        }
+
+                        data.inspection = payload.inspection
+                        const firebaseUser: any = result.user;
+
+                        dispatch({
+                            type: AUTH_.FIREBASE_TOKEN,
+                            response: {
+                                accessToken: firebaseUser.accessToken,
+                                refreshToken: firebaseUser.stsTokenManager.refreshToken,
+                                expirationTime: firebaseUser.stsTokenManager.expirationTime,
+                            },
+                        });
+
+                        setstate({
+                            ...state, status: 'fulfilled', httpStatus
+                        })
+
+                        return
                     })
+                    .catch((error) => {
+                        httpStatus = 500
 
-                    dispatch(resetAuth0())
+                        setstate({
+                            ...state, status: 'fulfilled', httpStatus
+                        })
 
-                    if (locationState.autoSignIn) {
-                        autoSignInHandler()
-                    }
+                        dispatch(resetAuth0())
+                        return null;
+                    });
+            } else {
+                status = 'rejected'
+            }
+        } catch (error) {
+            httpStatus = 500
+            status = 'rejected'
+        }
 
-                    return;
-                }
-
-                const firebaseUser: any = result.user;
-                const accessToken = firebaseUser.accessToken;
-
-                dispatch({
-                    type: AUTH_.FIREBASE_TOKEN,
-                    response: {
-                        accessToken: accessToken,
-                        refreshToken: firebaseUser.stsTokenManager.refreshToken,
-                        expirationTime: firebaseUser.stsTokenManager.expirationTime,
-                    },
-                });
-
-                setstate({
-                    ...state, status: 'fulfilled'
-                })
-
-                return
-            })
-            .catch((error) => {
-                setstate({
-                    ...state, status: 'fulfilled'
-                })
-
-                dispatch(resetAuth0())
-                return null;
-            });
-    }, [dispatch, locationState])
+        setstate({
+            ...state, status, httpStatus
+        })
+    }
 
     const onChangeHandler = (e: any) => {
         if (!auth0.processing) {
@@ -281,17 +323,27 @@ export const SignIn = () => {
             </Helmet>
 
             {
-                state.status === 'pending' ? (
-                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center">
-                        <div className="w-full form-group px-12 mb-14">
-                            <div className="w-full">
-                                <div className="pt-10">
-                                    <Loading />
-                                </div>
+                state.status === 'rejected' ? (
+                    state.httpStatus === 200 ? (
+                        <>
+                            <Navigate replace to={preflightRoute} />
+                        </>
+                    ) : (
+                        <div className="py-3 px-4">
+                            <div className="flex items-center justify-center">
+                                {
+                                    state.httpStatus === 404 ? (
+                                        <ERR_404
+                                            compact={true}
+                                        />
+                                    ) : (
+                                        <ERR_500 />
+                                    )
+                                }
                             </div>
                         </div>
-                    </div>
-                ) : (
+                    )
+                ) : state.status === 'fulfilled' ? (
                     <div className="wrapper md:align-middle align-baseline wrapper-background w-full overflow-auto h-screen md:p-6">
                         <section className="gx-container gx-900 bg-white shadow-md rounded-md h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
@@ -426,6 +478,16 @@ export const SignIn = () => {
                                 </div>
                             </div>
                         </section>
+                    </div>
+                ) : (
+                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center">
+                        <div className="w-full form-group px-12 mb-14">
+                            <div className="w-full">
+                                <div className="pt-10">
+                                    <Loading />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )
             }
