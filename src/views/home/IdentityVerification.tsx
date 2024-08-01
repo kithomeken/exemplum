@@ -176,7 +176,7 @@ export const IdentityVerification = () => {
                                                         A verification email was sent to <span className="text-slate-800">{firebaseAuth.currentUser.email}</span>, kindly check your email to complete the update.
 
                                                         <span className="text-sm block pt-3 mt-3">
-                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
+                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
                                                         </span>
                                                     </span>
                                                 </span>

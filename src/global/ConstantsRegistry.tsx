@@ -24,6 +24,7 @@ export const APPLICATION = {
 */
 export const STORAGE_KEYS = {
     PRc0_STATE:         '__bgfPRc0',
+    PFg0_STATE:         '__bgfPFg0',
     ACCOUNT_DATA:       '__bgfAc1D',
     ENCRYPTION_KEY:     '__bgfKYc0',
     ENCRYPTION_IV:      '__bgfC0iV',
@@ -62,10 +63,20 @@ export const AUTH_ = {
 
 
 export const IDENTITY_ = {
-    PRc0:           'PRc0_SET',
-    RESET_:         'PRc0_RESET',
-    PRc0_UPDATE:    'PRc0_UPDATE',
-    PROCESSING:     'PRc0_EXECUTING',
-    PRc0_EXCEPTION: 'PRc0_EXCEPTION',
-    PRc0_COMPLETED: 'PRc0_COMPLETED',
+    PRc0:               'PRc0_SET',
+    RESET_:             'PRc0_RESET',
+    PRc0_UPDATE:        'PRc0_UPDATE',
+    PROCESSING:         'PRc0_EXECUTING',
+    PRc0_EXCEPTION:     'PRc0_EXCEPTION',
+    PRc0_COMPLETED:     'PRc0_COMPLETED',
+}
+
+export const PREFLIGHT_ = {
+    PFg0:               'PFg0_SET',
+    RESET_:             'PFg0_RESET',
+    PFg0_UPDATE:        'PFg0_UPDATE',
+    PROCESSING:         'PFg0_EXECUTING',
+    PFg0_EXCEPTION:     'PFg0_EXCEPTION',
+    CKPIT_TOKEN:        'CKPIT_TOKEN',
+    CKPIT_EXECPTION:    'CKPIT_EXECPTION',
 }

@@ -13,12 +13,13 @@ import { revokeAuthSession } from '../../store/auth/firebaseAuthActions';
 import { CoreSideBar } from '../../components/layouts/CoreSideBar';
 
 const CoreRoutesGuard = () => {
-    const dispatch: any = useDispatch()
     const location = useLocation()
+    const dispatch: any = useDispatch()
     const currentLocation = location.pathname
 
     const auth0: any = useAppSelector(state => state.auth0)
     const sessionState = Auth.checkAuthentication(auth0)
+    const PFg0State = StorageServices.getLocalStorage(STORAGE_KEYS.PFg0_STATE)
 
     const state = {
         from: currentLocation
@@ -59,22 +60,29 @@ const CoreRoutesGuard = () => {
 
     return (
         <React.Fragment>
-            <div className="flex flex-row h-screen bg-gray-100">
+            {
+                PFg0State === 'CNF_g0' ? (
+                    <div className="flex flex-row h-screen bg-gray-100">
 
-                <Header />
+                        <Header />
 
-                <CoreSideBar
-                    location={location}
-                />
+                        <CoreSideBar
+                            location={location}
+                        />
 
-                <div className="flex-grow md:ml-64 ml-0 scroll-smooth overflow-y-auto text-gray-800">
-                    <div className="w-full p-4 pt-20 flex flex-col h-screen">
+                        <div className="flex-grow md:ml-64 ml-0 scroll-smooth overflow-y-auto text-gray-800">
+                            <div className="w-full p-4 pt-20 flex flex-col h-screen">
 
-                        <Outlet />
+                                <Outlet />
 
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                ) : (
+                    <Outlet />
+                )
+            }
+
         </React.Fragment>
     )
 }

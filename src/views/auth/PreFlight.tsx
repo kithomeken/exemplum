@@ -12,8 +12,12 @@ import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { classNames } from "../../lib/modules/HelperFunctions"
 import smallAsset from "../../assets/images/illustration_178786105.svg"
 import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
-import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions"
+import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+import { Navigate } from "react-router-dom"
+import { postAuthRoutes } from "../../routes/routes"
+import { ERR_404 } from "../errors/ERR_404"
+import { ERR_500 } from "../errors/ERR_500"
 
 export const PreFlight = () => {
     const [state, setstate] = React.useState({
@@ -51,20 +55,22 @@ export const PreFlight = () => {
         let { data } = state
         let { input } = state
         let { status } = state
+        let { httpStatus } = state
 
         try {
             const preflightResp: any = await AxiosServices.httpGet(PREFLIGHT.COCKPIT_INSP)
             const payload: any = preflightResp.data.payload
+            httpStatus = preflightResp.status
 
             if (preflightResp.data.success) {
                 authRedirectResult()
                     .then(async (result) => {
-                        if (!result) {                            
+                        if (!result) {
                             data.inspection = payload.inspection
                             status = data.inspection.cockpit === 'passed' ? 'fulfilled' : 'rejected'
 
                             setstate({
-                                ...state, status, data
+                                ...state, status, data, httpStatus
                             })
 
                             dispatch(resetAuth0())
@@ -90,34 +96,31 @@ export const PreFlight = () => {
                         }
 
                         setstate({
-                            ...state, status, data, input
+                            ...state, status, data, input, httpStatus
                         })
 
                         return
                     })
                     .catch((error) => {
-                        console.log(error);
-                        
                         input.email = ''
 
                         setstate({
-                            ...state, status: 'fulfilled', data, input
+                            ...state, status: 'fulfilled', data, input, httpStatus
                         })
 
                         dispatch(resetAuth0())
                         return null;
                     });
-
-                status = 'fulfilled'
             } else {
                 status = 'rejected'
             }
         } catch (error) {
             status = 'rejected'
+            httpStatus = 500
         }
 
         setstate({
-            ...state, status
+            ...state, status, httpStatus
         })
     }
 
@@ -185,9 +188,10 @@ export const PreFlight = () => {
         }
     }
 
-    const invitationWithGoogle = () => {
+    const signInWithGoogle = () => {
         if (!auth0.processing) {
             dispatch(resetAuth0())
+
             setstate({
                 ...state, errors: {
                     email: '',
@@ -200,12 +204,25 @@ export const PreFlight = () => {
                 }
             })
 
-            const signUpProps = {
+            const signInProps = {
                 identity: 'google',
             }
 
-            dispatch(firebaseAuthActions(signUpProps))
+            dispatch(Alt_FirebaseSSO_SignIn(signInProps))
         }
+    }
+
+    if (auth0.sso) {
+        const state = {
+            cockpit_SSO: true
+        }
+
+        const postAuthenticatoinRoute: any = (
+            postAuthRoutes.find(
+                (routeName) => routeName.name === 'AUTH_IDENTITY_')
+        )?.path
+
+        return <Navigate to={postAuthenticatoinRoute} replace state={state} />;
     }
 
     const authRedirectResult = async () => {
@@ -255,9 +272,25 @@ export const PreFlight = () => {
 
             {
                 state.status === 'rejected' ? (
-                    <>
-                        Rejected
-                    </>
+                    state.httpStatus === 200 ? (
+                        <>
+                            <Navigate replace to="/auth/sign-in" />
+                        </>
+                    ) : (
+                        <div className="py-3 px-4">
+                            <div className="flex items-center justify-center">
+                                {
+                                    state.httpStatus === 404 ? (
+                                        <ERR_404
+                                            compact={true}
+                                        />
+                                    ) : (
+                                        <ERR_500 />
+                                    )
+                                }
+                            </div>
+                        </div>
+                    )
                 ) : state.status === 'fulfilled' ? (
                     <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
                         <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
@@ -392,7 +425,7 @@ export const PreFlight = () => {
                                         ) : (
                                             <div className="w-full md:w-1/2 mx-auto py-4">
                                                 <div className="w-full">
-                                                    <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:text-orange-600 hover:border-orange-600 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                    <button type="button" onClick={signInWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:text-orange-600 hover:border-orange-600 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                         <span className="pl-2 block">
                                                             {
                                                                 auth0.processing && auth0.provider === 'google' ? (

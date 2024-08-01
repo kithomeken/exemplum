@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
-import { AUTH_, COOKIE_KEYS, STORAGE_KEYS } from "../../global/ConstantsRegistry";
+import { AUTH_, COOKIE_KEYS, PREFLIGHT_, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 import { encryptAndStoreCookie, encryptAndStoreLS } from "../../lib/modules/HelperFunctions";
 import CookieServices from "../../services/CookieServices";
 import StorageServices from "../../services/StorageServices";
@@ -61,6 +61,53 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
                 error: action.response
             }
 
+        case PREFLIGHT_.CKPIT_TOKEN:
+            const cockpitPayload = action.response.payload
+            let kapitan = cockpitPayload.identity
+            kapitan.acid = kapitan.uuid
+
+            const kapitanObject = {
+                uid: kapitan.uid,
+                email: kapitan.email,
+                msisdn: kapitan.msisdn,
+                provider: kapitan.provider_id,
+                display_name: kapitan.display_name,
+            }
+
+            encryptAndStoreLS(STORAGE_KEYS.ACCOUNT_DATA, kapitan)
+
+            if (cockpitPayload.token) {
+                // If response contains token, set it                
+                encryptAndStoreCookie(COOKIE_KEYS.SANCTUM, cockpitPayload.token)
+            }
+
+            return {
+                ...state,
+                sso: true,
+                processing: false,
+                authenticated: true,
+                identity: kapitanObject
+            }
+
+            
+        case PREFLIGHT_.CKPIT_EXECPTION:
+            CookieServices.remove(COOKIE_KEYS.SANCTUM)
+            StorageServices.removeLocalStorage(STORAGE_KEYS.ACCOUNT_DATA)
+
+            signOut(firebaseAuth).then(() => {
+                // Sign-out successful.
+            }).catch((error) => {
+                // An error happened.
+            });
+
+            return {
+                ...state,
+                sso: false,
+                processing: false,
+                authenticated: false,
+                error: action.response
+            }
+
         case AUTH_.SANCTUM_TOKEN:
             const payload = action.response.payload
             let identity = payload.identity
@@ -77,7 +124,7 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
             encryptAndStoreLS(STORAGE_KEYS.ACCOUNT_DATA, identity)
 
             if (payload.token) {
-                // If response containes token, set it                
+                // If response contains token, set it                
                 encryptAndStoreCookie(COOKIE_KEYS.SANCTUM, payload.token)
             }
 
@@ -107,7 +154,7 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
                 error: action.response
             }
 
-        case AUTH_.ID_META_01:            
+        case AUTH_.ID_META_01:
             let meta01Identity: any = action.response
             let displayName = null
 

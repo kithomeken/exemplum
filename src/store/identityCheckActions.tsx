@@ -1,5 +1,5 @@
-import { AUTH } from "../api/API_Registry";
-import { AUTH_, IDENTITY_, STORAGE_KEYS } from "../global/ConstantsRegistry";
+import { AUTH, PREFLIGHT } from "../api/API_Registry";
+import { AUTH_, IDENTITY_, PREFLIGHT_, STORAGE_KEYS } from "../global/ConstantsRegistry";
 import HttpServices from "../services/HttpServices";
 import StorageServices from "../services/StorageServices";
 
@@ -14,6 +14,17 @@ export function setPRc0MetaStage(propsIn: IdentityProps) {
         dispatch({
             type: IDENTITY_.PRc0,
             response: IdentityProps,
+        });
+    }
+}
+
+export function setPFg0MetaStage(propsIn: IdentityProps) {
+    return (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const metaProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PFg0,
+            response: metaProps,
         });
     }
 }
@@ -68,6 +79,58 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
         } catch (error) {
             dispatch({
                 type: IDENTITY_.PRc0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
+
+export function captainIdentityLog(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PROCESSING,
+            response: 'PFg0',
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+
+            if (dataDump.keepName) {
+                formData.append('display_name', dataDump.display_name)
+            } else {
+                formData.append('last_name', dataDump.last_name)
+                formData.append('first_name', dataDump.first_name)
+            }
+
+            const identityResponse: any = await HttpServices.httpPost(PREFLIGHT.CAPTAIN_IDENTITY, formData)
+
+            if (identityResponse.data.success) {
+                dispatch({
+                    type: AUTH_.ID_META_01,
+                    response: {
+                        keepName: dataDump.keepName,
+                        last_name: dataDump.last_name,
+                        first_name: dataDump.first_name,
+                        display_name: dataDump.display_name,
+                    },
+                });
+
+                dispatch({
+                    type: PREFLIGHT_.PFg0_UPDATE,
+                    response: 'PFg0',
+                });
+            } else {
+                dispatch({
+                    type: PREFLIGHT_.PFg0_EXCEPTION,
+                    response: '',
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: PREFLIGHT_.PFg0_EXCEPTION,
                 response: error,
             });
         }
@@ -186,3 +249,13 @@ export function resetIdentity() {
     }
 }
 
+export function resetCNF_g() {
+    return (dispatch: (arg0: { type: string; response: any }) => void) => {
+        dispatch({
+            type: PREFLIGHT_.RESET_,
+            response: {
+                redirect: false,
+            },
+        });
+    }
+}
