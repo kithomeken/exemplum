@@ -1,5 +1,5 @@
 import { AUTH } from "../api/API_Registry";
-import { AUTH_, IDENTITY_, STORAGE_KEYS } from "../global/ConstantsRegistry";
+import { AUTH_, IDENTITY_, PREFLIGHT_, STORAGE_KEYS } from "../global/ConstantsRegistry";
 import HttpServices from "../services/HttpServices";
 import StorageServices from "../services/StorageServices";
 
@@ -14,6 +14,17 @@ export function setPRc0MetaStage(propsIn: IdentityProps) {
         dispatch({
             type: IDENTITY_.PRc0,
             response: IdentityProps,
+        });
+    }
+}
+
+export function setPFg0MetaStage(propsIn: IdentityProps) {
+    return (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const metaProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PFg0,
+            response: metaProps,
         });
     }
 }
