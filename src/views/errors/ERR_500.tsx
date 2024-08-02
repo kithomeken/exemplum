@@ -1,24 +1,21 @@
 import React from "react"
 import smallAsset from '../../assets/images/ay32873n0f9204n79-3982.png'
+import errorAsset from '../../assets/images/illustration_7962160.svg'
 
 export const ERR_500 = () => {
     return (
         <React.Fragment>
-            <div className="px-4 pt-6 pb-4 w-full">
-                <div className="flex flex-col pt-4 items-center align-middle justify-center">
-                    <div className="mx-auto flex-shrink-0 flex items-center justify-center mb-3 m-auto sm:mx-0">
-                        <img src={smallAsset} alt="broken_robot" width="auto" className="block text-center m-auto w-64" />
-                    </div>
+            <div className="flex flex-col items-center justify-center min-h-screen md:p-6">
+                <div className="max-w-md w-full text-start p-6 bg-inherit">
+                    <img src={errorAsset} alt="error_500" className="mx-auto mb-6 w-full h-auto max-w-xs" />
 
-                    <div className="mt-3 text-center m-auto text-slate-600">
-                        <span className="text-red-600 mb-2 block">
-                            ERR_500: Internal Server Error
-                        </span>
-
-                        <div className="text-sm">
-                            Oops! Something went wrong, please try again later.
-                        </div>
-                    </div>
+                    <h1 className="text-sm sm:text-lg font-medium text-red-600 mb-2">
+                        ERR_500: <br />Internal Server Error
+                    </h1>
+                    <h2 className="text-base sm:text-2xl font-medium mb-2">Oops, that's our bad.</h2>
+                    <p className="text-gray-600 mb-6">
+                        We're not exactly sure what happened, but our servers say something is wrong. Worry not though, we're looking into it.
+                    </p>
                 </div>
             </div>
         </React.Fragment>
