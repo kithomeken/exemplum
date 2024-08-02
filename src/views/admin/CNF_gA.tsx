@@ -42,7 +42,6 @@ export const CNF_gA = () => {
     }, [])
 
     const dispatch: any = useDispatch();
-    const [verified, setVerified] = React.useState('0')
     const auth0: any = useAppSelector(state => state.auth0)
     const idC_State: any = useAppSelector(state => state.idC)
 
@@ -64,11 +63,8 @@ export const CNF_gA = () => {
                 let verifiedA = currentUser.emailVerified ? '0' : '1'
                 StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
-                setVerified(verifiedA)
-                status = 'fulfilled'
-
                 setstate({
-                    ...state, status, data
+                    ...state, status: 'fulfilled', data
                 })
             },
             error => {
@@ -265,7 +261,6 @@ export const CNF_gA = () => {
                     let verifiedA = currentUser.emailVerified ? '0' : '1'
                     StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
-                    setVerified(verifiedA)
                     process.state = false
 
                     toast.success("Email verification complete", {
@@ -308,7 +303,7 @@ export const CNF_gA = () => {
     return (
         <React.Fragment>
             <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
-                <section className="gx-container md:h-screen rounded-md w-full flex md:items-center justify-center" style={CONFIG_MAX_WIDTH}>
+                <section className={`gx-container md:h-screen rounded-md w-full flex ${state.status === 'pending' ? 'md:items-center' : null} justify-center`} style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle md:items-center w-full md:pb-0 pb-10">
                         <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
                             {
