@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { Helmet } from "react-helmet"
 import { Link } from "react-router-dom"
 
-import imageAsset from '../../assets/images/7070464_3275437.svg'
+import imageAsset from '../../assets/images/illustration_4326530.svg'
 import smallAsset from '../../assets/images/7117865_3371469.svg'
 import { HTTP_Error_Interface } from "../../lib/modules/Interfaces"
 import { STYLE } from "../../global/ConstantsRegistry"
@@ -36,36 +36,28 @@ export const ERR_404: FC<HTTP_Error_Interface> = ({ compact = false }) => {
                             <title>Page Not Found</title>
                         </Helmet >
 
-                        <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
-                            <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center" style={STYLE.MAX_WIDTH}>
-                                <div className="flex flex-col align-middle items-center w-full md:pb-0 pb-10">
-                                    <div className="md:w-3/5">
-                                        <img className="m-auto px-4 pt-6 block text-center mb-5 w-full" src={imageAsset} alt="404_page_not_found" />
-                                    </div>
+                        <div className="flex flex-col items-center justify-center min-h-screen md:p-6">
+                            <div className="max-w-md w-full text-start p-6 bg-inherit">
+                                <img src={imageAsset} alt="error_500" className="mx-auto mb-6 w-full h-auto max-w-xs" />
 
-                                    <div className="max-w-sm md:max-w-md lg:max-w-lg text-center px-4">
-                                            <p className="text-red-500 md:text-2xl mb-3 text-lg">ERR_404: Page Not Found</p>
-                                            <p className="text-stone-600 mb-5 text-sm">
-                                                Look's like you're lost in the digital wilderness. Let us Guide you back
-                                            </p>
+                                <h1 className="text-sm sm:text-lg font-medium text-red-600 mb-2">
+                                    ERR_404: <br />Page Not Found
+                                </h1>
+                                <h2 className="text-base sm:text-2xl font-medium mb-2">Whoopsy Daisy!</h2>
+                                <p className="text-gray-600 mb-6">
+                                    Look's like you're lost in the digital wilderness. Let us guide you back to someplace more familiar
+                                </p>
 
-                                            <div className="space-y-3">
-                                                <div className="flex items-center justify-between">
-                                                    <div className="text-sm m-auto ">
-                                                        <Link to="/home" className="font-medium text-center text-orange-600 hover:text-orange-700">
-                                                            <span className="flex items-center justify-between">
-                                                                <span>
-                                                                    Back to safety
-                                                                </span>
-                                                            </span>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-
+                                <div className="flex text-sm flex-row-reverse items-center justify-between">
+                                    <Link to="/home" className="text- text-orange-600 hover:text-orange-700">
+                                        <span className="flex items-center justify-between">
+                                            <span>
+                                                Back to safety
+                                            </span>
+                                        </span>
+                                    </Link>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </>
                 )
