@@ -259,3 +259,47 @@ export function resetCNF_g() {
         });
     }
 }
+
+export function setMpesaCredentials(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PROCESSING,
+            response: 'PFg0',
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+
+            formData.append('trans_min', dataDump.trans_min)
+            formData.append('trans_max', dataDump.trans_max)
+            formData.append('pass_key', dataDump.pass_key)
+            formData.append('init_name', dataDump.init_name)
+            formData.append('short_code', dataDump.short_code)
+            formData.append('init_passwd', dataDump.init_passwd)
+            formData.append('customer_key', dataDump.customer_key)
+            formData.append('customer_secret', dataDump.customer_secret)
+
+            const credentialsResp: any = await HttpServices.httpPost(PREFLIGHT.MPESA_CREDENTIALS, formData)
+
+            if (credentialsResp.data.success) {
+                dispatch({
+                    type: PREFLIGHT_.PFg0_UPDATE,
+                    response: 'PFg0',
+                });
+            } else {
+                dispatch({
+                    type: PREFLIGHT_.PFg0_EXCEPTION,
+                    response: '',
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: PREFLIGHT_.PFg0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
