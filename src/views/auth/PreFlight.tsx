@@ -1,23 +1,23 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { useDispatch } from "react-redux"
+import { Navigate } from "react-router-dom"
 import { getRedirectResult } from "firebase/auth"
 
+import { ERR_404 } from "../errors/ERR_404"
+import { ERR_500 } from "../errors/ERR_500"
 import { PasswordPolicy } from "./PasswordPolicy"
-import { useAppSelector } from "../../store/hooks"
 import { PREFLIGHT } from "../../api/API_Registry"
+import { useAppSelector } from "../../store/hooks"
+import { postAuthRoutes } from "../../routes/routes"
 import AxiosServices from "../../services/AxiosServices"
 import { Loading } from "../../components/modules/Loading"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { classNames } from "../../lib/modules/HelperFunctions"
 import smallAsset from "../../assets/images/illustration_178786105.svg"
-import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions"
+import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH, STYLE } from "../../global/ConstantsRegistry"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
-import { Navigate } from "react-router-dom"
-import { postAuthRoutes } from "../../routes/routes"
-import { ERR_404 } from "../errors/ERR_404"
-import { ERR_500 } from "../errors/ERR_500"
 
 export const PreFlight = () => {
     const [state, setstate] = React.useState({
@@ -477,14 +477,16 @@ export const PreFlight = () => {
                         </section>
                     </div>
                 ) : (
-                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center">
-                        <div className="w-full form-group px-12 mb-14">
-                            <div className="w-full">
-                                <div className="pt-10">
-                                    <Loading />
+                    <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
+                        <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center" style={STYLE.MAX_WIDTH}>
+                            <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
+                                <div className="w-full h-1/2 flex flex-col justify-center">
+                                    <div className="flex-grow pt-8">
+                                        <Loading />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 )
             }
