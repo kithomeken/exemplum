@@ -331,18 +331,16 @@ export const SignIn = () => {
                             <Navigate replace to={preflightRoute} />
                         </>
                     ) : (
-                        <div className="py-3 px-4">
-                            <div className="flex items-center justify-center">
-                                {
-                                    state.httpStatus === 404 ? (
-                                        <ERR_404
-                                            compact={true}
-                                        />
-                                    ) : (
-                                        <ERR_500 />
-                                    )
-                                }
-                            </div>
+                        <div className="flex items-center justify-center">
+                            {
+                                state.httpStatus === 404 ? (
+                                    <ERR_404
+                                        compact={true}
+                                    />
+                                ) : (
+                                    <ERR_500 />
+                                )
+                            }
                         </div>
                     )
                 ) : state.status === 'fulfilled' ? (
