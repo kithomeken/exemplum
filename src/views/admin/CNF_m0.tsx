@@ -1,16 +1,18 @@
 import React from "react"
-import { resetCNF_g, setPFg0MetaStage } from "../../store/identityCheckActions";
-import { CNF_gA } from "./CNF_gA";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
-import { PREFLIGHT } from "../../api/API_Registry";
-import { Loading } from "../../components/modules/Loading";
-import { STYLE } from "../../global/ConstantsRegistry";
-import HttpServices from "../../services/HttpServices";
-import { useAppSelector } from "../../store/hooks";
+
+import { CNF_gA } from "./CNF_gA";
+import { CNF_gC } from "./CNF_gC";
+import { CNF_gB } from "./CNF_gB";
 import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
-import { CNF_gB } from "./CNF_gB";
+import { useAppSelector } from "../../store/hooks";
+import { PREFLIGHT } from "../../api/API_Registry";
+import { STYLE } from "../../global/ConstantsRegistry";
+import HttpServices from "../../services/HttpServices";
+import { Loading } from "../../components/modules/Loading";
+import { resetCNF_g, setPFg0MetaStage } from "../../store/identityCheckActions";
 
 export const CNF_m0 = () => {
     const [state, setstate] = React.useState({
@@ -67,6 +69,9 @@ export const CNF_m0 = () => {
             case "CNF_gB":
                 return <CNF_gB />
 
+            case "CNF_gC":
+                return <CNF_gC />
+
             default:
                 return
         }
@@ -80,18 +85,16 @@ export const CNF_m0 = () => {
 
             {
                 state.status === 'rejected' ? (
-                    <div className="py-3 px-4 w-full h-screen">
-                        <div className="flex items-center justify-center">
-                            {
-                                state.httpStatus === 404 ? (
-                                    <ERR_404
-                                        compact={true}
-                                    />
-                                ) : (
-                                    <ERR_500 />
-                                )
-                            }
-                        </div>
+                    <div className="flex items-center justify-center">
+                        {
+                            state.httpStatus === 404 ? (
+                                <ERR_404
+                                    compact={true}
+                                />
+                            ) : (
+                                <ERR_500 />
+                            )
+                        }
                     </div>
                 ) : state.status === 'fulfilled' ? (
                     <>
