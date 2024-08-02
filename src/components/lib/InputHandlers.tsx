@@ -175,7 +175,6 @@ export function G_onInputBlurHandler(event: any, posting: boolean, title: any, m
                 break
 
             default:
-                const firstCase = tName
                 if (tValue.length < minChar) {
                     input.error = head + ' cannot be less than ' + minChar + ' characters'
                     return input
