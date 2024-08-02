@@ -471,7 +471,7 @@ export const PreFlight = () => {
                                 </div>
 
                                 <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                                    <img className="h-full bg-orange-100 rounded-2xl" src={smallAsset} alt={"hello_i'm_carol"} loading="lazy" />
+                                    <img className="h-full rounded-2xl" src={smallAsset} alt={"space_rocket"} loading="lazy" />
                                 </div>
                             </div>
                         </section>
