@@ -184,7 +184,7 @@ export const IdentityVerification = () => {
                                         </div>
 
                                         <div className="w-full flex flex-row-reverse pt-4 md:pb-8 pb-4 px-3 md:px-0 md:border-b-2 border-dashed">
-                                            <button onClick={resendEmailVerification} className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
+                                            <button onClick={resendEmailVerification} className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
                                                 {
                                                     state.process.type === 'resend' && state.process.state ? (
                                                         <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>

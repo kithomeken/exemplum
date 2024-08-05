@@ -496,7 +496,7 @@ export const Invitation = () => {
                                                 ) : (
                                                     <div className="w-full md:w-1/2 mx-auto pb-4">
                                                         <div className="w-full">
-                                                            <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                            <button type="button" onClick={invitationWithGoogle} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                                 <span className="pl-2 block">
                                                                     {
                                                                         auth0.processing && auth0.provider === 'google' ? (
@@ -522,7 +522,7 @@ export const Invitation = () => {
                                                         </div>
 
                                                         <div className="w-full">
-                                                            <button type="button" onClick={toggleAlternativeSignUp} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 font-medium disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
+                                                            <button type="button" onClick={toggleAlternativeSignUp} className="w-full border-stone-400 py-2 text-stone-700 hover:border-stone-400 hover:text-stone-900 transition duration-150 disabled:cursor-not-allowed text-sm rounded-md border shadow-sm focus:outline-none " disabled={auth0.processing}>
                                                                 <span className="pl-2 block">
                                                                     <span className="flex items-center gap-x-3 px-4 justify-center align-middle">
                                                                         <span className="tracking-wider">Continue with email</span>

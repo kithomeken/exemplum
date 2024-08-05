@@ -118,7 +118,7 @@ export const UserManagement = () => {
                                     ) : (
                                         <>
                                             <div className={`w-8 h-8 flex items-center justify-center rounded-full ${getColorForLetter(data.display_name.charAt(0))}`}>
-                                                <span className="text-white text-lg font-medium">
+                                                <span className="text-white text-lg">
                                                     {data.display_name.charAt(0)}
                                                 </span>
                                             </div>
@@ -129,7 +129,7 @@ export const UserManagement = () => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                            <p className="font-medium text-gray-900 truncate dark:text-white">
+                            <p className="text-gray-900 truncate dark:text-white">
                                 {data.display_name}
                             </p>
                             <p className="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -146,7 +146,7 @@ export const UserManagement = () => {
                     <span>
                         {
                             data.type === null ? (
-                                <span className="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">
+                                <span className="bg-orange-100 text-orange-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">
                                     <span className="hidden md:inline-block">Onboaring Pending</span>
                                     <span className="md:hidden">Pending</span>
                                 </span>
@@ -208,7 +208,7 @@ export const UserManagement = () => {
                                     <span className="md:hidden">Active</span>
                                 </span>
                             ) : (
-                                <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
                                     <span className="hidden md:inline-block">Disabled</span>
                                     <span className="md:hidden">Disabled</span>
                                 </span>
@@ -324,7 +324,7 @@ export const UserManagement = () => {
                         <div className={`w-full pb-3 mx-auto bg-white border rounded h-full`}>
                             <div className="py-4 px-6">
                                 <div className="flex items-center">
-                                    <p className="text-2xl flex-auto text-amber-600 mb-2 font-medium dark:text-white">
+                                    <p className="text-2xl flex-auto text-amber-600 mb-2 dark:text-white">
                                         User Management
 
                                         <span className="py-4 block text-sm font-normal text-gray-500 dark:text-gray-400">

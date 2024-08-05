@@ -236,7 +236,7 @@ export const EntityProfile = () => {
                         )
                     ) : state.status === 'fulfilled' ? (
                         <div className="w-full mx-auto" style={CONFIG_MAX_WIDTH}>
-                            <h1 className="text-xl text-stone-700 font-medium leading-7 tracking-wider mb-3">
+                            <h1 className="text-xl text-stone-700 leading-7 tracking-wider mb-3">
                                 Account
 
                                 <span className="block py-2 text-sm text-stone-500">

@@ -281,7 +281,7 @@ export const ArtistDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide })
                                                                 <span className="fa-duotone text-stone-500 fa-spinner-third fa-xl block fa-spin"></span>
                                                             </>
                                                         ) : (
-                                                            <span onClick={() => suspendOrReinstateUserAccount('R')} className="text-sm flex-none font-medium py-1 bg-inherit text-emerald-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                            <span onClick={() => suspendOrReinstateUserAccount('R')} className="text-sm flex-none py-1 bg-inherit text-emerald-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                                 Reinstate Account
                                                             </span>
                                                         )

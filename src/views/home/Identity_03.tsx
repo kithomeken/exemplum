@@ -457,7 +457,7 @@ export const Identity_03 = () => {
                                             </div>
 
                                             <div className="mb-3 pt-3 px-0">
-                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                     {
                                                         idC_State.processing ? (
                                                             <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>

@@ -75,7 +75,7 @@ export default function ReactTable({ columns, data, hidePagination = false, show
                                 <th
                                     // {...column.getHeaderProps()}
                                     key={column.render("id")}
-                                    className={`p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white`}>
+                                    className={`p-4 text-xs tracking-wider text-left text-gray-500 uppercase dark:text-white`}>
                                     {column.render("Header")}
                                 </th>
                             ))}

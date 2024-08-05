@@ -65,7 +65,7 @@ export const InformationalModal: FC<Props> = ({ title, details, show, showOrHide
                                     <div className="text-center sm:mt-0 sm:text-left">
                                         {
                                             title.length > 1 ? (
-                                                <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                                                <Dialog.Title as="h3" className="text-lg leading-6 text-gray-900">
                                                     {title}
                                                 </Dialog.Title>
                                             ) : null
@@ -78,7 +78,7 @@ export const InformationalModal: FC<Props> = ({ title, details, show, showOrHide
                                 </div>
                             </div>
                             <div className="bg-gray-100 px-4 py-3 sm:px-6 flex flex-row-reverse">
-                                <button type="button" className="w-1/2 inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-orange-600 font-medium text-white hover:bg-orange-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onClick={showOrHide}>
+                                <button type="button" className="w-1/2 inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-orange-600 text-white hover:bg-orange-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onClick={showOrHide}>
                                     Close
                                 </button>
                             </div>

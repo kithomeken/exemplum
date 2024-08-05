@@ -90,12 +90,12 @@ export const OnboardingRequests = () => {
                                     <span className="md:hidden">Approved</span>
                                 </span>
                             ) : data.status === 'P' ? (
-                                <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
+                                <span className="bg-purple-100 text-purple-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
                                     <span className="hidden md:inline-block">New Request</span>
                                     <span className="md:hidden">New</span>
                                 </span>
                             ) : (
-                                <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
                                     <span className="hidden md:inline-block">Rejected</span>
                                     <span className="md:hidden">Rejected</span>
                                 </span>

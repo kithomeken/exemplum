@@ -218,7 +218,7 @@ export const EntityMembers = () => {
                                                 <li key={person.email} className="flex justify-between gap-x-6 py-5 items-center">
                                                     <div className="flex min-w-0 gap-x-4 align-middle items-center">
                                                         <div className={`w-10 h-10 flex items-center justify-center rounded-full ${getColorForLetter(person.email.charAt(0))}`}>
-                                                            <span className="text-white text-lg font-medium">
+                                                            <span className="text-white text-lg">
                                                                 {person.email.toUpperCase().charAt(0)}
                                                             </span>
                                                         </div>

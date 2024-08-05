@@ -165,13 +165,13 @@ export const Entity = () => {
                                                             {
                                                                 person.display_name.length > 1 ? (
                                                                     <div className={`w-10 h-10 flex items-center justify-center rounded-full ${getColorForLetter(person.display_name.charAt(0))}`}>
-                                                                        <span className="text-white text-lg font-medium">
+                                                                        <span className="text-white text-lg">
                                                                             {person.display_name.charAt(0)}
                                                                         </span>
                                                                     </div>
                                                                 ) : (
                                                                     <div className={`w-10 h-10 flex items-center justify-center rounded-full ${getColorForLetter('X')}`}>
-                                                                        <span className="text-white text-lg font-medium">
+                                                                        <span className="text-white text-lg">
                                                                             X
                                                                         </span>
                                                                     </div>
@@ -229,7 +229,7 @@ export const Entity = () => {
                                         <li key={person.email} className="flex justify-between gap-x-6 py-5 items-center">
                                             <div className="flex min-w-0 gap-x-4 align-middle items-center">
                                                 <div className={`w-10 h-10 flex items-center justify-center rounded-full ${getColorForLetter(person.email.charAt(0))}`}>
-                                                    <span className="text-white text-lg font-medium">
+                                                    <span className="text-white text-lg">
                                                         {person.email.toUpperCase().charAt(0)}
                                                     </span>
                                                 </div>

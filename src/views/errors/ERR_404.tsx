@@ -40,10 +40,10 @@ export const ERR_404: FC<HTTP_Error_Interface> = ({ compact = false }) => {
                             <div className="max-w-md w-full text-start p-6 bg-inherit">
                                 <img src={imageAsset} alt="error_500" className="mx-auto mb-6 w-full h-auto max-w-xs" />
 
-                                <h1 className="text-sm sm:text-lg font-medium text-red-600 mb-2">
+                                <h1 className="text-sm sm:text-lg text-red-600 mb-2">
                                     ERR_404: <br />Page Not Found
                                 </h1>
-                                <h2 className="text-base sm:text-2xl font-medium mb-2">Whoopsy Daisy!</h2>
+                                <h2 className="text-base sm:text-2xl mb-2">Whoopsy Daisy!</h2>
                                 <p className="text-gray-600 mb-6">
                                     Look's like you're lost in the digital wilderness. Let us guide you back to someplace more familiar
                                 </p>

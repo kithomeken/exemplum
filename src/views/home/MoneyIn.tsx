@@ -68,7 +68,7 @@ export const MoneyIn = () => {
                             <div className="w-full flex flex-row align-middle items-center pb-2 md:pl-3 md:py-1 md:basis-1/2">
                                 <div className="flex flex-row align-middle items-center w-full">
                                     <div className="basis-1/2">
-                                        <span className="inline-flex items-center text-sm font-medium text-orange-600">
+                                        <span className="inline-flex items-center text-sm text-orange-600">
                                             <span className="text-orange-600 mr-2 pr-2 md:mr-4 md:pr-4 border-r">
                                                 {data.receipt}
                                             </span>

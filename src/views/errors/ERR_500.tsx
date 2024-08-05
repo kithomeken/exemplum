@@ -9,10 +9,10 @@ export const ERR_500 = () => {
                 <div className="max-w-md w-full text-start p-6 bg-inherit">
                     <img src={errorAsset} alt="error_500" className="mx-auto mb-6 w-full h-auto max-w-xs" />
 
-                    <h1 className="text-sm sm:text-lg font-medium text-red-600 mb-2">
+                    <h1 className="text-sm sm:text-lg text-red-600 mb-2">
                         ERR_500: <br />Internal Server Error
                     </h1>
-                    <h2 className="text-base sm:text-2xl font-medium mb-2">Oops, that's our bad.</h2>
+                    <h2 className="text-base sm:text-2xl mb-2">Oops, that's our bad.</h2>
                     <p className="text-gray-600 mb-6">
                         We're not exactly sure what happened, but our servers say something is wrong. Worry not though, we're looking into it.
                     </p>

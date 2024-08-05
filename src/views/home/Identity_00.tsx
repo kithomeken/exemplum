@@ -535,7 +535,7 @@ export const Identity_00 = () => {
                                                                                                 }
 
                                                                                                 <div className="pb-3 px-0 w-full flex flex-row-reverse align-middle items-middle">
-                                                                                                    <button className="bg-orange-600  min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                                                                    <button className="bg-orange-600  min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                                                                         {
                                                                                                             state.posting ? (
                                                                                                                 <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
