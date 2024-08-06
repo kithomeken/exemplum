@@ -82,10 +82,17 @@ export const CNF_gB = () => {
                     max: 10
                 };
 
-            case 'passKey':
+            case 'pass_key':
                 return {
                     min: 30,
                     max: 100
+                };
+
+            case 'customer_key':
+            case 'customer_secret':
+                return {
+                    min: 10,
+                    max: 50
                 };
 
             default:
@@ -285,8 +292,8 @@ export const CNF_gB = () => {
 
                 const credentialsProps = {
                     dataDump: {
-                        trans_min: input.trans_min,
-                        trans_max: input.trans_max,
+                        trans_min: input.trans_min.replace(',', ''),
+                        trans_max: input.trans_max.replace(',', ''),
                         pass_key: input.pass_key,
                         init_name: input.init_name,
                         short_code: input.short_code,
@@ -430,7 +437,7 @@ export const CNF_gB = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="w-full md:w-1/2 md:mb-3">
+                                                    <div className="w-full md:mb-3">
                                                         <div className="relative md:mt-2 rounded shadow-sm">
                                                             <input type="text" name="pass_key" id="pass_key" placeholder="Pass Key" autoComplete="off"
                                                                 className={classNames(

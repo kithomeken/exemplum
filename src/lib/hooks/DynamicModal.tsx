@@ -114,7 +114,7 @@ export const DynamicModal: FC<Props> = ({ show, size, showOrHideModal, title, on
                                                         <button
                                                             type="button"
                                                             onClick={checkIfFormIsPostingData}
-                                                            className="w-full inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-red-600 font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                                                            className="w-full inline-flex justify-center text-sm rounded-md border border-transparent shadow-sm px-3 py-1 bg-red-600 text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                                                             Close
                                                         </button>
                                                     </div>

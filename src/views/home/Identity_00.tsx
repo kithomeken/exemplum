@@ -64,7 +64,7 @@ export const Identity_00 = () => {
                 let onboardedMembers = 0
 
                 Object.keys(payload.beneficiaries).forEach(function (key) {
-                    if (data.beneficiaries[key].display_name !== null) {
+                    if (payload.beneficiaries[key].display_name !== null) {
                         onboardedMembers = onboardedMembers + 1
                     }
                 })
@@ -83,6 +83,7 @@ export const Identity_00 = () => {
                 status = 'rejected'
             }
         } catch (error) {
+            console.log(error);
             status = 'rejected'
             httpStatus = 500
         }
@@ -368,18 +369,16 @@ export const Identity_00 = () => {
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
                         {
                             state.status === 'rejected' ? (
-                                <div className="py-3 px-4 w-full">
-                                    <div className="flex items-center justify-center">
-                                        {
-                                            state.httpStatus === 404 ? (
-                                                <ERR_404
-                                                    compact={true}
-                                                />
-                                            ) : (
-                                                <ERR_500 />
-                                            )
-                                        }
-                                    </div>
+                                <div className="flex items-center justify-center w-full">
+                                    {
+                                        state.httpStatus === 404 ? (
+                                            <ERR_404
+                                                compact={true}
+                                            />
+                                        ) : (
+                                            <ERR_500 />
+                                        )
+                                    }
                                 </div>
                             ) : state.status === 'fulfilled' ? (
                                 <>
@@ -535,7 +534,7 @@ export const Identity_00 = () => {
                                                                                                 }
 
                                                                                                 <div className="pb-3 px-0 w-full flex flex-row-reverse align-middle items-middle">
-                                                                                                    <button className="bg-orange-600  min-w-28 py-1.5 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                                                                    <button className="bg-orange-600  min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                                                                         {
                                                                                                             state.posting ? (
                                                                                                                 <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
@@ -654,24 +653,12 @@ export const Identity_00 = () => {
                                                                                                         </div>
                                                                                                     ) : null
                                                                                                 }
-
-                                                                                                <div className="mt-4 bg-orange-00 px-2 md:py-2 border-l-2 bg-orange-50 border-orange-300 border-dashed rounded-sm mb-3">
-                                                                                                    <div className="flex flex-row align-middle items-center text-orange-700 px-2">
-                                                                                                        <i className="fa-duotone fa-info-circle fa-xl mt-1 text-orange-700 flex-none"></i>
-
-                                                                                                        <div className="flex-auto ml-1 mt-1">
-                                                                                                            <span className="text-sm pl-3 block py-2 text-orange-700">
-                                                                                                                All invited member(s) need to onboard for your request to be approved.
-                                                                                                            </span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
                                                                                             </div>
                                                                                         ) : null
                                                                                     }
 
                                                                                     <span className="text-sm pt-3 text-stone-500 block">
-                                                                                        In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
+                                                                                        In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </>
@@ -712,7 +699,7 @@ export const Identity_00 = () => {
 
                                                                     <div className="w-full block mb-3 pb-4 border-b-2 border-dashed">
                                                                         <span className="text-sm pt-3 mt-3 text-stone-500 block">
-                                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
+                                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
                                                                         </span>
                                                                     </div>
 

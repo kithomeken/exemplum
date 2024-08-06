@@ -83,7 +83,7 @@ export const AllEntities = () => {
                 id: 'cle22tk3i',
                 accessor: (data: { type: any }) => (
                     <span>
-                        <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                        <span className="text-sm font-normal text-stone-500 whitespace-nowrap">
                             {data.type}
                         </span>
                     </span>
@@ -94,7 +94,7 @@ export const AllEntities = () => {
                 id: 'iub7Y3jndi3',
                 accessor: (data: { account: any }) => (
                     <span>
-                        <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                        <span className="text-sm font-normal text-stone-500 whitespace-nowrap">
                             {data.account}
                         </span>
                     </span>
@@ -104,7 +104,7 @@ export const AllEntities = () => {
                 Header: 'Joined Date',
                 id: 'jhfbcinsakdnwq',
                 accessor: (data: { created_at: any }) => (
-                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                    <span className="text-sm font-normal text-stone-500 whitespace-nowrap">
                         {humanReadableDate(data.created_at)}
                     </span>
                 )
@@ -148,10 +148,10 @@ export const AllEntities = () => {
                         <div className={`w-full pb-3 mx-auto bg-white border rounded h-full`}>
                             <div className="py-3 px-4">
                                 <div className="flex items-center">
-                                    <p className="text-xl flex-auto text-amber-600 mb-2 font-bold dark:text-white">
+                                    <p className="text-xl flex-auto text-amber-600 mb-2">
                                         Entities
 
-                                        <span className="py-2 block text-sm font-normal text-gray-500 dark:text-gray-400">
+                                        <span className="py-2 block text-sm font-normal text-stone-500">
                                             List of onboarded artists and their members
                                         </span>
                                     </p>

@@ -118,29 +118,97 @@ export const MoneyOut = () => {
                 id: 'TRC_R001',
                 accessor: (data: any) => (
                     data.a_uuid ? (
-                        <div className="px-0 w-full">
-                            <div className="flex flex-col md:flex-row gap-y-3 md:gap-x-4 pt-2">
-                                <div className="w-full flex-grow flex flex-col md:pr-3 align-middle gap-y-2 md:pl-4 md:basis-1/2">
-                                    <div className="w-full flex flex-row md:pr-3 align-middle items-center gap-x-3 md:pl-4 md:basis-1/2">
-                                        <div className="basis-1/2">
-                                            <span className=" py-0 px-1.5 text-stone-500 text-xs">
-                                                Ksh.
-                                            </span>
+                        <>
+                            <div className="px-0 w-full">
+                                <div className="flex flex-col md:flex-row gap-y-3 md:gap-x-4 pt-2">
+                                    <div className="w-full flex-grow flex flex-col md:pr-3 align-middle gap-y-2 md:pl-4 md:basis-1/2">
+                                        <div className="w-full flex flex-row md:pr-3 align-middle items-center gap-x-3 md:pl-4 md:basis-1/2">
+                                            <div className="basis-1/2">
+                                                <span className=" py-0 px-1.5 text-stone-500 text-xs">
+                                                    KES.
+                                                </span>
 
-                                            <span className="py- px-1.5 text-2xl">
-                                                <span className="text-stone-700">{data.gross.split('.')[0]}</span>
-                                                <span className="text-stone-400">.{data.gross.split('.')[1]}</span>
-                                            </span>
+                                                <span className="py- px-1.5 text-2xl">
+                                                    <span className="text-stone-700">{data.gross.split('.')[0]}</span>
+                                                    <span className="text-stone-400">.{data.gross.split('.')[1]}</span>
+                                                </span>
+                                            </div>
+
+                                            <div className="basis-1/2">
+                                                <span className="block mb-0 text-sm text-slate-500 basis-1/2 text-right md:">
+                                                    {humanReadableDate(data.created_at)}
+                                                </span>
+                                            </div>
                                         </div>
 
-                                        <div className="basis-1/2">
-                                            <span className="block mb-0 text-sm text-slate-500 basis-1/2 text-right md:">
-                                                {humanReadableDate(data.created_at)}
-                                            </span>
+                                        <div className="w-full md:block hidden flex-row align-middle items-center md:pl-3 md:basis-1/2">
+                                            <div className="basis-1/2">
+                                                <div className="basis-1/2">
+                                                    {
+                                                        data.status === 'P' ? (
+                                                            <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-orange-600">
+                                                                Pending your approval
+                                                            </span>
+                                                        ) : data.status === 'A' ? (
+                                                            <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-emerald-600">
+                                                                You approved the withdrawal request
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-red-600">
+                                                                You rejected the request
+                                                            </span>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="w-full flex-row align-middle hidden md:block px-3 items-center">
+                                            {
+                                                data.status === 'P' ? (
+                                                    <div className="w-full flex flex-row gap-x-4 pt-1 align-middle items-center">
+                                                        <div className="basis-1/2">
+                                                            <span onClick={() => approveOrRejectRequestCheck('A')} className="text-green-600 w-full py-2 px-4 text-sm flex flex-row border border-green-600 items-center justify-center text-center rounded-md cursor-pointer bg-white hover:bg-green-200 focus:outline-none">
+                                                                {
+                                                                    actionMode.posting && actionMode.action === 'A' ? (
+                                                                        <span>
+                                                                            <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
+                                                                            Approving
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span>
+                                                                            <i className="fa-duotone fa-badge-check mr-2 fa-lg"></i>
+                                                                            Approve
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="basis-1/2">
+                                                            <span onClick={() => approveOrRejectRequestCheck('D')} className="text-red-600 w-full py-2 px-4 text-sm flex flex-row border border-red-600 items-center justify-center text-center rounded-md bg-white hover:bg-red-200 focus:outline-none">
+                                                                {
+                                                                    !isPosting && state.action === 'R' ? (
+                                                                        <span>
+                                                                            <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
+                                                                            Rejecting
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span>
+                                                                            <i className="fa-duotone fa-ban mr-2 fa-lg"></i>
+                                                                            Reject
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                ) : null
+                                            }
                                         </div>
                                     </div>
 
-                                    <div className="w-full md:block hidden flex-row align-middle items-center md:pl-3 md:basis-1/2">
+                                    <div className="w-full md:hidden flex flex-row align-middle items-center md:pl-3 md:basis-1/2">
                                         <div className="basis-1/2">
                                             <div className="basis-1/2">
                                                 {
@@ -162,170 +230,235 @@ export const MoneyOut = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-full flex-row align-middle hidden md:block px-3 items-center">
+                                    <div className="py-3 px-3 md:basis-1/2 w-full border-2 border-gray-300 border-dashed rounded-md">
+                                        <div className="flex flex-row w-full align-middle items-center">
+                                            <div className="basis-2/3 text-stone-500 text-sm">
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Amount to Receive:</span>
+                                                    <span className="md:hidden">You'll Receive:</span>
+                                                </span>
+
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Processing Fee ({data.comm_rate}%):</span>
+                                                    <span className="md:hidden">Processing Fee ({data.comm_rate}%):</span>
+                                                </span>
+
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Mpesa Transaction Costs:</span>
+                                                    <span className="md:hidden">Mpesa Transaction Costs:</span>
+                                                </span>
+                                            </div>
+
+                                            <div className="basis-1/3 text-stone-600 text-right">
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.amount_payable))}
+                                                </span>
+
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.comm_amount))}
+                                                </span>
+
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.mpesa_b2c_fee))}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col md:flex-row gap-y-4 pt-4">
+                                    {
+                                        data.status === 'P' ? (
+                                            <div className="w-full flex flex-row md:pr-3 gap-x-4 mb-4 align-middle items-center md:basis-1/2">
+                                                <div className="basis-1/2">
+                                                    <span onClick={() => approvePendingRequest('A')} className="text-green-600 w-full py-2 px-4 sm:hidden text-sm flex flex-row border border-green-600 items-center justify-center text-center rounded-md bg-white hover:bg-green-200 focus:outline-none">
+                                                        {
+                                                            state.show ? (
+                                                                <span>
+                                                                    <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
+                                                                    Approving
+                                                                </span>
+                                                            ) : (
+                                                                <span>
+                                                                    <i className="fa-duotone fa-badge-check mr-2 fa-lg"></i>
+                                                                    Approve
+                                                                </span>
+                                                            )
+                                                        }
+                                                    </span>
+                                                </div>
+
+                                                <div className="basis-1/2">
+                                                    <button type="button" className="text-red-600 w-full py-2 px-4 sm:hidden text-sm flex flex-row border border-red-600 items-center justify-center text-center rounded-md bg-white hover:bg-red-200 focus:outline-none">
+                                                        <i className="fa-duotone fa-ban mr-2 fa-lg"></i>
+                                                        Reject
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : null
+                                    }
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="px-0 w-full">
+                                <div className="md:grid hidden md:grid-cols-3 flex-col gap-x-3 md:gap-y-0 space-y-2 align-middle items-center justify-between w-full text-sm py-1 md:py-0">
+                                    <div className="text-orange-600 md:block flex flex-row w-full md:mb-0 mb-1">
+                                        <div className="basis-1/2 md:w-auto">
+                                            <div className="flex flex-row align-middle items-center gap-x-1.5">
+                                                <span className="text-stone-500 text-xs flex gap-x-2">
+                                                    <span className="text-orange-600">Payable:</span> KES.
+                                                </span>
+
+                                                <span className="text-lg">
+                                                    <span className="text-stone-700">{data.amount_payable.split('.')[0]}</span>
+                                                    <span className="text-stone-400">.{data.amount_payable.split('.')[1]}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <span className="md:block mb-0 text-sm text-slate-500 text-start hidden">
+                                            {humanReadableDate(data.created_at)}
+                                        </span>
+                                    </div>
+
+                                    <div className="w-auto flex flex-col">
+                                        <div className="flex flex-row align-middle items-center gap-x-1.5">
+                                            <span className="text-stone-500 text-xs">
+                                                KES.
+                                            </span>
+
+                                            <span className="text-sm">
+                                                <span className="text-stone-500">{data.comm_amount}</span>
+                                            </span>
+                                            Proc Fee ({data.comm_rate}%)
+                                        </div>
+
+                                        <div className="flex flex-row align-middle items-center gap-x-1.5">
+                                            <span className="text-stone-500 text-xs">
+                                                KES.
+                                            </span>
+
+                                            <span className="text-sm">
+                                                <span className="text-stone-500">{data.mpesa_b2c_fee}</span>
+                                            </span>
+                                            Mpesa TXN Charge
+                                        </div>
+                                    </div>
+
+                                    <div className="w-auto hidden md:block">
                                         {
                                             data.status === 'P' ? (
-                                                <div className="w-full flex flex-row gap-x-4 pt-1 align-middle items-center">
-                                                    <div className="basis-1/2">
-                                                        <span onClick={() => approveOrRejectRequestCheck('A')} className="text-green-600 w-full py-2 px-4 text-sm flex flex-row border border-green-600 items-center justify-center text-center rounded-md cursor-pointer bg-white hover:bg-green-200 focus:outline-none">
-                                                            {
-                                                                actionMode.posting && actionMode.action === 'A' ? (
-                                                                    <span>
-                                                                        <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
-                                                                        Approving
-                                                                    </span>
-                                                                ) : (
-                                                                    <span>
-                                                                        <i className="fa-duotone fa-badge-check mr-2 fa-lg"></i>
-                                                                        Approve
-                                                                    </span>
-                                                                )
-                                                            }
-                                                        </span>
-                                                    </div>
-
-                                                    <div className="basis-1/2">
-                                                        <span onClick={() => approveOrRejectRequestCheck('D')} className="text-red-600 w-full py-2 px-4 text-sm flex flex-row border border-red-600 items-center justify-center text-center rounded-md bg-white hover:bg-red-200 focus:outline-none">
-                                                            {
-                                                                !isPosting && state.action === 'R' ? (
-                                                                    <span>
-                                                                        <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
-                                                                        Rejecting
-                                                                    </span>
-                                                                ) : (
-                                                                    <span>
-                                                                        <i className="fa-duotone fa-ban mr-2 fa-lg"></i>
-                                                                        Reject
-                                                                    </span>
-                                                                )
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            ) : null
+                                                <span className="inline-flex items-center mr-2 rounded bg-yellow-100 px-3 text-sm text-stone-600 ring-1 ring-inset ring-yellow-500/20">
+                                                    {
+                                                        data.meta.app < data.meta.all ? (
+                                                            <span>Pending approval from members</span>
+                                                        ) : (
+                                                            <span>Pending admin's approval</span>
+                                                        )
+                                                    }
+                                                </span>
+                                            ) : data.status === 'A' ? (
+                                                <span className="inline-flex items-center mr-2 rounded bg-emerald-100 px-3 text-sm text-emerald-600 ring-1 ring-inset ring-emerald-500/20">
+                                                    Approved
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center mr-2 rounded bg-red-100 px-3 text-sm text-red-600 ring-1 ring-inset ring-red-500/10">
+                                                    Rejected
+                                                </span>
+                                            )
                                         }
-                                    </div>
-                                </div>
 
-                                <div className="w-full md:hidden flex flex-row align-middle items-center md:pl-3 md:basis-1/2">
-                                    <div className="basis-1/2">
-                                        <div className="basis-1/2">
+                                        <span className={
+                                            classNames(
+                                                data.meta.app < data.meta.all ? 'text-orange-500' : 'text-emerald-500',
+                                                'text-sm block'
+                                            )
+                                        }>
                                             {
-                                                data.status === 'P' ? (
-                                                    <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-orange-600">
-                                                        Pending your approval
-                                                    </span>
-                                                ) : data.status === 'A' ? (
-                                                    <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-emerald-600">
-                                                        You approved the withdrawal request
-                                                    </span>
+                                                data.meta.app < data.meta.all ? (
+                                                    <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
                                                 ) : (
-                                                    <span className="inline-flex items-center mr-2 rounded-md px-2 text-sm text-red-600">
-                                                        You rejected the request
-                                                    </span>
+                                                    <span></span>
                                                 )
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="py-3 px-3 md:basis-1/2 w-full border-2 border-gray-300 border-dashed rounded-md">
-                                    <div className="flex flex-row w-full align-middle items-center">
-                                        <div className="basis-2/3 text-stone-500 text-sm">
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Amount to Receive:</span>
-                                                <span className="md:hidden">You'll Receive:</span>
-                                            </span>
-
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Processing Fee ({data.comm_rate}%):</span>
-                                                <span className="md:hidden">Processing Fee ({data.comm_rate}%):</span>
-                                            </span>
-
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Mpesa Transaction Costs:</span>
-                                                <span className="md:hidden">Mpesa Transaction Costs:</span>
-                                            </span>
-                                        </div>
-
-                                        <div className="basis-1/3 text-stone-600 text-right">
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.amount_payable))}
-                                            </span>
-
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.comm_amount))}
-                                            </span>
-
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.mpesa_b2c_fee))}
-                                            </span>
-                                        </div>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col md:flex-row gap-y-4 pt-4">
-                                {
-                                    data.status === 'P' ? (
-                                        <div className="w-full flex flex-row md:pr-3 gap-x-4 mb-4 align-middle items-center md:basis-1/2">
+                            <div className="px-0 w-full md:hidden">
+                                <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-4 pt-2">
+                                    <div className="w-full flex-grow flex flex-col md:pr-3 align-middle gap-y- md:pl-4 md:basis-1/2">
+                                        <div className="w-full flex flex-row align-middle items-center gap-x-3 md:px-3 md:basis-1/2">
                                             <div className="basis-1/2">
-                                                <span onClick={() => approvePendingRequest('A')} className="text-green-600 w-full py-2 px-4 sm:hidden text-sm flex flex-row border border-green-600 items-center justify-center text-center rounded-md bg-white hover:bg-green-200 focus:outline-none">
-                                                    {
-                                                        state.show ? (
-                                                            <span>
-                                                                <i className="fa-duotone fa-spinner-third animate-spin mr-2 fa-lg"></i>
-                                                                Approving
-                                                            </span>
-                                                        ) : (
-                                                            <span>
-                                                                <i className="fa-duotone fa-badge-check mr-2 fa-lg"></i>
-                                                                Approve
-                                                            </span>
-                                                        )
-                                                    }
+                                                <span className=" py-0 px-1.5 text-stone-500 text-xs">
+                                                    KES.
+                                                </span>
+
+                                                <span className="py- px-1.5 text-2xl">
+                                                    <span className="text-stone-700">{data.gross.split('.')[0]}</span>
+                                                    <span className="text-stone-400">.{data.gross.split('.')[1]}</span>
                                                 </span>
                                             </div>
 
                                             <div className="basis-1/2">
-                                                <button type="button" className="text-red-600 w-full py-2 px-4 sm:hidden text-sm flex flex-row border border-red-600 items-center justify-center text-center rounded-md bg-white hover:bg-red-200 focus:outline-none">
-                                                    <i className="fa-duotone fa-ban mr-2 fa-lg"></i>
-                                                    Reject
-                                                </button>
+                                                <span className="block mb-0 text-sm text-slate-500 basis-1/2 text-right md:">
+                                                    {humanReadableDate(data.created_at)}
+                                                </span>
                                             </div>
                                         </div>
-                                    ) : null
-                                }
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="px-0 w-full">
-                            <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-4 pt-2">
-                                <div className="w-full flex-grow flex flex-col md:pr-3 align-middle gap-y- md:pl-4 md:basis-1/2">
-                                    <div className="w-full flex flex-row align-middle items-center gap-x-3 md:px-3 md:basis-1/2">
-                                        <div className="basis-1/2">
-                                            <span className=" py-0 px-1.5 text-stone-500 text-xs">
-                                                Ksh.
-                                            </span>
 
-                                            <span className="py- px-1.5 text-2xl">
-                                                <span className="text-stone-700">{data.gross.split('.')[0]}</span>
-                                                <span className="text-stone-400">.{data.gross.split('.')[1]}</span>
-                                            </span>
-                                        </div>
+                                        <div className="w-full md:flex hidden flex-col-reverse align-middle gap-x-3 items-cnter md:px-3 md:basis-1/2">
+                                            <div className="basis-1/2">
+                                                {
+                                                    data.status === 'P' ? (
+                                                        <span className="inline-flex items-center mr-2 rounded bg-yellow-100 px-3 text-sm text-stone-600 ring-1 ring-inset ring-yellow-500/20">
+                                                            {
+                                                                data.meta.app < data.meta.all ? (
+                                                                    <span>Pending approval from members</span>
+                                                                ) : (
+                                                                    <span>Pending admin's approval</span>
+                                                                )
+                                                            }
+                                                        </span>
+                                                    ) : data.status === 'A' ? (
+                                                        <span className="inline-flex items-center mr-2 rounded bg-emerald-100 px-3 text-sm text-emerald-600 ring-1 ring-inset ring-emerald-500/20">
+                                                            Approved
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center mr-2 rounded bg-red-100 px-3 text-sm text-red-600 ring-1 ring-inset ring-red-500/10">
+                                                            Rejected
+                                                        </span>
+                                                    )
+                                                }
+                                            </div>
 
-                                        <div className="basis-1/2">
-                                            <span className="block mb-0 text-sm text-slate-500 basis-1/2 text-right md:">
-                                                {humanReadableDate(data.created_at)}
-                                            </span>
+                                            <div className="basis-1/2">
+                                                <span className={
+                                                    classNames(
+                                                        data.meta.app < data.meta.all ? 'text-orange-500' : 'text-emerald-500',
+                                                        'text-sm block'
+                                                    )
+                                                }>
+                                                    {
+                                                        data.meta.app < data.meta.all ? (
+                                                            <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
+                                                        ) : (
+                                                            <span></span>
+                                                        )
+                                                    }
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="w-full md:flex hidden flex-col-reverse align-middle gap-x-3 items-cnter md:px-3 md:basis-1/2">
+                                    <div className="w-full md:hidden flex flex-col align-middle items-ceter gap-y-2 md:pl-3 md:basis-1/2">
                                         <div className="basis-1/2">
                                             {
                                                 data.status === 'P' ? (
-                                                    <span className="inline-flex items-center mr-2 rounded bg-orange-100 px-3 text-sm text-orange-600 ring-1 ring-inset ring-orange-500/20">
+                                                    <span className="inline-flex items-center mr-2 rounded bg-yellow-100 px-3 text-sm text-stone-600 ring-1 ring-inset ring-yellow-500/20">
                                                         {
                                                             data.meta.app < data.meta.all ? (
                                                                 <span>Pending approval from members</span>
@@ -350,100 +483,57 @@ export const MoneyOut = () => {
                                             <span className={
                                                 classNames(
                                                     data.meta.app < data.meta.all ? 'text-orange-500' : 'text-emerald-500',
-                                                    'text-sm'
+                                                    'text-sm block'
                                                 )
                                             }>
                                                 {
                                                     data.meta.app < data.meta.all ? (
-                                                        <span>{data.meta.app}/{data.meta.all}</span>
+                                                        <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
                                                     ) : (
-                                                        <span>All</span>
+                                                        <span></span>
                                                     )
-                                                } members approved
+                                                }
                                             </span>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="w-full md:hidden flex flex-col align-middle items-ceter gap-y-2 md:pl-3 md:basis-1/2">
-                                    <div className="basis-1/2">
-                                        {
-                                            data.status === 'P' ? (
-                                                <span className="inline-flex items-center mr-2 rounded bg-orange-100 px-3 text-sm text-orange-600 ring-1 ring-inset ring-orange-500/20">
-                                                    {
-                                                        data.meta.app < data.meta.all ? (
-                                                            <span>Pending approval from members</span>
-                                                        ) : (
-                                                            <span>Pending admin's approval</span>
-                                                        )
-                                                    }
+                                    <div className="py- px-3 md:basis-1/2 w-full border-2 mb-3 border-gray-300 border-dashed rounded-md">
+                                        <div className="flex flex-row w-full align-middle items-center">
+                                            <div className="basis-2/3 text-stone-500 text-sm">
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Amount to Receive:</span>
+                                                    <span className="md:hidden">You'll Receive:</span>
                                                 </span>
-                                            ) : data.status === 'A' ? (
-                                                <span className="inline-flex items-center mr-2 rounded bg-emerald-100 px-3 text-sm text-emerald-600 ring-1 ring-inset ring-emerald-500/20">
-                                                    Approved
+
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Processing Fee ({data.comm_rate}%):</span>
+                                                    <span className="md:hidden">Processing Fee ({data.comm_rate}%):</span>
                                                 </span>
-                                            ) : (
-                                                <span className="inline-flex items-center mr-2 rounded bg-red-100 px-3 text-sm text-red-600 ring-1 ring-inset ring-red-500/10">
-                                                    Rejected
+
+                                                <span className=" py-1 block mb-2">
+                                                    <span className="hidden md:inline-block">Mpesa Transaction Cost:</span>
+                                                    <span className="md:hidden">Mpesa Transaction Cost:</span>
                                                 </span>
-                                            )
-                                        }
-                                    </div>
+                                            </div>
 
-                                    <div className="basis-1/2">
-                                        <span className={
-                                            classNames(
-                                                data.meta.app < data.meta.all ? 'text-orange-500' : 'text-emerald-500',
-                                                'text-sm'
-                                            )
-                                        }>
-                                            {
-                                                data.meta.app < data.meta.all ? (
-                                                    <span>{data.meta.app}/{data.meta.all}</span>
-                                                ) : (
-                                                    <span>All</span>
-                                                )
-                                            } members approved
-                                        </span>
-                                    </div>
-                                </div>
+                                            <div className="basis-1/3 text-stone-600 text-right">
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.amount_payable))}
+                                                </span>
 
-                                <div className="py- px-3 md:basis-1/2 w-full border-2 mb-3 border-gray-300 border-dashed rounded-md">
-                                    <div className="flex flex-row w-full align-middle items-center">
-                                        <div className="basis-2/3 text-stone-500 text-sm">
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Amount to Receive:</span>
-                                                <span className="md:hidden">You'll Receive:</span>
-                                            </span>
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.comm_amount))}
+                                                </span>
 
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Processing Fee ({data.comm_rate}%):</span>
-                                                <span className="md:hidden">Processing Fee ({data.comm_rate}%):</span>
-                                            </span>
-
-                                            <span className=" py-1 block mb-2">
-                                                <span className="hidden md:inline-block">Mpesa Transaction Cost:</span>
-                                                <span className="md:hidden">Mpesa Transaction Cost:</span>
-                                            </span>
-                                        </div>
-
-                                        <div className="basis-1/3 text-stone-600 text-right">
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.amount_payable))}
-                                            </span>
-
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.comm_amount))}
-                                            </span>
-
-                                            <span className=" py-1 block mb-2 capitalize">
-                                                {formatAmount(parseFloat(data.mpesa_b2c_fee))}
-                                            </span>
+                                                <span className=" py-1 block mb-2 capitalize">
+                                                    {formatAmount(parseFloat(data.mpesa_b2c_fee))}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </>
                     )
 
                 ),
@@ -506,7 +596,7 @@ export const MoneyOut = () => {
                             <div className="w-auto flex flex-col">
                                 <div className="flex flex-row align-middle items-center gap-x-1.5">
                                     <span className="text-stone-500 text-xs">
-                                        Ksh.
+                                        KES.
                                     </span>
 
                                     <span className="text-lg">
@@ -517,7 +607,7 @@ export const MoneyOut = () => {
 
                                 <div className="flex flex-row align-middle items-center gap-x-1.5">
                                     <span className="text-stone-500 text-xs">
-                                        Ksh.
+                                        KES.
                                     </span>
 
                                     <span className="text-sm">
@@ -573,7 +663,6 @@ export const MoneyOut = () => {
                                 Withdrawals requests to move money from your wallet
                             </p>
                         </div>
-
 
                         {
                             state.data.requests.length < 1 ? (

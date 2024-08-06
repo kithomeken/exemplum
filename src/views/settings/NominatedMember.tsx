@@ -228,7 +228,7 @@ export const NomintatedMember = () => {
                     <>
                         <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 pb-6 border-b md:px-4">
                             <div className="col-span-1">
-                                <span className="text-lg text-stone-600 font-medium md:text-base">
+                                <span className="text-lg text-stone-600 md:text-base">
                                     Nominated Member:
                                 </span>
                             </div>
@@ -327,7 +327,7 @@ export const NomintatedMember = () => {
                                                         </div>
 
                                                         <div className="flex-auto text-sm pl-2 py-2">
-                                                            <span className="text-blue-800 font-medium pb-2 flex flex-row align-middle items-center gap-x-3 md:py-0">
+                                                            <span className="text-blue-800 pb-2 flex flex-row align-middle items-center gap-x-3 md:py-0">
                                                                 <div className="md:hidden block">
                                                                     <i className="fa-duotone fa-info-circle fa-2x text-blue-700"></i>
                                                                 </div>
@@ -349,7 +349,7 @@ export const NomintatedMember = () => {
                                                         </div>
 
                                                         <div className="flex-auto text-sm pl-2 py-2">
-                                                            <span className="text-blue-800 font-medium pb-2 flex flex-row align-middle items-center gap-x-3 md:py-0">
+                                                            <span className="text-blue-800 pb-2 flex flex-row align-middle items-center gap-x-3 md:py-0">
                                                                 <div className="md:hidden block">
                                                                     <i className="fa-duotone fa-info-circle fa-2x text-blue-700"></i>
                                                                 </div>

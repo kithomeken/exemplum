@@ -85,17 +85,17 @@ export const OnboardingRequests = () => {
                     <span>
                         {
                             data.status === 'A' ? (
-                                <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
+                                <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-green-100">
                                     <span className="hidden md:inline-block">Approved</span>
                                     <span className="md:hidden">Approved</span>
                                 </span>
                             ) : data.status === 'P' ? (
-                                <span className="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">
+                                <span className="bg-purple-100 text-purple-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-purple-100">
                                     <span className="hidden md:inline-block">New Request</span>
                                     <span className="md:hidden">New</span>
                                 </span>
                             ) : (
-                                <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100">
                                     <span className="hidden md:inline-block">Rejected</span>
                                     <span className="md:hidden">Rejected</span>
                                 </span>
@@ -109,7 +109,7 @@ export const OnboardingRequests = () => {
                 id: 'cle22tk3i',
                 accessor: (data: { type: any }) => (
                     <span>
-                        <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                        <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
                             {data.type}
                         </span>
                     </span>
@@ -119,7 +119,7 @@ export const OnboardingRequests = () => {
                 Header: 'Request Date',
                 id: 'jhfbcinsakdnwq',
                 accessor: (data: { created_at: any }) => (
-                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
                         {humanReadableDate(data.created_at)}
                     </span>
                 )
@@ -166,7 +166,7 @@ export const OnboardingRequests = () => {
                                     <p className="text-xl flex-auto text-amber-600 mb-2 font-bold dark:text-white">
                                         Onboarding Requests
 
-                                        <span className="py-2 block text-sm font-normal text-gray-500 dark:text-gray-400">
+                                        <span className="py-2 block text-sm font-normal text-gray-500">
                                             List of client onboarding requests
                                         </span>
                                     </p>
@@ -175,7 +175,9 @@ export const OnboardingRequests = () => {
                                 <div className="flex mb-4 w-full">
                                     {
                                         state.data.onboarding.length < 1 ? (
-                                            <Empty description={'You do not have any onboarding requests at the moment'} />
+                                            <div className="w-full overflow-x-auto sm:rounded-lg">
+                                                <Empty description={'You do not have any onboarding requests at the moment'} />
+                                            </div>
                                         ) : (
                                             <div className="w-full overflow-x-auto sm:rounded-lg">
                                                 <ReactTable columns={columns} data={state.data.onboarding} />

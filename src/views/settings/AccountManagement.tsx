@@ -35,7 +35,7 @@ export const AccountManagement = () => {
                             <img className="rounded-full h-20 w-20" src={identityData.photo_url} alt={'photo_url'} />
                         ) : (
                             <div className={`w-16 h-16 flex items-center justify-center rounded-full ${getColorForLetter(auth0.identity.display_name.charAt(0))}`}>
-                                <span className="text-white text-4xl font-medium">
+                                <span className="text-white text-4xl">
                                     {auth0.identity.display_name.charAt(0)}
                                 </span>
                             </div>
@@ -62,7 +62,7 @@ export const AccountManagement = () => {
 
             <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 pb-6 border-b md:px-4">
                 <div className="col-span-1">
-                    <span className="text-lg text-stone-600 font-medium md:text-base">
+                    <span className="text-lg text-stone-600 md:text-base">
                         Name:
                     </span>
                 </div>
@@ -82,7 +82,7 @@ export const AccountManagement = () => {
 
             <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 pb-6 border-b md:px-4">
                 <div className="col-span-1">
-                    <span className="text-lg text-stone-600 font-medium md:text-base">
+                    <span className="text-lg text-stone-600 md:text-base">
                         Phone Number:
                     </span>
                 </div>
@@ -109,7 +109,7 @@ export const AccountManagement = () => {
 
             <div className="w-full md:gap-x-4 gap-y-4 md:grid md:grid-cols-3 py-4 border-b md:px-4">
                 <div className="col-span-1 flex flex-row align-middle items-center gap-x-3 w-full mb-5">
-                    <span className="text-lg text-stone-600 font-medium md:text-base">
+                    <span className="text-lg text-stone-600 md:text-base">
                         Sign-in-method:
                     </span>
 

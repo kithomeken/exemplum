@@ -145,49 +145,69 @@ export const WithdrawModal: FC<props> = ({ show, showOrHide, account, entity }) 
         let { input } = state
         let { errors } = state
         let { summary } = state
+        let { posting } = state
 
-        switch (e.target.name) {
-            case 'amount':
-                const withdrawalAmount = output.value.replace(',', '')
-                const walletBalanace = state.data.bal.replace(',', '')
-                const transactionMaxAmount = state.data.max
+        if (!posting) {            
+            switch (e.target.name) {
+                case 'amount':
+                    const withdrawalAmount = output.value.replace(',', '')
+                    const walletBalanace = state.data.bal.replace(',', '')
+                    const transactionMaxAmount = state.data.max
+                    const transactionMinAmount = state.data.min
 
-                let theAmount = output.value.replace(',', '')
-                theAmount = theAmount.length < 1 ? '0' : theAmount
+                    let theAmount = output.value.replace(',', '')
+                    theAmount = theAmount.length < 1 ? '0' : theAmount
 
-                if (output.error.length < 1) {
-                    if (parseFloat(withdrawalAmount) > parseFloat(transactionMaxAmount)) {
-                        // Maximum withdrawable amount per transaction
-                        output.value = transactionMaxAmount
-                        output.error = 'Maximum withdrawal amount per transaction is KSh. ' + formatAmount(parseFloat(transactionMaxAmount))
-                    } else if (parseFloat(withdrawalAmount) > parseFloat(walletBalanace)) {
-                        // Maximum withdrawable amount as per wallet
-                        output.value = walletBalanace
-                        output.error = 'Maximum withdrawal amount is KSh. ' + formatAmount(parseFloat(walletBalanace))
-                    } else {
-                        let mpesaB2C_Charges = b2cBusinessCharge(theAmount)
-                        let processingFees = parseFloat(theAmount) * parseFloat(data.fee) / 100
-                        let receiptAmount = parseFloat(theAmount) - processingFees - mpesaB2C_Charges
+                    if (output.error.length < 1) {
+                        if (parseFloat(withdrawalAmount) < parseFloat(transactionMinAmount)) {
+                            // Maximum withdrawable amount per transaction
+                            output.value = transactionMaxAmount
+                            output.error = 'Minimum withdrawal amount per transaction is KES. ' + formatAmount(parseFloat(transactionMinAmount))
+                            console.log('000');
+                            
+                        } else if (parseFloat(withdrawalAmount) > parseFloat(transactionMaxAmount)) {
+                            // Maximum withdrawable amount per transaction
+                            output.value = transactionMaxAmount
+                            output.error = 'Maximum withdrawal amount per transaction is KES. ' + formatAmount(parseFloat(transactionMaxAmount))
+                            console.log('111');
+                            
+                        } else if (parseFloat(withdrawalAmount) > parseFloat(walletBalanace)) {
+                            // Maximum withdrawable amount as per wallet
+                            output.value = walletBalanace
+                            output.error = 'Maximum withdrawal amount is KES. ' + formatAmount(parseFloat(walletBalanace))
+                            console.log('222');
 
-                        summary.fee = processingFees.toString()
-                        summary.receipt = receiptAmount.toString()
-                        summary.b2C_charge = mpesaB2C_Charges.toString()
+                        } else {
+                            let mpesaB2C_Charges = b2cBusinessCharge(theAmount)
+                            let processingFees = parseFloat(theAmount) * parseFloat(data.fee) / 100
+                            let receiptAmount = parseFloat(theAmount) - processingFees - mpesaB2C_Charges
+
+                            summary.fee = processingFees.toString()
+                            summary.receipt = receiptAmount.toString()
+                            summary.b2C_charge = mpesaB2C_Charges.toString()
+
+                            console.log('333');
+
+                        }
                     }
-                }
 
-                input[e.target.name] = formatAmount(parseFloat(theAmount))
-                errors[e.target.name] = output.error
-                break;
+                    console.log('e3oijdiewuhc3948y984', parseFloat(withdrawalAmount) > parseFloat(transactionMaxAmount));
 
-            default:
-                input[e.target.name] = output.value
-                errors[e.target.name] = output.error
-                break;
+
+                    input[e.target.name] = formatAmount(parseFloat(theAmount))
+                    errors[e.target.name] = output.error
+                    break;
+
+                default:
+                    input[e.target.name] = output.value
+                    errors[e.target.name] = output.error
+                    break;
+            }
+
+            setstate({
+                ...state, input, errors, summary
+            })
         }
-
-        setstate({
-            ...state, input, errors, summary
-        })
     }
 
     function formValidation() {
@@ -211,13 +231,13 @@ export const WithdrawModal: FC<props> = ({ show, showOrHide, account, entity }) 
                 valid = false
             } else {
                 if (parseFloat(amount) < parseFloat(transactionMinAmount)) {
-                    errors.amount = "Minimum withdrawal amount per transaction is KSh. 100"
+                    errors.amount = "Minimum withdrawal amount per transaction is KES. 100"
                     valid = false
                 } else if (parseFloat(amount) > parseFloat(transactionMaxAmount)) {
-                    errors.amount = "Maximum withdrawal amount per transaction is KSh. " + formatAmount(parseFloat(transactionMaxAmount))
+                    errors.amount = "Maximum withdrawal amount per transaction is KES. " + formatAmount(parseFloat(transactionMaxAmount))
                     valid = false
                 } else if (parseFloat(amount) > parseFloat(walletBalanace)) {
-                    errors.amount = 'Maximum withdrawal amount is KSh. ' + formatAmount(parseFloat(walletBalanace))
+                    errors.amount = 'Maximum withdrawal amount is KES. ' + formatAmount(parseFloat(walletBalanace))
                     valid = false
                 }
             }
@@ -319,7 +339,7 @@ export const WithdrawModal: FC<props> = ({ show, showOrHide, account, entity }) 
 
                                 <div className="w-full flex flex-row align-middle items-center py-">
                                     <span className="pc-1 px-1.5 text-stone-500 text-xs">
-                                        Ksh.
+                                        KES.
                                     </span>
 
                                     <span className="pc-1 px-1.5 text-2xl">

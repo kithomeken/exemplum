@@ -266,7 +266,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                 <div className="w-full text-sm flex flex-col py-3">
                                     <div className="w-full flex flex-row align-middle items-center px-6 mb-3">
                                         <span className="pc-1 px-1 text-stone-500 text-xs">
-                                            Ksh.
+                                            KES.
                                         </span>
 
                                         <span className="pc-1 px-1 text-3xl">
@@ -432,7 +432,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                                     </span>
 
                                                                     <span className="text-stone-500 text-sm block">
-                                                                        Ksh.
+                                                                        KES.
                                                                     </span>
                                                                 </div>
                                                             </span>
@@ -508,7 +508,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                                     </span>
 
                                                                     <span className="text-stone-500 text-sm block">
-                                                                        Ksh.
+                                                                        KES.
                                                                     </span>
                                                                 </div>
                                                             </span>
@@ -667,7 +667,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                 <span className=" py-1 block mb-2.5">
                                                     <div className="w-full flex flex-row align-middle items-center">
                                                         <span className="text-stone-500 text-sm block">
-                                                            Ksh.
+                                                            KES.
                                                         </span>
 
                                                         <span className="px-1 text-sm block">

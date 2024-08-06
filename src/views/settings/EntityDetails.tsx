@@ -65,7 +65,7 @@ export const EntityDetails = () => {
                                 <>
                                     <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 pb-6 md:px-4">
                                         <div className="col-span-1">
-                                            <span className="text-lg text-stone-600 font-medium md:text-base">
+                                            <span className="text-lg text-stone-600 md:text-base">
                                                 Artist Details:
                                             </span>
                                         </div>
@@ -94,7 +94,7 @@ export const EntityDetails = () => {
                                 <>
                                     <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 border-b md:px-4">
                                         <div className="col-span-1">
-                                            <span className="text-lg text-stone-600 font-medium md:text-base">
+                                            <span className="text-lg text-stone-600 md:text-base">
                                                 Entity Details:
                                             </span>
                                         </div>

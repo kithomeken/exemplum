@@ -125,7 +125,7 @@ export const TransactionPayOuts = () => {
                                     <span className="md:hidden">Paid Out</span>
                                 </span>
                             ) : (
-                                <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
                                     <span className="hidden md:inline-block">Rejected</span>
                                     <span className="md:hidden">Rejected</span>
                                 </span>
@@ -194,7 +194,9 @@ export const TransactionPayOuts = () => {
                                 <div className="flex mb-4 w-full">
                                     {
                                         state.data.payouts.length < 1 ? (
-                                            <Empty description={'No payouts have been made at the moment...'} />
+                                            <div className="w-full overflow-x-auto sm:rounded-lg">
+                                                <Empty description={'No payouts have been made at the moment...'} />
+                                            </div>
                                         ) : (
                                             <div className="w-full overflow-x-auto sm:rounded-lg">
                                                 <ReactTable columns={columns} data={state.data.payouts} />
