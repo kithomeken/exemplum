@@ -563,8 +563,17 @@ export const Identity_00 = () => {
                                                                                                         return (
                                                                                                             <li key={`MMDR-${member.email}`} className={`w-full flex md:flex-row flex-col align-middle items-center justify-between gap-x-6 py-3 md:py-2 md:px-3 md:hover:bg-stone-100 ${index === 0 ? 'border-t-0' : 'border-t'}`}>
                                                                                                                 <div className="flex w-full md:w-auto min-w-0 gap-x-4 md:gap-x-4 align-middle items-center">
-                                                                                                                    <div className={`md:h-8 md:w-8 w-10 h-10 flex items-center justify-center uppercase text-white rounded-full ${getColorForLetter(member.email.charAt(0))}`}>
-                                                                                                                        {member.email.charAt(0)}
+                                                                                                                    <div className={classNames(
+                                                                                                                        member.display_name === null || member.display_name === undefined ? `${getColorForLetter(member.email.charAt(0))}` : `${getColorForLetter(member.display_name.charAt(0))}`,
+                                                                                                                        `md:h-8 md:w-8 w-10 h-10 flex items-center justify-center uppercase text-white rounded-full`
+                                                                                                                    )}>
+                                                                                                                        {
+                                                                                                                            member.display_name === null || member.display_name === undefined ? (
+                                                                                                                                member.email.charAt(0)
+                                                                                                                            ) : (
+                                                                                                                                member.display_name.charAt(0)
+                                                                                                                            )
+                                                                                                                        }
                                                                                                                     </div>
 
                                                                                                                     <div className="min-w-0 flex-auto">

@@ -9,14 +9,14 @@ import { PasswordPolicy } from "./PasswordPolicy";
 import { getRedirectResult } from "firebase/auth";
 import { useAppSelector } from "../../store/hooks";
 import { postAuthRoutes } from "../../routes/routes";
-import { TermsAndConditions } from "./TermsAndConditions";
 import AxiosServices from "../../services/AxiosServices";
+import { TermsAndConditions } from "./TermsAndConditions";
 import { Loading } from "../../components/modules/Loading"
 import StorageServices from "../../services/StorageServices";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import connecting from '../../assets/images/53059e12f79a42c5e4b259b50d1412c1.svg'
-import { firebaseAuthActions, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { APPLICATION, AUTH_, STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
+import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions";
 
@@ -254,7 +254,7 @@ export const Invitation = () => {
                     }
                 }
 
-                dispatch(firebaseAuthActions(invitationProps))
+                dispatch(Alt_FirebaseSSO_SignIn(invitationProps))
             }
         }
     };
@@ -278,7 +278,7 @@ export const Invitation = () => {
                 identity: 'google',
             }
 
-            dispatch(firebaseAuthActions(signUpProps))
+            dispatch(Alt_FirebaseSSO_SignIn(signUpProps))
         }
     }
 

@@ -76,16 +76,18 @@ export const EntityDetails = () => {
                                                     {state.data.enTT.name}
                                                 </p>
 
-                                                <div className="text-teal-700 text-xs">
-                                                    <span className="bg-teal-200  py-1 px-1.5 rounded">
-                                                        <span className="hidden md:inline-block">{state.data.enTT.description}</span>
-                                                        <span className="md:hidden">{state.data.enTT.description}</span>
+                                                <div className="flex flex-row align-middle items-center gap-x-3">
+                                                    <div className="text-teal-700 text-xs">
+                                                        <span className="bg-teal-200  py-1 px-1.5 rounded">
+                                                            <span className="hidden md:inline-block">{state.data.enTT.description}</span>
+                                                            <span className="md:hidden">{state.data.enTT.description}</span>
+                                                        </span>
+                                                    </div>
+
+                                                    <span className="block text-sm text-stone-600">
+                                                        Account: <span className="text-orange-600">{state.data.enTT.account}</span>
                                                     </span>
                                                 </div>
-
-                                                <span className="block text-sm text-stone-600">
-                                                    Account: <span className="text-orange-600">{state.data.enTT.account}</span>
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -105,16 +107,18 @@ export const EntityDetails = () => {
                                                     {state.data.enTT.name}
                                                 </p>
 
-                                                <div className="text-teal-700 text-xs">
-                                                    <span className="bg-teal-200  py-1 px-1.5 rounded">
-                                                        <span className="hidden md:inline-block">{state.data.enTT.description}</span>
-                                                        <span className="md:hidden">{state.data.enTT.description}</span>
+                                                <div className="flex flex-row align-middle items-center gap-x-3">
+                                                    <div className="text-teal-700 text-xs">
+                                                        <span className="bg-teal-200  py-1 px-1.5 rounded">
+                                                            <span className="hidden md:inline-block">{state.data.enTT.description}</span>
+                                                            <span className="md:hidden">{state.data.enTT.description}</span>
+                                                        </span>
+                                                    </div>
+
+                                                    <span className="block text-sm text-stone-600">
+                                                        Account: <span className="text-orange-600">{state.data.enTT.account}</span>
                                                     </span>
                                                 </div>
-
-                                                <span className="block text-sm text-stone-600">
-                                                    Account: <span className="text-orange-600">{state.data.enTT.account}</span>
-                                                </span>
 
                                                 <div className="w-full mt-2 border-t-2 border-dashed pt-4">
                                                     <p className="text-base leading-7 text-stone-500">

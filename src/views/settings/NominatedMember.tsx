@@ -283,7 +283,7 @@ export const NomintatedMember = () => {
                                                                     }>
                                                                         {
                                                                             state.data.meta.dsGR[0] > state.data.meta.dsGR[1] ? (
-                                                                                <span>Pending approval of {state.data.meta.dsGR[0]} member(s)</span>
+                                                                                <span>Pending approval from {state.data.meta.dsGR[0]} member(s)</span>
                                                                             ) : (
                                                                                 <span>Approved by all members</span>
                                                                             )
