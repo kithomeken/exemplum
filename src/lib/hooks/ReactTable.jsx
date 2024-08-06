@@ -70,12 +70,12 @@ export default function ReactTable({ columns, data, hidePagination = false, show
             <table {...getTableProps()} className="w-full divide-y divide-gray-200">
                 <thead>
                     {headerGroups.map(headerGroup => (
-                        <tr className="bg-gray-50 dark:bg-gray-700" {...headerGroup.getHeaderGroupProps()}>
+                        <tr className="bg-gray-50" {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column, index) => (
                                 <th
                                     // {...column.getHeaderProps()}
                                     key={column.render("id")}
-                                    className={`p-4 text-xs tracking-wider text-left text-gray-500 uppercase dark:text-white`}>
+                                    className={`p-4 text-xs font-normal tracking-wider text-left text-gray-500 uppercase`}>
                                     {column.render("Header")}
                                 </th>
                             ))}
