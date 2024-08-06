@@ -90,11 +90,11 @@ export const EntityPayIn = () => {
                     if (parseFloat(theAmount) > parseFloat(transactionMaxAmount)) {
                         // Maximum withdrawable amount per transaction
                         output.value = transactionMaxAmount
-                        output.error = 'Maximum tipping amount is KSh. ' + formatAmount(parseFloat(transactionMaxAmount))
+                        output.error = 'Maximum tipping amount is KES. ' + formatAmount(parseFloat(transactionMaxAmount))
                     } else if (parseFloat(theAmount) < parseFloat(transactionMinAmount)) {
                         // Maximum withdrawable amount as per wallet
                         output.value = transactionMinAmount
-                        output.error = 'Minimum tipping amount is KSh. ' + formatAmount(parseFloat(transactionMinAmount))
+                        output.error = 'Minimum tipping amount is KES. ' + formatAmount(parseFloat(transactionMinAmount))
                     }
                 }
 
@@ -135,11 +135,11 @@ export const EntityPayIn = () => {
             } else {
                 if (parseFloat(theAmount) > parseFloat(transactionMaxAmount)) {
                     // Maximum contributable amount per transaction
-                    errors.amount = 'Maximum tipping amount is KSh. ' + formatAmount(parseFloat(transactionMaxAmount))
+                    errors.amount = 'Maximum tipping amount is KES. ' + formatAmount(parseFloat(transactionMaxAmount))
                     valid = false
                 } else if (parseFloat(theAmount) < parseFloat(transactionMinAmount)) {
                     // Maximum contributable amount as per transaction
-                    errors.amount = 'Minimum tipping amount is KSh. ' + formatAmount(parseFloat(transactionMinAmount))
+                    errors.amount = 'Minimum tipping amount is KES. ' + formatAmount(parseFloat(transactionMinAmount))
                     valid = false
                 }
             }

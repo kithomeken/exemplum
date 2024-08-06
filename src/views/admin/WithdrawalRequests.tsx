@@ -203,7 +203,9 @@ export const WithdrawalRequests = () => {
                                 <div className="flex mb-4 w-full">
                                     {
                                         state.data.payments.length < 1 ? (
-                                            <Empty description={'You do not have any payment requests at the moment'} />
+                                            <div className="w-full overflow-x-auto sm:rounded-lg">
+                                                <Empty description={'You do not have any payment requests at the moment'} />
+                                            </div>
                                         ) : (
                                             <div className="w-full overflow-x-auto sm:rounded-lg">
                                                 <ReactTable columns={columns} data={state.data.payments} />
