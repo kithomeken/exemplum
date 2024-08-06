@@ -1,19 +1,14 @@
+import { Link } from "react-router-dom"
 import React, { FC, useState } from "react"
 
+import { FQDN } from "../../api/API_Controller"
 import { Doc_Details_Props } from "../../lib/modules/Interfaces"
-import { DocumentView } from "./DocumentView"
 
 export const DocumentDetails: FC<Doc_Details_Props> = ({ docs }) => {
     const [state, setstate] = useState({
         status: 'pending',
         show: false
     })
-
-    const showOrHideDocViewModal = () => {
-        setstate({
-            ...state, show: !state.show
-        })
-    }
 
     return (
         <React.Fragment>
@@ -75,18 +70,12 @@ export const DocumentDetails: FC<Doc_Details_Props> = ({ docs }) => {
                                         <span>Passport</span>
                                     )
                                 }
-                                <span onClick={showOrHideDocViewModal} className="text-right hover:cursor-pointer hover:underline float-right text-amber-600">View</span>
+                                <Link to={`${FQDN}/files/documents/${docs.path}`} target="_blank" className="text-right hover:cursor-pointer hover:underline float-right text-amber-600">View</Link>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <DocumentView
-                show={state.show}
-                uuid={docs.path}
-                showOrHide={showOrHideDocViewModal}
-            />
         </React.Fragment>
     )
 }
