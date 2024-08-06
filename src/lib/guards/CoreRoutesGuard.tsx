@@ -18,8 +18,9 @@ const CoreRoutesGuard = () => {
     const currentLocation = location.pathname
 
     const auth0: any = useAppSelector(state => state.auth0)
+    const idC_State: any = useAppSelector(state => state.idC)
     const sessionState = Auth.checkAuthentication(auth0)
-    const PFg0State = StorageServices.getLocalStorage(STORAGE_KEYS.PFg0_STATE)
+    const PFg0State = idC_State.PFg0
 
     const state = {
         from: currentLocation
