@@ -33,7 +33,7 @@ export const PostAuthentication = () => {
                 }
 
                 const firebaseUser: any = currentUser
-                const ssoTokens: any = {
+                let ssoTokens: any = {
                     deviceInfo: DeviceInfo(),
                 }
 
@@ -45,8 +45,8 @@ export const PostAuthentication = () => {
                 } else {
                     if (locationState?.beneficiary) {
                         const beneficiary = locationState?.beneficiary
-                        ssoTokens.beneficiary = { beneficiary }
-
+                        ssoTokens.beneficiary = beneficiary
+                        
                         beneficiarySanctumToken(dispatch, firebaseUser.accessToken, ssoTokens)
                     } else {
                         benefactorSanctumToken(dispatch, firebaseUser.accessToken, ssoTokens)
