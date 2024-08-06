@@ -194,7 +194,9 @@ export const TransactionPayOuts = () => {
                                 <div className="flex mb-4 w-full">
                                     {
                                         state.data.payouts.length < 1 ? (
-                                            <Empty description={'No payouts have been made at the moment...'} />
+                                            <div className="w-full overflow-x-auto sm:rounded-lg">
+                                                <Empty description={'No payouts have been made at the moment...'} />
+                                            </div>
                                         ) : (
                                             <div className="w-full overflow-x-auto sm:rounded-lg">
                                                 <ReactTable columns={columns} data={state.data.payouts} />
