@@ -222,7 +222,7 @@ export const ArtistHome = () => {
                                                         )
                                                     }>
                                                         <span className="text-slate-500 text-xs">
-                                                            Ksh.
+                                                            KES.
                                                         </span>
 
                                                         <span className="text-3xl">
@@ -290,7 +290,7 @@ export const ArtistHome = () => {
                                             </div>
                                         </div>
 
-                                        <div className="w-full px-3">
+                                        <div className="w-full md:px-3 px-1.5">
                                             {loadRespectiveTab(state.activeTab)}
                                         </div>
                                     </div>

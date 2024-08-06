@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom"
 import React, { FC, useState } from "react"
 import PhoneInput from 'react-phone-number-input'
 
 import { ERR_404 } from "../errors/ERR_404"
+import { FQDN } from "../../api/API_Controller"
 import HttpServices from "../../services/HttpServices"
 import { ADMINISTRATION } from "../../api/API_Registry"
 import { Loading } from "../../components/modules/Loading"
@@ -9,7 +11,6 @@ import { BespokePanel } from "../../lib/hooks/BespokePanel"
 import { Basic_Modal_Props } from "../../lib/modules/Interfaces"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
 import { API_RouteReplace, classNames, humanReadableDate } from "../../lib/modules/HelperFunctions"
-import { DocumentView } from "./DocumentView"
 
 export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }) => {
     const [state, setstate] = useState({
@@ -183,28 +184,6 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
 
         setstate({
             ...state, input, errors
-        })
-    }
-
-    const toogleDocViewer = (doc: any) => {
-        let {show} = state
-        let {document} = state
-        
-        document = doc
-        show.docView = true
-
-        setstate({
-            ...state, document, show
-        })
-    }
-
-    const showOrHideDocViewModal = () => {
-        let {show} = state
-
-        show.docView = !state.show.docView
-        
-        setstate({
-            ...state, show
         })
     }
 
@@ -479,7 +458,7 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                                                                 )
                                                                                             }
 
-                                                                                            <button type="button" className="text-right float-right text-amber-600" onClick={() => toogleDocViewer(document.path)}>View</button>
+                                                                                            <Link to={`${FQDN}/files/documents/${document.path}`} target="_blank" className="text-right float-right text-amber-600">View</Link>
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -507,12 +486,6 @@ export const RequestDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                         }
                     </>
                 }
-            />
-
-            <DocumentView
-                show={state.show.docView}
-                uuid={state.document}
-                showOrHide={showOrHideDocViewModal}
             />
         </React.Fragment>
     )

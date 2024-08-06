@@ -129,10 +129,10 @@ export const UserManagement = () => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                            <p className="text-gray-900 truncate dark:text-white">
+                            <p className="text-gray-900 truncate">
                                 {data.display_name}
                             </p>
-                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                            <p className="text-sm text-gray-500 truncate">
                                 {data.email}
                             </p>
                         </div>
@@ -146,12 +146,12 @@ export const UserManagement = () => {
                     <span>
                         {
                             data.type === null ? (
-                                <span className="bg-orange-100 text-orange-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">
+                                <span className="bg-orange-100 text-orange-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 ">
                                     <span className="hidden md:inline-block">Onboaring Pending</span>
                                     <span className="md:hidden">Pending</span>
                                 </span>
                             ) : (
-                                <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
                                     {data.type}
                                 </span>
                             )
@@ -168,7 +168,7 @@ export const UserManagement = () => {
                             data.artist === null ? (
                                 <>-</>
                             ) : (
-                                <span className="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-gray-400">
+                                <span className="text-sm font-normal text-gray-900 whitespace-nowrap">
                                     {data.artist}
                                 </span>
                             )
@@ -187,7 +187,7 @@ export const UserManagement = () => {
                                 <>-</>
                             ) : (
                                 <span>
-                                    <span className="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-gray-400">
+                                    <span className="text-sm font-normal text-gray-900 whitespace-nowrap">
                                         {data.name}
                                     </span>
                                 </span>
@@ -203,12 +203,12 @@ export const UserManagement = () => {
                     <span>
                         {
                             data.active === 'Y' ? (
-                                <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">
+                                <span className="bg-green-100 text-green-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-green-100">
                                     <span className="hidden md:inline-block">Active</span>
                                     <span className="md:hidden">Active</span>
                                 </span>
                             ) : (
-                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">
+                                <span className="bg-red-100 text-red-800 text-xs mr-2 px-2.5 py-0.5 rounded-md border border-red-100">
                                     <span className="hidden md:inline-block">Disabled</span>
                                     <span className="md:hidden">Disabled</span>
                                 </span>
@@ -324,10 +324,10 @@ export const UserManagement = () => {
                         <div className={`w-full pb-3 mx-auto bg-white border rounded h-full`}>
                             <div className="py-4 px-6">
                                 <div className="flex items-center">
-                                    <p className="text-2xl flex-auto text-amber-600 mb-2 dark:text-white">
+                                    <p className="text-2xl flex-auto text-amber-600 mb-2">
                                         User Management
 
-                                        <span className="py-4 block text-sm font-normal text-gray-500 dark:text-gray-400">
+                                        <span className="py-4 block text-sm font-normal text-gray-500">
                                             Essential tools to efficiently oversee user accounts. From account verification to engagement monitoring, our dashboard simplifies user management tasks, ensuring a smooth and secure user experience
                                         </span>
                                     </p>
