@@ -1,16 +1,108 @@
 import React from "react"
+import { useDispatch } from "react-redux"
 
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
+import { useAppSelector } from "../../store/hooks"
 import { Loading } from "../../components/modules/Loading"
 import mainAsset from "../../assets/images/illutsration_726837462.svg"
-import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
+import { G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+import { APPLICATION, CONFIG_MAX_WIDTH, PREFLIGHT_ } from "../../global/ConstantsRegistry"
 
 export const CNF_gC = () => {
     const [state, setstate] = React.useState({
+        toastERR: '',
+        posting: false,
         httpStatus: 200,
-        status: 'pending'
+        status: 'pending',
+        data: {
+
+        },
+        team: [{
+            email: '',
+        }],
+        teamErrors: [{
+            email: '',
+        }]
     })
+
+    const dispatch: any = useDispatch();
+    const auth0: any = useAppSelector(state => state.auth0)
+
+    React.useEffect(() => {
+        dispatch({
+            type: PREFLIGHT_.PFg0_FIN,
+            response: 'PFg0',
+        });
+    })
+
+    const onChangeHandler = (e: any, index: any) => {
+        const { posting } = state
+
+        if (!posting) {
+            let { teamErrors } = state
+            let { team }: any = state
+
+            const artistDetailsCollection = state.team.map((artist, mapIndex) => {
+                if (index !== mapIndex) return artist
+
+                teamErrors[index][e.target.name] = ''
+                return { ...artist, [e.target.name]: e.target.value }
+            })
+
+            team = artistDetailsCollection
+
+            setstate({
+                ...state, team, teamErrors
+            })
+        }
+    }
+
+    const onInputBlur = (e: any, index: any) => {
+        let { posting } = state
+
+        if (!posting) {
+            let output: any = G_onInputBlurHandler(e, posting, '', 3)
+            let { team } = state
+            let { teamErrors } = state
+
+            team[index][e.target.name] = output.value
+            teamErrors[index][e.target.name] = output.error.replace('_', ' ')
+
+            setstate({
+                ...state, team, teamErrors
+            })
+        }
+    }
+
+    const addTeamMateHandler = () => {
+        let { data } = state
+        let { team } = state
+        let { teamErrors } = state
+        const { posting } = state
+
+        if (!posting) {
+            team = state.team.concat([{
+                email: '',
+            }])
+
+            teamErrors = state.teamErrors.concat([{
+                email: '',
+            }])
+
+            setstate({
+                ...state, team, teamErrors, toastERR: ''
+            })
+        }
+    }
+
+    const removeTeamMateHandler = (index: any) => {
+        setstate({
+            ...state,
+            team: state.team.filter((s, varIdx) => index !== varIdx),
+            teamErrors: state.teamErrors.filter((s, varIdx) => index !== varIdx),
+        })
+    }
 
     return (
         <React.Fragment>
