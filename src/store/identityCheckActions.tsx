@@ -98,8 +98,18 @@ export function captainIdentityLog(propsIn: IdentityProps) {
             let formData = new FormData()
             const dataDump = IdentityProps.dataDump
 
+            let identity: any = {
+                display_name: dataDump.display_name,
+                first_name: dataDump.first_name,
+                last_name: dataDump.last_name
+            }
+
             if (dataDump.keepName) {
                 formData.append('display_name', dataDump.display_name)
+                const nameParts = dataDump.display_name.split(' ');
+
+                identity.first_name = nameParts[0];
+                identity.last_name = nameParts[nameParts.length - 1]
             } else {
                 formData.append('last_name', dataDump.last_name)
                 formData.append('first_name', dataDump.first_name)
@@ -112,9 +122,9 @@ export function captainIdentityLog(propsIn: IdentityProps) {
                     type: AUTH_.ID_META_01,
                     response: {
                         keepName: dataDump.keepName,
-                        last_name: dataDump.last_name,
-                        first_name: dataDump.first_name,
-                        display_name: dataDump.display_name,
+                        last_name: identity.last_name,
+                        first_name: identity.first_name,
+                        display_name: identity.display_name,
                     },
                 });
 

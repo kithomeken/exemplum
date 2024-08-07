@@ -10,8 +10,8 @@ import { classNames } from "../../lib/modules/HelperFunctions"
 import mainAsset from "../../assets/images/illustration_3647294.svg"
 import { captainIdentityLog } from "../../store/identityCheckActions"
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth"
-import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
+import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
 
 export const CNF_gA = () => {
     const [state, setstate] = React.useState({
@@ -39,7 +39,7 @@ export const CNF_gA = () => {
 
     React.useEffect(() => {
         identityVerificationStatus()
-    }, [])
+    })
 
     const dispatch: any = useDispatch();
     const auth0: any = useAppSelector(state => state.auth0)
@@ -151,9 +151,9 @@ export const CNF_gA = () => {
 
     const onFormSubmitHandler = (e: any) => {
         e.preventDefault()
+        let { data } = state
 
         if (!idC_State.processing) {
-
             let validity = formValidation()
 
             if (validity) {
@@ -163,7 +163,7 @@ export const CNF_gA = () => {
                     identProps = {
                         dataDump: {
                             keepName: state.keepName,
-                            display_name: auth0.identity.display_name,
+                            display_name: data.display_name,
                         }
                     }
                 } else {

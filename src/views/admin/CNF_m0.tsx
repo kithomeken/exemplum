@@ -1,6 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 import { CNF_gA } from "./CNF_gA";
 import { CNF_gC } from "./CNF_gC";
@@ -12,6 +13,7 @@ import { PREFLIGHT } from "../../api/API_Registry";
 import { STYLE } from "../../global/ConstantsRegistry";
 import HttpServices from "../../services/HttpServices";
 import { Loading } from "../../components/modules/Loading";
+import { administrativeRoutes } from "../../routes/routes";
 import { resetCNF_g, setPFg0MetaStage } from "../../store/identityCheckActions";
 
 export const CNF_m0 = () => {
@@ -61,6 +63,11 @@ export const CNF_m0 = () => {
         })
     }
 
+    const homeRoute: any = (
+        administrativeRoutes.find(
+            (routeName) => routeName.name === 'CORE_HOME_')
+    )?.path
+
     const loadCNF_Modules = (tab: string = 'in') => {
         switch (tab) {
             case "CNF_gA":
@@ -73,7 +80,7 @@ export const CNF_m0 = () => {
                 return <CNF_gC />
 
             default:
-                return
+                return <Navigate to={homeRoute} replace />
         }
     }
 

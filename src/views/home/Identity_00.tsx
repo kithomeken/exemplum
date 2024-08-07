@@ -1,20 +1,20 @@
 import { toast } from "react-toastify";
 import React, { useState } from "react";
+import { Navigate } from "react-router";
 
 import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
 import { AUTH } from "../../api/API_Registry";
 import { useAppSelector } from "../../store/hooks";
+import { standardRoutes } from "../../routes/routes";
 import HttpServices from "../../services/HttpServices";
 import { Loading } from "../../components/modules/Loading";
+import StorageServices from "../../services/StorageServices";
 import { G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import completed from "../../assets/images/fd0b0ed18a34962f80d77c6e6ff42e7b.svg"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry";
-import { classNames, emailValidator, encryptAndStoreLS, getColorForLetter } from "../../lib/modules/HelperFunctions";
-import StorageServices from "../../services/StorageServices";
-import { Navigate } from "react-router";
-import { standardRoutes } from "../../routes/routes";
+import { classNames, emailValidator, getColorForLetter } from "../../lib/modules/HelperFunctions";
 
 export const Identity_00 = () => {
     const [state, setstate] = useState({

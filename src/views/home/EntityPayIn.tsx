@@ -20,8 +20,8 @@ export const EntityPayIn = () => {
             limits: null,
         },
         input: {
-            amount: '1.00',
-            msisdn: '254724392070'
+            amount: '0',
+            msisdn: ''
         },
         errors: {
             stkError: '',
@@ -38,6 +38,7 @@ export const EntityPayIn = () => {
 
     const fetchEntityDetails = async () => {
         let { data } = state
+        let { input } = state
         let { status } = state
 
         try {
@@ -48,6 +49,8 @@ export const EntityPayIn = () => {
                 status = 'fulfilled'
                 data.entity = entityResponse.data.payload.entity
                 data.limits = entityResponse.data.payload.limits
+
+                input.amount = formatAmount(parseFloat(data.limits.min))
             } else {
                 status = 'rejected'
             }
@@ -56,7 +59,7 @@ export const EntityPayIn = () => {
         }
 
         setstate({
-            ...state, status, data
+            ...state, status, data, input
         })
     }
 
