@@ -85,14 +85,14 @@ export const CNF_gB = () => {
             case 'pass_key':
                 return {
                     min: 30,
-                    max: 100
+                    max: 80
                 };
 
             case 'customer_key':
             case 'customer_secret':
                 return {
                     min: 10,
-                    max: 50
+                    max: 80
                 };
 
             default:
