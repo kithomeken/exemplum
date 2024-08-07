@@ -28,7 +28,7 @@ export const MoneyOut = () => {
 
     React.useEffect(() => {
         moneyOutTransactions()
-    }, [])
+    })
 
     const moneyOutTransactions = async () => {
         let { status } = state
