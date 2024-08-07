@@ -82,7 +82,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             }
 
         case PREFLIGHT_.PFg0:
-            const metaPFg0 = action.response.dataDump.PFg0            
+            const metaPFg0 = action.response.dataDump.PFg0
             StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, metaPFg0)
 
             return {
@@ -111,7 +111,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case PREFLIGHT_.PFg0_UPDATE:
             const PFg0Code = metaPFg0State.charAt(metaPFg0State.length - 1);
             const nextChar = String.fromCharCode(PFg0Code.charCodeAt(0) + 1);
-            
+
             const nextPFg0 = 'CNF_g' + nextChar
             StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, nextPFg0)
 
@@ -119,6 +119,18 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 ...state,
                 error: null,
                 PFg0: nextPFg0,
+                processing: false,
+                PRc0: metaPRc0State,
+            }
+
+        case PREFLIGHT_.PFg0_FIN:
+            const PFg0_FIN = 'CNF_g0'
+            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, PFg0_FIN)
+
+            return {
+                ...state,
+                error: null,
+                PFg0: PFg0_FIN,
                 processing: false,
                 PRc0: metaPRc0State,
             }
