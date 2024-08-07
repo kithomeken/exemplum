@@ -228,13 +228,13 @@ export const NomintatedMember = () => {
                     <>
                         <div className="w-full md:gap-x-4 gap-y-4 grid md:grid-cols-3 pt-4 pb-6 border-b md:px-4">
                             <div className="col-span-1">
-                                <span className="text-lg text-stone-600 md:text-base">
+                                <span className="text-lg text-stone-800 md:text-base">
                                     Nominated Member:
                                 </span>
                             </div>
 
                             <div className="col-span-2 flex flex-col md:gap-x-2 gap-y-3 md:align-middle md:items-center py-2 md:py-0">
-                                <p className="text-sm text-stone-600">
+                                <p className="text-sm text-stone-800">
                                     A member's phone number nominated to receive funds, withdrawal notifications and confirmation of transactions.
                                 </p>
 
@@ -242,7 +242,7 @@ export const NomintatedMember = () => {
                                     {
                                         state.data.Nm0T === 'Y' ? (
                                             <div className="mb-2 rounded">
-                                                <div className="flex md:flex-row flex-col gap-y-1 w-full md:gap-x-3 align-middle md:items-center border-b pb-4">
+                                                <div className="flex md:flex-row flex-col gap-y-1 w-full md:gap-x-3 align-middle md:items-center pb-4">
                                                     <span className="py-2 block basis-1/2 text-stone-700 whitespace-nowrap">
                                                         {state.data.meta.dsGA.display_name}
                                                     </span>
@@ -301,17 +301,36 @@ export const NomintatedMember = () => {
                                                                 <span className="fad text-orange-500 fa-spinner-third fa-xl block fa-spin"></span>
                                                             </div>
                                                         ) : (
-                                                            <div className="flex flex-row-reverse align-middle items-center py-1">
-                                                                <span onClick={() => nominatedMemberAction('R')} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
-                                                                    <span className="hidden md:inline-block">Reject Nomination</span>
-                                                                    <span className="md:hidden">Reject</span>
-                                                                </span>
+                                                            state.data.meta.dsG0.status === 'P' ? (
+                                                                <div className="flex flex-row-reverse align-middle items-center py-1">
+                                                                    <span onClick={() => nominatedMemberAction('R')} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                                        <span className="hidden md:inline-block">Reject Nomination</span>
+                                                                        <span className="md:hidden">Reject</span>
+                                                                    </span>
 
-                                                                <span onClick={() => nominatedMemberAction('A')} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-emerald-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
-                                                                    <span className="hidden md:inline-block">Approve Nomination</span>
-                                                                    <span className="md:hidden">Approve</span>
-                                                                </span>
-                                                            </div>
+                                                                    <span onClick={() => nominatedMemberAction('A')} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-emerald-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                                        <span className="hidden md:inline-block">Approve Nomination</span>
+                                                                        <span className="md:hidden">Approve</span>
+                                                                    </span>
+                                                                </div>
+                                                            ) : (
+                                                                <div className="flex flex-row">
+                                                                    <span className="text-sm block text-stone-800">
+                                                                        {
+                                                                            state.data.meta.dsG0.status === 'A' ? (
+                                                                                <span>
+                                                                                    Your approval has been captured. Awaiting other members to action
+                                                                                </span>
+                                                                            ) : (
+                                                                                <span>
+                                                                                    Your rejection has been captured. Awaiting other members to action
+                                                                                </span>
+                                                                            )
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            )
+
                                                         )
 
                                                     )
@@ -364,11 +383,11 @@ export const NomintatedMember = () => {
                                                     </div>
 
                                                     <div className="flex flex-row-reverse align-middle items-center pt-3">
-                                                        <button type="button" onClick={showOrHideNominationModal} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-stone-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                        <button type="button" onClick={showOrHideNominationModal} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-stone-800 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
                                                             Nominate another
                                                         </button>
 
-                                                        <button type="button" onClick={setOwnMsisdnAsDesignated} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-stone-600 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
+                                                        <button type="button" onClick={setOwnMsisdnAsDesignated} className="text-sm flex-none shadow-none px-3 py-1 bg-inherit text-stone-800 hover:underline hover:cursor-pointer mr-2 sm:w-auto sm:text-sm">
                                                             Nominate yourself
                                                         </button>
                                                     </div>
