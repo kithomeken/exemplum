@@ -64,7 +64,7 @@ export const MpesaExceptions = () => {
                 id: 'tHmMTe3py9',
                 accessor: (data: { exception: any }) => (
                     <span className="text-slate-600 text-sm">
-                        {data.exception}:
+                        {data.exception}
                     </span>
                 ),
             },
