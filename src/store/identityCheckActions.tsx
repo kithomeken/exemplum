@@ -113,7 +113,7 @@ export function captainIdentityLog(propsIn: IdentityProps) {
             } else {
                 formData.append('last_name', dataDump.last_name)
                 formData.append('first_name', dataDump.first_name)
-            }
+            }            
 
             const identityResponse: any = await HttpServices.httpPost(PREFLIGHT.CAPTAIN_IDENTITY, formData)
 

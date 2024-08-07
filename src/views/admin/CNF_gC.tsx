@@ -14,7 +14,7 @@ export const CNF_gC = () => {
         toastERR: '',
         posting: false,
         httpStatus: 200,
-        status: 'pending',
+        status: 'fulfilled',
         data: {
 
         },
@@ -28,13 +28,11 @@ export const CNF_gC = () => {
 
     const dispatch: any = useDispatch();
     const auth0: any = useAppSelector(state => state.auth0)
+    const idC_State: any = useAppSelector(state => state.idC)
 
     React.useEffect(() => {
-        dispatch({
-            type: PREFLIGHT_.PFg0_FIN,
-            response: 'PFg0',
-        });
-    })
+
+    }, [])
 
     const onChangeHandler = (e: any, index: any) => {
         const { posting } = state
@@ -104,6 +102,18 @@ export const CNF_gC = () => {
         })
     }
 
+    const goToCoreHome = () => {
+        dispatch({
+            type: PREFLIGHT_.PROCESSING,
+            response: 'PFg0',
+        });
+
+        dispatch({
+            type: PREFLIGHT_.PFg0_FIN,
+            response: 'PFg0',
+        });
+    }
+
     return (
         <React.Fragment>
             {
@@ -142,9 +152,24 @@ export const CNF_gC = () => {
                                                                 Pre-flight Check #4:
                                                             </span>
 
-                                                            The final step, invite your team to join you as administrators
+                                                            {/* The final step, invite your team to join you as administrators */}
+                                                            Setup has been completed.
                                                         </span>
                                                     </span>
+                                                </div>
+
+                                                <div className="mb-3 pt-3 md:px-3 px-0 block w-full">
+                                                    <button type="button" onClick={goToCoreHome} className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700">
+                                                        {
+                                                            idC_State.processing ? (
+                                                                <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
+                                                            ) : (
+                                                                <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                    Finish
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </button>
                                                 </div>
                                             </>
                                         ) : (

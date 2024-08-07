@@ -39,13 +39,13 @@ export const CNF_gA = () => {
 
     React.useEffect(() => {
         identityVerificationStatus()
-    })
+    }, [])
 
     const dispatch: any = useDispatch();
     const auth0: any = useAppSelector(state => state.auth0)
     const idC_State: any = useAppSelector(state => state.idC)
 
-    const identityVerificationStatus = () => {
+    const identityVerificationStatus = async () => {
         let { data } = state
         let { status } = state
         let { httpStatus } = state

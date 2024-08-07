@@ -63,7 +63,7 @@ export const CNF_m0 = () => {
         })
     }
 
-    const homeRoute: any = (
+    const homeCoreRoute: any = (
         administrativeRoutes.find(
             (routeName) => routeName.name === 'CORE_HOME_')
     )?.path
@@ -80,7 +80,7 @@ export const CNF_m0 = () => {
                 return <CNF_gC />
 
             case "CNF_g0":
-                return <Navigate to={homeRoute} replace />
+                return <Navigate to={homeCoreRoute} replace />
 
             default:
                 return
