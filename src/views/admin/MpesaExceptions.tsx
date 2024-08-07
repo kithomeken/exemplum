@@ -52,36 +52,39 @@ export const MpesaExceptions = () => {
         () => [
             {
                 Header: 'Module',
-                id: 'Xy5RvKs3',
+                id: 'Yo3sm5Lri4',
                 accessor: (data: { module: any }) => (
-                    <span className="text-sm font-normal text-slate-800 whitespace-nowrap dark:text-gray-400">
+                    <span className="text-sm font-normal text-slate-800 whitespace-nowrap">
                         {data.module}
                     </span>
                 ),
             },
             {
-                Header: 'Exception Date',
-                id: 'fJ7iS2oE4n',
+                Header: 'Type',
+                id: 'tHmMTe3py9',
+                accessor: (data: { exception: any }) => (
+                    <span className="text-slate-600 text-sm">
+                        {data.exception}:
+                    </span>
+                ),
+            },
+            {
+                Header: 'Message',
+                id: 'SKql82t39z',
+                accessor: (data: { message: any }) => (
+                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
+                        {data.message}
+                    </span>
+                ),
+            },
+            {
+                Header: 'Date',
+                id: 'mR7PtX0LEE',
                 accessor: (data: { created_at: any }) => (
-                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
                         {DateFormating(data.created_at)}
                     </span>
                 )
-            },
-            {
-                Header: 'Error Code',
-                id: '6pAqW8tC',
-                accessor: (data: { error_code: any, error_message: any }) => (
-                    <span className="flex flex-row gap-x-1">
-                        <span className="text-slate-700 text-sm">
-                            {data.error_code}:
-                        </span>
-
-                        <span className="text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {data.error_message}
-                        </span>
-                    </span>
-                ),
             },
         ],
         []
@@ -125,7 +128,9 @@ export const MpesaExceptions = () => {
                                 <div className="flex mb-4 w-full">
                                     {
                                         state.data.exceptions.length < 1 ? (
-                                            <Empty description={'No contributions have been made at the moment...'} />
+                                            <div className="w-full overflow-x-auto sm:rounded-lg">
+                                                <Empty description={'No contributions have been made at the moment...'} />
+                                            </div>
                                         ) : (
                                             <div className="w-full overflow-x-auto sm:rounded-lg">
                                                 <ReactTable columns={exceptionsColumns} data={state.data.exceptions} />
