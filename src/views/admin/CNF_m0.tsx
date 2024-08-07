@@ -79,8 +79,11 @@ export const CNF_m0 = () => {
             case "CNF_gC":
                 return <CNF_gC />
 
-            default:
+            case "CNF_g0":
                 return <Navigate to={homeRoute} replace />
+
+            default:
+                return
         }
     }
 
