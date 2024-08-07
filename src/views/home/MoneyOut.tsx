@@ -312,7 +312,7 @@ export const MoneyOut = () => {
                                                 </span>
 
                                                 <span className="text-lg">
-                                                    <span className="text-stone-700">{data.amount_payable.split('.')[0]}</span>
+                                                    <span className="text-stone-700">{formatAmount(parseFloat(data.amount_payable)).split('.')[0]}</span>
                                                     <span className="text-stone-400">.{data.amount_payable.split('.')[1]}</span>
                                                 </span>
                                             </div>
@@ -378,7 +378,7 @@ export const MoneyOut = () => {
                                         }>
                                             {
                                                 data.meta.app < data.meta.all ? (
-                                                    <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
+                                                    <span className="py-1 block">{data.meta.app}/{data.meta.all} members approved</span>
                                                 ) : (
                                                     <span></span>
                                                 )
@@ -444,7 +444,7 @@ export const MoneyOut = () => {
                                                 }>
                                                     {
                                                         data.meta.app < data.meta.all ? (
-                                                            <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
+                                                            <span className="py-1 block">{data.meta.app}/{data.meta.all} members approved</span>
                                                         ) : (
                                                             <span></span>
                                                         )
@@ -488,7 +488,7 @@ export const MoneyOut = () => {
                                             }>
                                                 {
                                                     data.meta.app < data.meta.all ? (
-                                                        <span className="py-1">{data.meta.app}/{data.meta.all} members approved</span>
+                                                        <span className="py-1 block">{data.meta.app}/{data.meta.all} members approved</span>
                                                     ) : (
                                                         <span></span>
                                                     )
