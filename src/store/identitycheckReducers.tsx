@@ -125,6 +125,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
         case PREFLIGHT_.PFg0_EXCEPTION:
             metaErrMsg = action.response
+            console.log('PFg0_EXCEPTION: ', metaErrMsg);
             console.log('PFg0_EXCEPTION: ', metaPFg0State);
 
             return {

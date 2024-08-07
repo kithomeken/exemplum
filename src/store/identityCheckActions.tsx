@@ -292,7 +292,7 @@ export function setMpesaCredentials(propsIn: IdentityProps) {
             } else {
                 dispatch({
                     type: PREFLIGHT_.PFg0_EXCEPTION,
-                    response: '',
+                    response: 'Something went wrong. Could not complete action',
                 });
             }
         } catch (error) {
