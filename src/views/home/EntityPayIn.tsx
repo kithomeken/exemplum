@@ -50,7 +50,7 @@ export const EntityPayIn = () => {
                 data.entity = entityResponse.data.payload.entity
                 data.limits = entityResponse.data.payload.limits
 
-                input.amount = data.limits.min
+                input.amount = formatAmount(parseFloat(data.limits.min))
             } else {
                 status = 'rejected'
             }
