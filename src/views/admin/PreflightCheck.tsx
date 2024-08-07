@@ -166,8 +166,16 @@ export const PreflightCheck = () => {
                         }
                     </>
                 ) : (
-                    <div className="w-full h-screen -mt-20 flex flex-col justify-center align-middle items-center mx-4">
-                        <Loading />
+                    <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
+                        <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center">
+                            <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
+                                <div className="w-full h-1/2 flex flex-col justify-center">
+                                    <div className="flex-grow pt-8">
+                                        <Loading />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 )
             }
