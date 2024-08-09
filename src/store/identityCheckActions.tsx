@@ -113,7 +113,7 @@ export function captainIdentityLog(propsIn: IdentityProps) {
             } else {
                 formData.append('last_name', dataDump.last_name)
                 formData.append('first_name', dataDump.first_name)
-            }            
+            }
 
             const identityResponse: any = await HttpServices.httpPost(PREFLIGHT.CAPTAIN_IDENTITY, formData)
 
@@ -188,6 +188,55 @@ export function addMSISDN_ToProfile(propsIn: IdentityProps) {
         } catch (error) {
             dispatch({
                 type: IDENTITY_.PRc0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
+
+export function capitanSecuris(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PROCESSING,
+            response: 'PFg0',
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+            formData.append('msisdn', dataDump.msisdn)
+
+            const securisResponse: any = await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
+
+            console.log('SECURIS', dataDump);
+            // return
+            if (securisResponse.data.success) {
+                dispatch({
+                    type: AUTH_.ID_META_02,
+                    response: dataDump,
+                });
+
+                dispatch({
+                    type: PREFLIGHT_.PFg0_UPDATE,
+                    response: 'PFg0',
+                });
+            } else {
+                let errorMsg = securisResponse.data.msisdn[0]
+                errorMsg = errorMsg.replace('msisdn', 'phone number')
+
+                dispatch({
+                    type: PREFLIGHT_.PFg0_EXCEPTION,
+                    response: errorMsg,
+                });
+            }
+        } catch (error) {
+            console.log('SECURIS', error);
+
+            // return
+            dispatch({
+                type: PREFLIGHT_.PFg0_EXCEPTION,
                 response: error,
             });
         }
