@@ -3,7 +3,7 @@ import StorageServices from "../services/StorageServices";
 
 const identityState = {
     error: null,
-    PFg0: 'CNF_gA',
+    PFg0: 'CNF_gQ',
     PRc0: 'META_00',
     processing: false,
 }
@@ -97,6 +97,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
                 error: null,
                 processing: false,
                 PFg0: metaPFg0State,
+                PRc0: metaPRc0State,
             }
 
         case PREFLIGHT_.PROCESSING:
@@ -139,7 +140,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             metaErrMsg = action.response
             console.log('PFg0_EXCEPTION: ', metaErrMsg);
             console.log('PFg0_EXCEPTION: ', metaPFg0State);
-
+            
             return {
                 ...state,
                 processing: false,
