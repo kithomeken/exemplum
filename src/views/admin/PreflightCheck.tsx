@@ -82,50 +82,6 @@ export const PreflightCheck = () => {
         })
     }
 
-    const identityVerificationStatus = () => {
-        let { status } = state
-        let { httpStatus } = state
-        const accountVerified: any = StorageServices.getLocalStorage(STORAGE_KEYS.ACC_VERIFIED)
-
-        if (accountVerified === null) {
-            /* 
-             * Fetch Firebase identity data for
-             * verification check
-            */
-            onAuthStateChanged(firebaseAuth,
-                currentUser => {
-                    let verifiedA = currentUser.emailVerified ? '0' : '1'
-                    StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
-
-                    setVerified(verifiedA)
-                    status = 'fulfilled'
-
-                    setstate({
-                        ...state, status
-                    })
-                },
-                error => {
-                    console.error(error)
-                    httpStatus = 500
-                    status = 'rejected'
-
-                    setstate({
-                        ...state, status, httpStatus
-                    })
-                }
-            );
-
-            return
-        }
-
-        setVerified(accountVerified)
-        status = 'fulfilled'
-
-        setstate({
-            ...state, status
-        })
-    }
-
     return (
         <React.Fragment>
             <Helmet>
