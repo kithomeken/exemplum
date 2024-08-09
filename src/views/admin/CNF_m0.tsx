@@ -11,10 +11,11 @@ import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
 import { useAppSelector } from "../../store/hooks";
 import { PREFLIGHT } from "../../api/API_Registry";
-import { STYLE } from "../../global/ConstantsRegistry";
 import HttpServices from "../../services/HttpServices";
 import { Loading } from "../../components/modules/Loading";
 import { administrativeRoutes } from "../../routes/routes";
+import StorageServices from "../../services/StorageServices";
+import { STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
 import { resetCNF_g, setPFg0MetaStage } from "../../store/identityCheckActions";
 
 export const CNF_m0 = () => {
@@ -29,6 +30,7 @@ export const CNF_m0 = () => {
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
+    const PFg1_ = StorageServices.getLocalStorage(STORAGE_KEYS.PFg0_OVERRIDE)
 
     const preflightProgressCheck = async () => {
         let { status } = state
@@ -40,7 +42,9 @@ export const CNF_m0 = () => {
             httpStatus = progCheckResp.status
 
             if (progCheckResp.data.success) {
-                const PFg0 = progCheckResp.data.payload.PFg0
+                const PFg0 = progCheckResp.data.payload.PFg0 === PFg1_
+                    ? progCheckResp.data.payload.PFg0
+                    : PFg1_
 
                 const metaProps = {
                     dataDump: {

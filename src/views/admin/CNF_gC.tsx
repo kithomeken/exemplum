@@ -5,11 +5,11 @@ import { ERR_500 } from "../errors/ERR_500"
 import { ERR_404 } from "../errors/ERR_404"
 import { useAppSelector } from "../../store/hooks"
 import { Loading } from "../../components/modules/Loading"
-import { classNames, formatAmount } from "../../lib/modules/HelperFunctions"
 import mainAsset from "../../assets/images/illustration_8351740.svg"
+import { classNames, formatAmount } from "../../lib/modules/HelperFunctions"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
+import { overridePFg0MetaStage, setMpesaCredentials } from "../../store/identityCheckActions"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
-import { setMpesaCredentials } from "../../store/identityCheckActions"
 
 export const CNF_gC = () => {
     const [state, setstate] = React.useState({
@@ -308,6 +308,12 @@ export const CNF_gC = () => {
         }
     }
 
+    const overridePFg0 = (currentPFg0: any) => {
+        if (!idC_State.processing) {
+            dispatch(overridePFg0MetaStage(currentPFg0))
+        }
+    }
+
     return (
         <React.Fragment>
             {
@@ -584,20 +590,31 @@ export const CNF_gC = () => {
                                                         ) : null
                                                     }
 
-                                                    <div className="mb-3 pt-3 md:px-3 px-0 block w-full">
-                                                        <button type="submit" className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700">
-                                                            {
-                                                                idC_State.processing ? (
-                                                                    <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
-                                                                ) : (
-                                                                    <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                        Proceed
-                                                                    </div>
-                                                                )
-                                                            }
-                                                        </button>
-                                                    </div>
+                                                    <div className="mb-3 pt-3 px-0 w-full flex flex-row align-middle items-center gap-x-3">
+                                                        <div className="flex-1 w-1/2">
+                                                            <button onClick={() => overridePFg0(idC_State.PFg0)} className="text-orange-600 relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md bg-inherit hover:text-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:text-orange-700" type="button" disabled={idC_State.processing ? true : false}>
+                                                                <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                    <i className="fa-duotone fa-arrow-left fa-lg"></i>
+                                                                    Previous
+                                                                </div>
+                                                            </button>
+                                                        </div>
 
+                                                        <div className="flex-1 w-1/2">
+                                                            <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                                {
+                                                                    idC_State.processing ? (
+                                                                        <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
+                                                                    ) : (
+                                                                        <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                            Next
+                                                                            <i className="fa-duotone fa-arrow-right fa-lg"></i>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </button>
+                                                        </div>
+                                                    </div>
 
                                                 </form>
 
