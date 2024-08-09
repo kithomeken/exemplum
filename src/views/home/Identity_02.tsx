@@ -202,9 +202,6 @@ export const Identity_02 = () => {
                                     © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                 </p>
                             </div>
-
-
-
                         </div>
 
                         <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
