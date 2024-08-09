@@ -29,6 +29,17 @@ export function setPFg0MetaStage(propsIn: IdentityProps) {
     }
 }
 
+export function overridePFg0MetaStage(propsIn: IdentityProps) {
+    return (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const ovrProps = { ...propsIn }
+
+        dispatch({
+            type: PREFLIGHT_.PFg0_OVRD,
+            response: ovrProps,
+        });
+    }
+}
+
 export function addIdentityToProfile(propsIn: IdentityProps) {
     return async (dispatch: (arg0: { type: string; response: any }) => void) => {
         const IdentityProps = { ...propsIn }
