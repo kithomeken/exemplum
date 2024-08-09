@@ -1,188 +1,77 @@
-import React from "react"
+import React, { useState } from "react"
 import { useDispatch } from "react-redux"
+import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-number-input'
 
-import { ERR_500 } from "../errors/ERR_500"
 import { ERR_404 } from "../errors/ERR_404"
+import { ERR_500 } from "../errors/ERR_500"
 import { useAppSelector } from "../../store/hooks"
+import '../../assets/css/react_phone_number_input.css'
 import { Loading } from "../../components/modules/Loading"
-import { classNames, formatAmount } from "../../lib/modules/HelperFunctions"
-import mainAsset from "../../assets/images/illustration_8351740.svg"
+import { capitanSecuris, resetCNF_g } from "../../store/identityCheckActions"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
-import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
-import { setMpesaCredentials } from "../../store/identityCheckActions"
+import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
 
 export const CNF_gB = () => {
-    const [state, setstate] = React.useState({
+    const [state, setstate] = useState({
         httpStatus: 200,
         status: 'fulfilled',
-        data: {
-
-        },
         input: {
-            trans_min: '0',
-            trans_max: '0',
-            pass_key: '',
-            init_name: '',
-            short_code: '',
-            init_passwd: '',
-            customer_key: '',
-            customer_secret: '',
+            msisdn: '',
         },
         errors: {
-            trans_min: '',
-            trans_max: '',
-            pass_key: '',
-            init_name: '',
-            short_code: '',
-            init_passwd: '',
-            customer_key: '',
-            customer_secret: '',
+            msisdn: '',
         },
     })
+
+    React.useEffect(() => {
+        dispatch(resetCNF_g())
+    }, [])
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
 
-    const onChangeHandler = (e: any) => {
+    const onPhoneInputChange = (e: any) => {
         if (!idC_State.processing) {
-            let output: any = G_onInputChangeHandler(e, idC_State.processing)
             let { input } = state
-            let { errors }: any = state
-
-            switch (e.target.name) {
-                case 'identifier':
-                    output.value = output.value.toUpperCase()
-                    break;
-
-                default:
-                    break;
-            }
-
-            input[e.target.name] = output.value
-            errors[e.target.name] = output.error
+            input.msisdn = e
 
             setstate({
-                ...state, input, errors
+                ...state, input
             })
         }
     }
 
-    const targetLength = (name: string) => {
-        switch (name) {
-            case 'short_code':
-                return {
-                    min: 5,
-                    max: 10
-                };
-
-            case 'trans_min':
-            case 'trans_max':
-                return {
-                    min: 1,
-                    max: 10
-                };
-
-            case 'pass_key':
-                return {
-                    min: 30,
-                    max: 80
-                };
-
-            case 'customer_key':
-            case 'customer_secret':
-                return {
-                    min: 10,
-                    max: 80
-                };
-
-            default:
-                return {
-                    min: 5,
-                    max: 30
-                };
-        }
-    }
-
-    const onInputBlur = (e: any) => {
+    const onPhoneInputBlur = (e: any) => {
         if (!idC_State.processing) {
-            let { input } = state
-            let { errors }: any = state
+            let { errors } = state
+            const validPhone = isValidPhoneNumber(e.target.value)
+            const phoneNumber = parsePhoneNumber(e.target.value)
 
-            const target0 = targetLength(e.target.name)
-            let output: any = G_onInputBlurHandler(e, idC_State.processing, '', target0.min, target0.max)
+            if (phoneNumber) {
+                if (phoneNumber.country !== 'KE') {
+                    errors.msisdn = 'Only (KE) phone numbers allowed'
 
-            switch (e.target.name) {
-                case 'short_code':
-                    if (output.error.length < 1) {
-                        const validShortCode = /^\d+$/.test(output.value);
-                        output.error = validShortCode ? '' : 'Invalid short code format';
-                    }
-                    break
+                    setstate({
+                        ...state, errors
+                    })
 
-                case 'init_name':
-                case 'init_passwd':
-                    output.error = output.error.replace('Init', 'Initiator')
-                    output.error = output.error.replace('passwd', 'password')
-                    break
-
-                case 'trans_max':
-                case 'trans_min':
-                    output.value = output.value.replace(',', '')
-                    let targetTitle = e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1)
-                    targetTitle = targetTitle.replace('_', ' ')
-
-                    const trans_min = input.trans_min.replace(',', '')
-                    const trans_max = input.trans_max.replace(',', '')
-
-                    if (output.value.length < 1) {
-                        output.error = targetTitle + ' cannot be empty'
-                    } else if (parseFloat(output.value) === 0) {
-                        output.error = targetTitle + ' cannot be 0'
-                    } else {
-                        const validAmount = /^\d+(\.\d{1,2})?$/.test(output.value);
-
-                        if (!validAmount) {
-                            output.error = validAmount ? '' : 'Invalid amount format for ' + e.target.name
-                        } else {
-                            switch (e.target.name) {
-                                case 'trans_min':
-                                    output.error = (parseFloat(trans_max) > 0 && parseFloat(trans_max) < output.value)
-                                        ? targetTitle + ' must be less than ' + trans_max
-                                        : (errors.trans_max = '')
-                                    break;
-
-                                case 'trans_max':
-                                    output.error = (output.value < parseFloat(trans_min))
-                                        ? targetTitle + ' must be more than ' + trans_min
-                                        : (errors.trans_min = '')
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-
-                    output.value = formatAmount(parseInt(output.value))
-                    output.error = output.error.replace('_', ' ')
-                    output.error = output.error.replace('trans', 'transaction')
-                    output.error = output.error.replace('Trans', 'Transaction')
-                    break
-
-                default:
-                    break;
+                    return
+                }
             }
 
-            input[e.target.name] = output.value
-            errors[e.target.name] = output.error
+            if (!validPhone) {
+                errors.msisdn = 'Kindly add a valid phone number'
+            } else {
+                errors.msisdn = ''
+            }
 
             setstate({
-                ...state, input, errors
+                ...state, errors
             })
         }
     }
 
-    function comprehensiveValidation() {
+    function c0MP_FLvD() {
         let valid = true
         let { input } = state
         let { errors } = state
@@ -191,7 +80,7 @@ export const CNF_gB = () => {
         const errorArray = Object.keys(errors)
 
         inputArray.forEach((inputObject) => {
-            const makeShiftEvent = {
+            const msE = {
                 target: {
                     required: true,
                     name: inputObject,
@@ -199,76 +88,29 @@ export const CNF_gB = () => {
                 }
             }
 
-            const target0 = targetLength(inputObject)
-            let output: any = G_onInputBlurHandler(makeShiftEvent, idC_State.processing, '', target0.min, target0.max)
+            const validPhone = isValidPhoneNumber(msE.target.value)
+            const phoneNumber = parsePhoneNumber(msE.target.value)
 
-            switch (inputObject) {
-                case 'short_code':
-                    if (output.error.length < 1) {
-                        const validShortCode = /^\d+$/.test(output.value);
-                        output.error = validShortCode ? '' : 'Invalid short code format';
-                    }
-                    break
+            if (phoneNumber) {
+                if (phoneNumber.country !== 'KE') {
+                    errors[inputObject] = 'Only (KE) phone numbers allowed'
 
-                case 'init_name':
-                case 'init_passwd':
-                    output.error = output.error.replace('Init', 'Initiator')
-                    output.error = output.error.replace('passwd', 'password')
-                    break
+                    setstate({
+                        ...state, errors
+                    })
 
-                case 'trans_max':
-                case 'trans_min':
-                    output.value = output.value.replace(',', '')
-                    let targetTitle = inputObject.charAt(0).toUpperCase() + inputObject.slice(1)
-                    targetTitle = targetTitle.replace('_', ' ')
-
-                    const trans_min = input.trans_min.replace(',', '')
-                    const trans_max = input.trans_max.replace(',', '')
-
-                    if (output.value.length < 1) {
-                        output.error = targetTitle + ' cannot be empty'
-                    } else if (parseFloat(output.value) === 0) {
-                        output.error = targetTitle + ' cannot be 0'
-                    } else {
-                        const validAmount = /^\d+(\.\d{1,2})?$/.test(output.value);
-
-                        if (!validAmount) {
-                            output.error = validAmount ? '' : 'Invalid amount format for ' + inputObject
-                        } else {
-                            switch (inputObject) {
-                                case 'trans_min':
-                                    output.error = (parseFloat(trans_max) > 0 && parseFloat(trans_max) < output.value)
-                                        ? targetTitle + ' must be less than ' + trans_max
-                                        : (errors.trans_max = '')
-                                    break;
-
-                                case 'trans_max':
-                                    output.error = (output.value < parseFloat(trans_min))
-                                        ? targetTitle + ' must be more than ' + trans_min
-                                        : (errors.trans_min = '')
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-
-                    output.value = formatAmount(parseFloat(output.value))
-                    output.error = output.error.replace('_', ' ')
-                    output.error = output.error.replace('trans', 'transaction')
-                    output.error = output.error.replace('Trans', 'Transaction')
-                    break
-
-                default:
-                    break;
+                    return
+                }
             }
 
-            input[inputObject] = output.value
-            errors[inputObject] = output.error
+            if (!validPhone) {
+                errors[inputObject] = 'Kindly add a valid phone number'
+            } else {
+                errors[inputObject] = ''
+            }
 
             setstate({
-                ...state, input, errors
+                ...state, errors
             })
         })
 
@@ -281,29 +123,21 @@ export const CNF_gB = () => {
         return valid
     }
 
-    const onFormSubmitHandler = (e: any) => {
+    const msisdnFormHandler = (e: any) => {
         e.preventDefault()
 
         if (!idC_State.processing) {
-            let validity = comprehensiveValidation()
+            let { input } = state
+            let validity = c0MP_FLvD()
 
             if (validity) {
-                let { input } = state
-
-                const credentialsProps = {
+                const identProps = {
                     dataDump: {
-                        trans_min: input.trans_min.replace(',', ''),
-                        trans_max: input.trans_max.replace(',', ''),
-                        pass_key: input.pass_key,
-                        init_name: input.init_name,
-                        short_code: input.short_code,
-                        init_passwd: input.init_passwd,
-                        customer_key: input.customer_key,
-                        customer_secret: input.customer_secret,
+                        msisdn: input.msisdn,
                     }
                 }
-
-                dispatch(setMpesaCredentials(credentialsProps))
+    
+                dispatch(capitanSecuris(identProps))
             }
         }
     }
@@ -335,7 +169,7 @@ export const CNF_gB = () => {
 
                                                 <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
                                                     <div className="w-48 pt-4 mx-auto pb-3">
-                                                        <img src={mainAsset} alt={"hello_i'm_carol"} width="auto" className="block text-center m-auto" />
+                                                        <img src={serviceCenter} alt={"service_center"} width="auto" className="block text-center m-auto" />
                                                     </div>
                                                 </div>
 
@@ -346,264 +180,59 @@ export const CNF_gB = () => {
                                                                 Pre-flight Check #3:
                                                             </span>
 
-                                                            Two more steps to go, let's add your <span className="text-green-600">MPESA</span> configurations
+                                                            Add your phone number to secure your account
                                                         </span>
                                                     </span>
                                                 </div>
 
-                                                <form className="flex flex-col w-full gap-y-2" onSubmit={onFormSubmitHandler}>
-                                                    <div className="w-full border-b-2 border-dashed">
-                                                        <div className="w-full md:w-1/2 mb-3 pb-2">
-                                                            <div className="relative mt-2 rounded shadow-sm">
-                                                                <input type="text" name="short_code" id="short_code" placeholder="Short Code" autoComplete="off"
-                                                                    className={classNames(
-                                                                        state.errors.short_code.length > 0 ?
-                                                                            'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                        'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                    )} onChange={onChangeHandler} value={state.input.short_code} onBlur={onInputBlur} />
-                                                                <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                    {
-                                                                        state.errors.short_code.length > 0 ? (
-                                                                            <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                        ) : null
-                                                                    }
-                                                                </div>
-                                                            </div>
+                                                <div className="md:w-3/5 flex flex-col w-full mb-4">
+                                                    <form className="space-y-4 w-full" onSubmit={msisdnFormHandler}>
+                                                        <div className="w-full">
+                                                            <label htmlFor="msisdn" className="block text-sm leading-6 text-gray-500 mb-2">Phone Number:</label>
+
+                                                            <PhoneInput
+                                                                international
+                                                                defaultCountry='KE'
+                                                                className="border border-gray-300 px-3 py-1 rounded"
+                                                                placeholder="Enter phone number"
+                                                                value={state.input.msisdn}
+                                                                onChange={onPhoneInputChange}
+                                                                onBlur={onPhoneInputBlur}
+                                                                error={state.input.msisdn ? (isValidPhoneNumber(state.input.msisdn) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                                                            />
 
                                                             {
-                                                                state.errors.short_code.length > 0 ? (
-                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                        {state.errors.short_code}
-                                                                    </span>
-                                                                ) : null
-                                                            }
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="w-full pt-2 flex md:flex-row flex-col gap-x-4 pb-2">
-                                                        <div className="w-full md:w-1/2 mb-3">
-                                                            <div className="relative mt-2 rounded shadow-sm">
-                                                                <input type="text" name="customer_key" id="customer_key" placeholder="Customer Key" autoComplete="off"
-                                                                    className={classNames(
-                                                                        state.errors.customer_key.length > 0 ?
-                                                                            'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                        'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                    )} onChange={onChangeHandler} value={state.input.customer_key} onBlur={onInputBlur} />
-                                                                <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                    {
-                                                                        state.errors.customer_key.length > 0 ? (
-                                                                            <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                        ) : null
-                                                                    }
-                                                                </div>
-                                                            </div>
-
-                                                            {
-                                                                state.errors.customer_key.length > 0 ? (
-                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                        {state.errors.customer_key}
-                                                                    </span>
-                                                                ) : null
-                                                            }
-                                                        </div>
-
-                                                        <div className="w-full md:w-1/2 md:mb-3 mb-2">
-                                                            <div className="relative mt-2 rounded shadow-sm">
-                                                                <input type="text" name="customer_secret" id="customer_secret" placeholder="Customer Key" autoComplete="off"
-                                                                    className={classNames(
-                                                                        state.errors.customer_secret.length > 0 ?
-                                                                            'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                        'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                    )} onChange={onChangeHandler} value={state.input.customer_secret} onBlur={onInputBlur} />
-                                                                <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                    {
-                                                                        state.errors.customer_secret.length > 0 ? (
-                                                                            <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                        ) : null
-                                                                    }
-                                                                </div>
-                                                            </div>
-
-                                                            {
-                                                                state.errors.customer_secret.length > 0 ? (
-                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                        {state.errors.customer_secret}
-                                                                    </span>
-                                                                ) : null
-                                                            }
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="w-full md:mb-3">
-                                                        <div className="relative md:mt-2 rounded shadow-sm">
-                                                            <input type="text" name="pass_key" id="pass_key" placeholder="Pass Key" autoComplete="off"
-                                                                className={classNames(
-                                                                    state.errors.pass_key.length > 0 ?
-                                                                        'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                        'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                    'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                )} onChange={onChangeHandler} value={state.input.pass_key} onBlur={onInputBlur} />
-                                                            <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                {
-                                                                    state.errors.pass_key.length > 0 ? (
-                                                                        <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                    ) : null
-                                                                }
-                                                            </div>
-                                                        </div>
-
-                                                        {
-                                                            state.errors.pass_key.length > 0 ? (
+                                                                state.errors.msisdn.length > 0 &&
                                                                 <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                    {state.errors.pass_key}
+                                                                    {state.errors.msisdn}
                                                                 </span>
-                                                            ) : null
-                                                        }
-                                                    </div>
-
-                                                    <div className="w-full pt-2 flex md:flex-row flex-col gap-x-4 pb-2 border-b-2 border-dashed">
-                                                        <div className="w-full md:w-1/2 mb-3">
-                                                            <div className="relative mt-2 rounded shadow-sm">
-                                                                <input type="text" name="init_name" id="init_name" placeholder="Initiator Name" autoComplete="off"
-                                                                    className={classNames(
-                                                                        state.errors.init_name.length > 0 ?
-                                                                            'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                        'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                    )} onChange={onChangeHandler} value={state.input.init_name} onBlur={onInputBlur} />
-                                                                <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                    {
-                                                                        state.errors.init_name.length > 0 ? (
-                                                                            <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                        ) : null
-                                                                    }
-                                                                </div>
-                                                            </div>
-
-                                                            {
-                                                                state.errors.init_name.length > 0 ? (
-                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                        {state.errors.init_name}
-                                                                    </span>
-                                                                ) : null
                                                             }
-                                                        </div>
-
-                                                        <div className="w-full md:w-1/2 mb-3">
-                                                            <div className="relative mt-2 rounded shadow-sm">
-                                                                <input type="password" name="init_passwd" id="init_passwd" placeholder="Initiator Password" autoComplete="off"
-                                                                    className={classNames(
-                                                                        state.errors.init_passwd.length > 0 ?
-                                                                            'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                            'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                        'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                    )} onChange={onChangeHandler} value={state.input.init_passwd} onBlur={onInputBlur} />
-                                                                <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                    {
-                                                                        state.errors.init_passwd.length > 0 ? (
-                                                                            <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                        ) : null
-                                                                    }
-                                                                </div>
-                                                            </div>
 
                                                             {
-                                                                state.errors.init_passwd.length > 0 ? (
+                                                                idC_State.error && (
                                                                     <span className='invalid-feedback text-xs text-red-600 pl-0'>
-                                                                        {state.errors.init_passwd}
+                                                                        {idC_State.error}
                                                                     </span>
-                                                                ) : null
-                                                            }
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="w-full pt-2 flex md:flex-row flex-col gap-x-4">
-                                                        <span className="md:basis-2/5 text-stone-700 text-sm py-2">
-                                                            Min & max transactions limits for both withdrawals and contributions:
-                                                        </span>
-
-                                                        <div className="flex flex-row gap-x-3 align-middle items-center md:basis-3/5">
-                                                            <div className="w-1/2 mb-3">
-                                                                <div className="relative mt-2 rounded shadow-sm">
-                                                                    <input type="text" name="trans_min" id="trans_min" placeholder="Min" autoComplete="off"
-                                                                        className={classNames(
-                                                                            state.errors.trans_min.length > 0 ?
-                                                                                'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                            'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                        )} onChange={onChangeHandler} value={parseFloat(state.input.trans_min) === 0 ? '' : state.input.trans_min} onBlur={onInputBlur} />
-                                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                        {
-                                                                            state.errors.trans_min.length > 0 ? (
-                                                                                <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                            ) : null
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <span className="text-stone-700 block">-</span>
-
-                                                            <div className="w-1/2 mb-3">
-                                                                <div className="relative mt-2 rounded shadow-sm">
-                                                                    <input type="text" name="trans_max" id="trans_max" placeholder="Max" autoComplete="off"
-                                                                        className={classNames(
-                                                                            state.errors.trans_max.length > 0 ?
-                                                                                'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 border border-red-600 focus:outline-red-500' :
-                                                                                'text-stone-900 ring-slate-300 placeholder:text-stone-400 focus:border-0 focus:outline-none focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
-                                                                            'block w-full rounded-md py-1.5 pl-3 pr-8  text-sm'
-                                                                        )} onChange={onChangeHandler} value={parseFloat(state.input.trans_max) === 0 ? '' : state.input.trans_max} onBlur={onInputBlur} />
-                                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                        {
-                                                                            state.errors.trans_max.length > 0 ? (
-                                                                                <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                            ) : null
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {
-                                                        state.errors.trans_min.length > 0 ? (
-                                                            <span className='invalid-feedback block text-xs text-red-600 pl-0'>
-                                                                {state.errors.trans_min}
-                                                            </span>
-                                                        ) : null
-                                                    }
-
-                                                    {
-                                                        state.errors.trans_max.length > 0 ? (
-                                                            <span className='invalid-feedback block text-xs text-red-600 pl-0'>
-                                                                {state.errors.trans_max}
-                                                            </span>
-                                                        ) : null
-                                                    }
-
-                                                    <div className="mb-3 pt-3 md:px-3 px-0 block w-full">
-                                                        <button type="submit" className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700">
-                                                            {
-                                                                idC_State.processing ? (
-                                                                    <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
-                                                                ) : (
-                                                                    <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                        Proceed
-                                                                    </div>
                                                                 )
                                                             }
-                                                        </button>
-                                                    </div>
+                                                        </div>
 
-
-                                                </form>
-
-
-
-
+                                                        <div className="mb-3 pt-3 px-0">
+                                                            <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                                {
+                                                                    idC_State.processing ? (
+                                                                        <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
+                                                                    ) : (
+                                                                        <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                            Next
+                                                                            <i className="fa-duotone fa-arrow-right fa-lg"></i>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
 
                                                 <div className="mx-auto py-3 text-center block w-full">
                                                     <p className="text-sm text-stone-500">
@@ -620,13 +249,13 @@ export const CNF_gB = () => {
                                 </div>
 
                                 <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                                    <img className="h-full rounded-2xl" src={mainAsset} alt={"data_points"} loading="lazy" />
+                                    <img className="h-full rounded-2xl" src={serviceCenter} alt={"service_center"} loading="lazy" />
                                 </div>
                             </div>
                         </section>
                     </div >
                 )
             }
-        </React.Fragment >
+        </React.Fragment>
     )
 }
