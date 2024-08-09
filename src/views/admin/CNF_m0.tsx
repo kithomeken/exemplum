@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 import { CNF_gA } from "./CNF_gA";
-import { CNF_gC } from "./CNF_gC";
 import { CNF_gB } from "./CNF_gB";
+import { CNF_gC } from "./CNF_gC";
+import { CNF_gD } from "./CNF_gD";
 import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
 import { useAppSelector } from "../../store/hooks";
@@ -78,6 +79,9 @@ export const CNF_m0 = () => {
 
             case "CNF_gC":
                 return <CNF_gC />
+
+            case "CNF_gD":
+                return <CNF_gD />
 
             case "CNF_g0":
                 return <Navigate to={homeCoreRoute} replace />
