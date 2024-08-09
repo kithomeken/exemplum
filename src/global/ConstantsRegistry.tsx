@@ -30,6 +30,7 @@ export const STORAGE_KEYS = {
     ENCRYPTION_IV:      '__bgfC0iV',
     ACC_VERIFIED:       '__bgf3vRF',
     ONBOARDING_STATUS:  '__bgf0nBg',
+    PFg0_OVERRIDE:      '__bgf0PFg1',
 
     FIREBASE_RFSH:      '__RfhS',
     ENTITY_TYPE:        '__enTY',
@@ -75,6 +76,7 @@ export const PREFLIGHT_ = {
     PFg0:               'PFg0_SET',
     RESET_:             'PFg0_RESET',
     PFg0_FIN:           'PFg0_FIN',
+    PFg0_OVRD:          'PFg0_OVRD',
     PFg0_UPDATE:        'PFg0_UPDATE',
     PROCESSING:         'PFg0_EXECUTING',
     PFg0_EXCEPTION:     'PFg0_EXCEPTION',
