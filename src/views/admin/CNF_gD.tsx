@@ -152,8 +152,7 @@ export const CNF_gD = () => {
                                                                 Pre-flight Check #5:
                                                             </span>
 
-                                                            {/* The final step, invite your team to join you as administrators */}
-                                                            Setup has been completed.
+                                                            The final step, invite your team to join you as administrators
                                                         </span>
                                                     </span>
                                                 </div>

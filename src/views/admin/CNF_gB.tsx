@@ -7,7 +7,7 @@ import { ERR_500 } from "../errors/ERR_500"
 import { useAppSelector } from "../../store/hooks"
 import '../../assets/css/react_phone_number_input.css'
 import { Loading } from "../../components/modules/Loading"
-import { capitanSecuris, resetCNF_g } from "../../store/identityCheckActions"
+import { capitanSecuris, overridePFg0MetaStage, resetCNF_g } from "../../store/identityCheckActions"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
 
@@ -136,9 +136,15 @@ export const CNF_gB = () => {
                         msisdn: input.msisdn,
                     }
                 }
-    
+
                 dispatch(capitanSecuris(identProps))
             }
+        }
+    }
+
+    const overridePFg0 = (currentPFg0: any) => {
+        if (!idC_State.processing) {
+            dispatch(overridePFg0MetaStage(currentPFg0))
         }
     }
 
@@ -185,9 +191,9 @@ export const CNF_gB = () => {
                                                     </span>
                                                 </div>
 
-                                                <div className="md:w-3/5 flex flex-col w-full mb-4">
+                                                <div className=" flex flex-col w-full mb-4">
                                                     <form className="space-y-4 w-full" onSubmit={msisdnFormHandler}>
-                                                        <div className="w-full">
+                                                        <div className="md:w-3/5 w-full">
                                                             <label htmlFor="msisdn" className="block text-sm leading-6 text-gray-500 mb-2">Phone Number:</label>
 
                                                             <PhoneInput
@@ -217,19 +223,30 @@ export const CNF_gB = () => {
                                                             }
                                                         </div>
 
-                                                        <div className="mb-3 pt-3 px-0">
-                                                            <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
-                                                                {
-                                                                    idC_State.processing ? (
-                                                                        <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
-                                                                    ) : (
-                                                                        <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                            Next
-                                                                            <i className="fa-duotone fa-arrow-right fa-lg"></i>
-                                                                        </div>
-                                                                    )
-                                                                }
-                                                            </button>
+                                                        <div className="mb-3 pt-3 px-0 w-full flex flex-row align-middle items-center gap-x-3 bg-sky-10">
+                                                            <div className="flex-1 w-1/2">
+                                                                <button onClick={() => overridePFg0(idC_State.PFg0)} className="text-orange-600 relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md bg-inherit hover:text-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:text-orange-700" type="button" disabled={idC_State.processing ? true : false}>
+                                                                    <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                        <i className="fa-duotone fa-arrow-left fa-lg"></i>
+                                                                        Previous
+                                                                    </div>
+                                                                </button>
+                                                            </div>
+
+                                                            <div className="flex-1 w-1/2">
+                                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                                    {
+                                                                        idC_State.processing ? (
+                                                                            <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
+                                                                        ) : (
+                                                                            <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                                Next
+                                                                                <i className="fa-duotone fa-arrow-right fa-lg"></i>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
