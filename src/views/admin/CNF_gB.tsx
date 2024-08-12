@@ -224,14 +224,14 @@ export const CNF_gB = () => {
                                                         </div>
 
                                                         <div className="mb-3 pt-3 px-0 w-full flex flex-row align-middle items-center gap-x-3 bg-sky-10">
-                                                            <div className="flex-1 w-1/2">
+                                                            {/* <div className="flex-1 w-1/2">
                                                                 <button onClick={() => overridePFg0(idC_State.PFg0)} className="text-orange-600 relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md bg-inherit hover:text-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:text-orange-700" type="button" disabled={idC_State.processing ? true : false}>
                                                                     <div className="flex justify-center align-middle items-center gap-x-3">
                                                                         <i className="fa-duotone fa-arrow-left fa-lg"></i>
                                                                         Previous
                                                                     </div>
                                                                 </button>
-                                                            </div>
+                                                            </div> */}
 
                                                             <div className="flex-1 w-1/2">
                                                                 <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
