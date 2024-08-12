@@ -276,7 +276,7 @@ export const CNF_gD = () => {
                                                         <>
                                                             <div className="mb-3 px-0 w-full md:w-3/5 mx-auto flex md:flex-row flex-col align-middle items-center gap-y-3 md:gap-x-3">
                                                                 <div className="flex-1 md:w-1/2">
-                                                                    <button onClick={teamExpansion} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
+                                                                    <button onClick={goToCoreHome} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
                                                                         <div className="flex justify-center align-middle items-center gap-x-3">
                                                                             Invite Now
                                                                         </div>
