@@ -130,14 +130,17 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             const currPFg0 = metaPFg0State.charAt(metaPFg0State.length - 1);
             const prevChar = String.fromCharCode(currPFg0.charCodeAt(0) - 1);
 
+            // PFg0 state check for MPESA credentials
             const shuPFg0 = 'CNF_g' + prevChar
-            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, shuPFg0)
-            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_OVERRIDE, shuPFg0)
+            const PFg0_CHK = shuPFg0 === 'CNF_gC' ? 'CNF_gD': shuPFg0
+
+            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, PFg0_CHK)
+            StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_OVERRIDE, PFg0_CHK)
 
             return {
                 ...state,
                 error: null,
-                PFg0: shuPFg0,
+                PFg0: PFg0_CHK,
                 processing: false,
                 PRc0: metaPRc0State,
             }
