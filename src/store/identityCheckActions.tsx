@@ -219,10 +219,10 @@ export function capitanSecuris(propsIn: IdentityProps) {
             const dataDump = IdentityProps.dataDump
             formData.append('msisdn', dataDump.msisdn)
 
-            const securisResponse: any = await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
+            const securisResponse: any = dataDump.RPcL
+                ? await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
+                : await HttpServices.httpPost(PREFLIGHT.CAPTAIN_SECURIS, formData)
 
-            console.log('SECURIS', dataDump);
-            // return
             if (securisResponse.data.success) {
                 dispatch({
                     type: AUTH_.ID_META_02,
@@ -243,9 +243,6 @@ export function capitanSecuris(propsIn: IdentityProps) {
                 });
             }
         } catch (error) {
-            console.log('SECURIS', error);
-
-            // return
             dispatch({
                 type: PREFLIGHT_.PFg0_EXCEPTION,
                 response: error,

@@ -1,9 +1,12 @@
 import React from "react"
+import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
 
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
 import { useAppSelector } from "../../store/hooks"
+import { PREFLIGHT } from "../../api/API_Registry"
+import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import mainAsset from "../../assets/images/illutsration_5712674.svg"
 import { G_onInputBlurHandler } from "../../components/lib/InputHandlers"
@@ -32,7 +35,6 @@ export const CNF_gD = () => {
     })
 
     const dispatch: any = useDispatch();
-    const auth0: any = useAppSelector(state => state.auth0)
     const idC_State: any = useAppSelector(state => state.idC)
 
     React.useEffect(() => {
@@ -79,7 +81,6 @@ export const CNF_gD = () => {
     }
 
     const addTeamMateHandler = () => {
-        let { data } = state
         let { team } = state
         let { teamErrors } = state
         const { posting } = state
@@ -130,12 +131,105 @@ export const CNF_gD = () => {
         }
     }
 
+    function comprehesiveValidation() {
+        let valid = true
+        let { team } = state
+        let { teamErrors } = state
+
+        team.forEach((teamObject, index) => {
+            const objectName = Object.keys(teamObject)[0]
+
+            const makeShiftEvent = {
+                target: {
+                    required: true,
+                    name: objectName,
+                    value: String(teamObject.email).trim(),
+                }
+            }
+
+            let output: any = G_onInputBlurHandler(makeShiftEvent, idC_State.processing, '', 3)
+            teamErrors[index][objectName] = output.error.replace('_', ' ')
+
+            setstate({
+                ...state, teamErrors
+            })
+        })
+
+        teamErrors.forEach((errorObject) => {
+            const objectName = Object.keys(errorObject)[0]
+
+            if (errorObject[objectName].length > 0) {
+                valid = false
+            }
+        })
+
+        return valid
+    }
+
     const onFormSubmitHandler = (e: any) => {
         e.preventDefault()
 
         if (!idC_State.processing) {
+            let validity = comprehesiveValidation()
 
+            if (validity) {
+                setstate({
+                    ...state, posting: true
+                })
+
+                adminInvitations()
+            }
         }
+    }
+
+    const adminInvitations = async () => {
+        let { team } = state
+        let { posting } = state
+        let { httpStatus } = state
+        let { teamErrors } = state
+
+        try {
+            let formData = new FormData()
+
+            Object.keys(team).forEach(function (key) {
+                formData.append("email[]", team[key].email)
+            })
+
+            const teamResponse: any = await HttpServices.httpPost(PREFLIGHT.TEAM_EXPANSION, formData)
+            httpStatus = teamResponse.status
+
+            if (teamResponse.data.success) {
+                toast.success("Your invites have been dispatched", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+                goToCoreHome()
+            } else {
+                httpStatus = 500
+                const payload = teamResponse.data
+
+                Object.keys(payload).forEach(function (key) {
+                    let teamIndex = key.split('.')[1]
+                    let errorMsg = payload[key][0]
+                    teamErrors[teamIndex].email = errorMsg.replace('.' + teamIndex, '')
+                })
+            }
+
+            posting = false
+        } catch (error) {
+            posting = false
+            httpStatus = 500
+        }
+
+        setstate({
+            ...state, posting, httpStatus, teamErrors
+        })
     }
 
     return (
@@ -196,7 +290,7 @@ export const CNF_gD = () => {
                                                                                 return (
                                                                                     <div key={`KDE_${index}`} className="w-full py-3 flex flex-row align-middle items-center gap-x-3">
                                                                                         <div className="flex-grow">
-                                                                                            <input type="email" name="email" id={`team-${index}-email`} autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-orange-600 focus:outline-orange-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`member${index + 1}@email.com`} value={contact.email} />
+                                                                                            <input type="email" name="email" id={`team-${index}-email`} autoComplete="off" onChange={(e) => onChangeHandler(e, index)} className="focus:ring-1 w-full py-1.5 px-2.5 lowercase flex-1 block text-sm rounded-md sm:text-sm border border-gray-300 disabled:opacity-50 focus:ring-orange-600 focus:outline-orange-500" onBlur={(e) => onInputBlur(e, index)} placeholder={`administrator${index + 1}@email.com`} value={contact.email} />
 
                                                                                             {
                                                                                                 state.teamErrors[index].email.length > 0 &&
@@ -229,7 +323,7 @@ export const CNF_gD = () => {
 
                                                                             {
                                                                                 state.team.length < (state.data.identity.pax - 1) ? (
-                                                                                    <button type="button" className="text-blue-500 text-sm cursor-pointer" onClick={addTeamMateHandler}>
+                                                                                    <button type="button" className="text-orange-600 hover:underline text-sm cursor-pointer" onClick={addTeamMateHandler}>
                                                                                         Invite another member
                                                                                     </button>
                                                                                 ) : (
@@ -274,16 +368,16 @@ export const CNF_gD = () => {
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <div className="mb-3 px-0 w-full md:w-3/5 mx-auto flex md:flex-row flex-col align-middle items-center gap-y-3 md:gap-x-3">
-                                                                <div className="flex-1 md:w-1/2">
-                                                                    <button onClick={goToCoreHome} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
+                                                            <div className="mb-3 px-0 w-full mx-auto flex flex-row align-middle items-center gap-y-3 md:gap-x-3">
+                                                                <div className="flex-1 md:w-1/2 flex justify-center">
+                                                                    <button onClick={teamExpansion} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
                                                                         <div className="flex justify-center align-middle items-center gap-x-3">
                                                                             Invite Now
                                                                         </div>
                                                                     </button>
                                                                 </div>
 
-                                                                <div className="flex-1 md:w-1/2 md:mt-0 mt-3">
+                                                                <div className="flex-1 md:w-1/2 flex justify-center">
                                                                     <button onClick={goToCoreHome} className="bg-stone-200 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-stone-700 hover:bg-stone-300 focus:outline-none hover:text-stone-800 focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit" disabled={idC_State.processing ? true : false}>
                                                                         <div className="flex justify-center align-middle items-center gap-x-3">
                                                                             Maybe Later

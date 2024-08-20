@@ -89,7 +89,7 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
                 identity: kapitanObject
             }
 
-            
+
         case PREFLIGHT_.CKPIT_EXECPTION:
             CookieServices.remove(COOKIE_KEYS.SANCTUM)
             StorageServices.removeLocalStorage(STORAGE_KEYS.ACCOUNT_DATA)
@@ -160,15 +160,27 @@ export const firebaseAuthReducer = (state = initialState, action: any) => {
 
             if (meta01Identity.keepName) {
                 displayName = meta01Identity.display_name
+
+                return {
+                    ...state,
+                    identity: {
+                        ...state.identity,
+                        display_name: displayName,
+                        last_name: null,
+                        first_name: null,
+                    }
+                }
             } else {
                 displayName = meta01Identity.first_name + " " + meta01Identity.last_name
-            }
 
-            return {
-                ...state,
-                identity: {
-                    ...state.identity,
-                    display_name: displayName,
+                return {
+                    ...state,
+                    identity: {
+                        ...state.identity,
+                        display_name: displayName,
+                        last_name: meta01Identity.last_name,
+                        first_name: meta01Identity.first_name,
+                    }
                 }
             }
 

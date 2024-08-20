@@ -7,9 +7,9 @@ import { ERR_500 } from "../errors/ERR_500"
 import { useAppSelector } from "../../store/hooks"
 import '../../assets/css/react_phone_number_input.css'
 import { Loading } from "../../components/modules/Loading"
-import { capitanSecuris, overridePFg0MetaStage, resetCNF_g } from "../../store/identityCheckActions"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
+import { capitanSecuris, overridePFg0MetaStage } from "../../store/identityCheckActions"
 
 export const CNF_gB = () => {
     const [state, setstate] = useState({
@@ -24,11 +24,23 @@ export const CNF_gB = () => {
     })
 
     React.useEffect(() => {
-        dispatch(resetCNF_g())
+        msisdnCheck()
     }, [])
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
+    const auth0: any = useAppSelector(state => state.auth0)
+
+    const msisdnCheck = () => {
+        if (!idC_State.processing) {
+            let { input } = state
+            input.msisdn = auth0.identity.msisdn
+
+            setstate({
+                ...state, input
+            })
+        }
+    }
 
     const onPhoneInputChange = (e: any) => {
         if (!idC_State.processing) {
@@ -134,6 +146,7 @@ export const CNF_gB = () => {
                 const identProps = {
                     dataDump: {
                         msisdn: input.msisdn,
+                        RPcL: auth0.identity.msisdn ? true : false
                     }
                 }
 
@@ -194,12 +207,12 @@ export const CNF_gB = () => {
                                                 <div className=" flex flex-col w-full mb-4">
                                                     <form className="space-y-4 w-full" onSubmit={msisdnFormHandler}>
                                                         <div className="md:w-3/5 w-full">
-                                                            <label htmlFor="msisdn" className="block text-sm leading-6 text-gray-500 mb-2">Phone Number:</label>
+                                                            <label htmlFor="msisdn" className="block text-sm leading-6 text-stone-600 mb-2">Phone Number:</label>
 
                                                             <PhoneInput
                                                                 international
                                                                 defaultCountry='KE'
-                                                                className="border border-gray-300 px-3 py-1 rounded"
+                                                                className="border border-stone-300 px-3 py-1 rounded"
                                                                 placeholder="Enter phone number"
                                                                 value={state.input.msisdn}
                                                                 onChange={onPhoneInputChange}
@@ -216,7 +229,7 @@ export const CNF_gB = () => {
 
                                                             {
                                                                 idC_State.error && (
-                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0'>
+                                                                    <span className={`invalid-feedback text-xs text-red-600 pl-0`} hidden={state.errors.msisdn.length > 0 ? true : false}>
                                                                         {idC_State.error}
                                                                     </span>
                                                                 )

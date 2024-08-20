@@ -15,6 +15,7 @@ export const PREFLIGHT = {
     CAPTAIN_IDENTITY:   '/v1/pre-flight/inspection/captain/identity-log',
     CAPTAIN_SECURIS:    '/v1/pre-flight/inspection/captain/securis',
     MPESA_CREDENTIALS:  '/v1/pre-flight/inspection/mpesa-credentials/set',
+    TEAM_EXPANSION:     '/v1/pre-flight/auth/account/meta/team/expansion',
 }
 
 /***************************
