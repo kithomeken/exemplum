@@ -52,10 +52,6 @@ export const CNF_gA = () => {
         let { keepName } = state
         let { httpStatus } = state
 
-        /* 
-        * Fetch Firebase identity data for
-        * verification check
-        */
         onAuthStateChanged(firebaseAuth,
             currentUser => {
                 data.email = currentUser.email
