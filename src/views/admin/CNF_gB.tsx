@@ -143,13 +143,15 @@ export const CNF_gB = () => {
             let validity = c0MP_FLvD()
 
             if (validity) {
+                const method = auth0.identity.msisdn === null ? 'POST' : 'PUT'
+
                 const identProps = {
                     dataDump: {
                         msisdn: input.msisdn,
-                        RPcL: auth0.identity.msisdn === null ? false : true
+                        method: method
                     }
                 }
-
+                
                 dispatch(capitanSecuris(identProps))
             }
         }
