@@ -50,10 +50,16 @@ export const authenticationRoutes: Array<Routes_Interface> = [
         name: 'FORGOT_PWD_'
     },
     {
-        path: "/auth/invitation/:hash",
+        path: "/auth/_/sso/invitation/u/:hash",
         element: <Invitation />,
         caseSensitive: true,
         name: 'AUTH_INVITE_'
+    },
+    {
+        path: "/auth/_/sso/invitation/a/:hash",
+        element: <Invitation />,
+        caseSensitive: true,
+        name: 'ADMIN_INVITE_'
     },
     {
         path: "/pre-flight/check",
