@@ -220,9 +220,7 @@ export function capitanSecuris(propsIn: IdentityProps) {
             formData.append('msisdn', dataDump.msisdn)
             console.log('mrthod', dataDump.method);
 
-            const securisResponse: any = dataDump.method === 'PUT'
-                ? await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
-                : await HttpServices.httpPost(PREFLIGHT.CAPTAIN_SECURIS, formData)
+            const securisResponse: any = await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
 
             if (securisResponse.data.success) {
                 dispatch({
