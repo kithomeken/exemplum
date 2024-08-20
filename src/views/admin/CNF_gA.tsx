@@ -47,7 +47,9 @@ export const CNF_gA = () => {
 
     const identityVerificationStatus = async () => {
         let { data } = state
+        let { input } = state
         let { status } = state
+        let { keepName } = state
         let { httpStatus } = state
 
         /* 
@@ -63,8 +65,14 @@ export const CNF_gA = () => {
                 let verifiedA = currentUser.emailVerified ? '0' : '1'
                 StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
+                if (auth0.identity.first_name) {
+                    keepName = false
+                    input.first_name = auth0.identity.first_name
+                    input.last_name = auth0.identity.last_name
+                }
+
                 setstate({
-                    ...state, status: 'fulfilled', data
+                    ...state, status: 'fulfilled', data, input, keepName
                 })
             },
             error => {
@@ -407,24 +415,18 @@ export const CNF_gA = () => {
                                                                 </div>
                                                             ) : (
                                                                 state.keepName ? (
-                                                                    <div className="py-2 px-3 border-2 border-orange-300 border-dashed rounded-md mb-4">
-                                                                        <div className="flex flex-row align-middle justify-center items-center text-orange-700 px-2 gap-x-3 py-3">
-                                                                            <img className="w-8 h-8 md:block hidden" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo" />
-
+                                                                    <div className="py-2 border-2 px-3 border-stone-400 border-dashed rounded-md mb-4">
+                                                                        <div className="flex flex-row align-middle justify-center items-center text-orange-700 py-3">
                                                                             <div className="flex-auto">
-                                                                                <span className="text-sm block text-gray-600">
-                                                                                    We'll set your name to <span className="text-orange-600">{state.data.display_name}</span> as provided by your Google sign-in.
+                                                                                <span className="text-sm block text-stone-800">
+                                                                                    We've set your name to <span className="text-orange-600">{state.data.display_name}</span> as provided by your Google account.
                                                                                 </span>
                                                                             </div>
                                                                         </div>
 
-                                                                        <div className="flex flex-row align-middle gap-x-3 items-center text-stone-600 px-2 pt-1 pb-2">
-                                                                            <div className="w-8 h-8 md:hidden">
-                                                                                <i className="fab fa-google fa-xl"></i>
-                                                                            </div>
-
-                                                                            <div className="flex-grow flex flex-row-reverse align-middle gap-x-4 items-center text-stone-600 md:px-2 pt-1 pb-2">
-                                                                                <button onClick={keepOrChangeDisplayName} className="text-sm flex-none md:px-2 shadow-none hover:text-orange-600 py-2 md:py-1 bg-inherit hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                                        <div className="flex flex-row align-middle items-center text-stone-600 px-2 pt-1 pb-2">
+                                                                            <div className="flex-grow flex flex-row-reverse align-middle gap-x-4 items-center text-orange-600 md:px-2 pt-1 pb-2">
+                                                                                <button onClick={keepOrChangeDisplayName} className="text-sm flex-none md:px-2 shadow-none hover:text-orange-700 py-2 md:py-1 bg-inherit hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
                                                                                     Change name
                                                                                 </button>
                                                                             </div>
@@ -434,7 +436,7 @@ export const CNF_gA = () => {
                                                                     <>
                                                                         <div className="flex flex-row-reverse align-middle items-center text-orange-600 px-2">
                                                                             <span onClick={keepOrChangeDisplayName} className="text-sm flex-none shadow-none py-1 mb-2 bg-inherit hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
-                                                                                Retain the name from Google sign-in
+                                                                                Keep your Google account name
                                                                             </span>
                                                                         </div>
 
@@ -509,7 +511,16 @@ export const CNF_gA = () => {
                                                                         <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
                                                                     ) : (
                                                                         <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                            Proceed
+                                                                            {
+                                                                                state.keepName ? (
+                                                                                    'Keep Name'
+                                                                                ) : (
+                                                                                    <>
+                                                                                        Next
+                                                                                        < i className="fa-duotone fa-arrow-right fa-lg"></i>
+                                                                                    </>
+                                                                                )
+                                                                            }
                                                                         </div>
                                                                     )
                                                                 }
@@ -583,7 +594,7 @@ export const CNF_gA = () => {
                             <img className="h-full rounded-2xl" src={mainAsset} alt={"hello_i'm_carol"} loading="lazy" />
                         </div>
                     </div>
-                </section>
+                </section >
             </div >
         </React.Fragment >
     )

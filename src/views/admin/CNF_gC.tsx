@@ -314,6 +314,23 @@ export const CNF_gC = () => {
         }
     }
 
+    // Simple example of obfuscating a string
+    const obfuscate = (str) => {
+        return str.split('').map(char => String.fromCharCode(char.charCodeAt(0) + 1)).join('');
+    };
+
+    const deobfuscate = (str) => {
+        return str.split('').map(char => String.fromCharCode(char.charCodeAt(0) - 1)).join('');
+    };
+
+    const original = "SensitiveData";
+    const obfuscated = obfuscate(original);
+    const deobfuscated = deobfuscate(obfuscated);
+
+    console.log('obfuscated', obfuscated); // Outputs obfuscated string
+    console.log('deobfuscated', deobfuscated); // Outputs original "SensitiveData"
+
+
     return (
         <React.Fragment>
             {
