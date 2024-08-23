@@ -40,6 +40,17 @@ export function overridePFg0MetaStage(propsIn: IdentityProps) {
     }
 }
 
+export function overridePRc0MetaStage(propsIn: IdentityProps) {
+    return (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const override = { ...propsIn }
+
+        dispatch({
+            type: IDENTITY_.PRc0_OVRD,
+            response: override,
+        });
+    }
+}
+
 export function addIdentityToProfile(propsIn: IdentityProps) {
     return async (dispatch: (arg0: { type: string; response: any }) => void) => {
         const IdentityProps = { ...propsIn }
@@ -218,7 +229,6 @@ export function capitanSecuris(propsIn: IdentityProps) {
             let formData = new FormData()
             const dataDump = IdentityProps.dataDump
             formData.append('msisdn', dataDump.msisdn)
-            console.log('mrthod', dataDump.method);
 
             const securisResponse: any = await HttpServices.httpPut(PREFLIGHT.CAPTAIN_SECURIS, formData)
 
