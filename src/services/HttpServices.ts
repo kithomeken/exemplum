@@ -5,6 +5,7 @@ import Crypto from "../security/Crypto"
 import CookieServices from "./CookieServices"
 import { API_DOMAIN } from "../api/API_Controller"
 import { COOKIE_KEYS } from "../global/ConstantsRegistry"
+import { DeviceInfo } from "../lib/modules/HelperFunctions"
 import { revokeAuthSession } from "../store/auth/firebaseAuthActions"
 
 class HttpServices {
@@ -189,8 +190,11 @@ class HttpServices {
     }
 
     axiosInstanceHeaders() {
+        const deviceData = DeviceInfo()
+
         return {
             headers: {
+                'User-Device': deviceData,
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + this.decryptSanctumTokenCookie(),
             }
@@ -198,8 +202,11 @@ class HttpServices {
     }
 
     axiosInstanceMultipartHeaders() {
+        const deviceData = DeviceInfo()
+
         return {
             headers: {
+                'User-Device': deviceData,
                 'Content-Type': 'multipart/form-data',
                 Authorization: "Bearer " + this.decryptSanctumTokenCookie(),
             }

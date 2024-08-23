@@ -52,10 +52,6 @@ export const CNF_m0 = () => {
                     }
                 }
 
-                console.log('PFg1_', PFg1_);
-                console.log('PFg0', progCheckResp.data.payload.PFg0);
-                
-
                 dispatch(setPFg0MetaStage(metaProps))
                 status = 'fulfilled'
             } else {
@@ -95,7 +91,7 @@ export const CNF_m0 = () => {
                 return <Navigate to={homeCoreRoute} replace />
 
             default:
-                return
+                return <Navigate to={homeCoreRoute} replace />
         }
     }
 

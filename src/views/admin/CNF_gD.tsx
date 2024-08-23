@@ -37,10 +37,6 @@ export const CNF_gD = () => {
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
 
-    React.useEffect(() => {
-
-    }, [])
-
     const onChangeHandler = (e: any, index: any) => {
         const { posting } = state
 

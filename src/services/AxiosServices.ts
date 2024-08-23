@@ -4,6 +4,7 @@ import Crypto from "../security/Crypto"
 import CookieServices from "./CookieServices"
 import { API_DOMAIN } from "../api/API_Controller"
 import { COOKIE_KEYS } from "../global/ConstantsRegistry"
+import { DeviceInfo } from "../lib/modules/HelperFunctions"
 
 class AxiosServices {
     protected decryptSanctumTokenCookie() {
@@ -54,9 +55,12 @@ class AxiosServices {
         }
     }
 
-    axiosInstanceHeaders() {        
+    axiosInstanceHeaders() {
+        const deviceData = DeviceInfo()
+
         return {
             headers: {
+                'User-Device': deviceData,
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + this.decryptSanctumTokenCookie(),
             }

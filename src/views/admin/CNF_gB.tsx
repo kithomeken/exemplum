@@ -9,7 +9,7 @@ import '../../assets/css/react_phone_number_input.css'
 import { Loading } from "../../components/modules/Loading"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
-import { capitanSecuris, overridePFg0MetaStage } from "../../store/identityCheckActions"
+import { capitanSecuris, overridePFg0MetaStage, resetIdentity } from "../../store/identityCheckActions"
 
 export const CNF_gB = () => {
     const [state, setstate] = useState({
@@ -28,10 +28,12 @@ export const CNF_gB = () => {
     }, [])
 
     const dispatch: any = useDispatch();
-    const idC_State: any = useAppSelector(state => state.idC)
     const auth0: any = useAppSelector(state => state.auth0)
+    const idC_State: any = useAppSelector(state => state.idC)
 
     const msisdnCheck = () => {
+        dispatch(resetIdentity())
+
         if (!idC_State.processing) {
             let { input } = state
             input.msisdn = auth0.identity.msisdn

@@ -31,6 +31,7 @@ export const STORAGE_KEYS = {
     ACC_VERIFIED:       '__bgf3vRF',
     ONBOARDING_STATUS:  '__bgf0nBg',
     PFg0_OVERRIDE:      '__bgf0PFg1',
+    PRc0_OVERRIDE:      '__bgf0PRc1',
 
     FIREBASE_RFSH:      '__RfhS',
     ENTITY_TYPE:        '__enTY',
@@ -66,6 +67,7 @@ export const AUTH_ = {
 export const IDENTITY_ = {
     PRc0:               'PRc0_SET',
     RESET_:             'PRc0_RESET',
+    PRc0_OVRD:          'PRc0_OVRD',
     PRc0_UPDATE:        'PRc0_UPDATE',
     PROCESSING:         'PRc0_EXECUTING',
     PRc0_EXCEPTION:     'PRc0_EXCEPTION',

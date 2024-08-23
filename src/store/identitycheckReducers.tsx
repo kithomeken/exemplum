@@ -17,6 +17,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0:
             const metaPRc0 = action.response.dataDump.PRc0
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, metaPRc0)
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, metaPRc0)
 
             return {
                 ...state,
@@ -45,12 +46,31 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0_UPDATE:
             const PRc0Code = metaPRc0State.charAt(metaPRc0State.length - 1);
             const nextPRc0 = 'META_0' + (parseInt(PRc0Code) + 1)
+
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, nextPRc0)
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, nextPRc0)
 
             return {
                 ...state,
                 error: null,
                 PRc0: nextPRc0,
+                processing: false,
+                PFg0: metaPFg0State,
+            }
+
+        case IDENTITY_.PRc0_OVRD:
+            const currPRc0 = metaPRc0State.charAt(metaPRc0State.length - 1)
+            const prevPRc0 = 'META_0' + (parseInt(currPRc0) - 1)
+
+            const PRc0_CHK = prevPRc0 === 'META_03' ? 'META_00' : prevPRc0
+
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, PRc0_CHK)
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, PRc0_CHK)
+
+            return {
+                ...state,
+                error: null,
+                PRc0: PRc0_CHK,
                 processing: false,
                 PFg0: metaPFg0State,
             }
@@ -132,7 +152,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
             // PFg0 state check for MPESA credentials
             const shuPFg0 = 'CNF_g' + prevChar
-            const PFg0_CHK = shuPFg0 === 'CNF_gC' ? 'CNF_gD': shuPFg0
+            const PFg0_CHK = shuPFg0 === 'CNF_gC' ? 'CNF_gD' : shuPFg0
 
             StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_STATE, PFg0_CHK)
             StorageServices.setLocalStorage(STORAGE_KEYS.PFg0_OVERRIDE, PFg0_CHK)
@@ -161,7 +181,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             metaErrMsg = action.response
             console.log('PFg0_EXCEPTION: ', metaErrMsg);
             console.log('PFg0_EXCEPTION: ', metaPFg0State);
-            
+
             return {
                 ...state,
                 processing: false,
