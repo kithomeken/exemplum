@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Moment from 'moment';
-import { browserName, isMobile, mobileModel, mobileVendor, osName, osVersion } from 'react-device-detect';
+import { browserName, deviceType, engineName, engineVersion, osName, osVersion } from 'react-device-detect';
 
 import Crypto from '../../security/Crypto';
 import { FQDN } from '../../api/API_Controller';
@@ -25,15 +25,10 @@ export function humanReadableDate(dateString: any) {
 }
 
 export function DeviceInfo() {
-    let deviceName: any
+    const osPart = `${osName} ${osVersion}`;
+    const browserPart = `${browserName}/${engineName}`;
 
-    if (isMobile) {
-        deviceName = mobileVendor + ' ' + mobileModel
-    } else {
-        deviceName = osName + ' ' + osVersion
-    }
-
-    return browserName + ' on ' + deviceName
+    return deviceType + ': ' + osPart + ' ' + browserPart + ' ' + engineVersion
 }
 
 export function sanctumAxiosInstance() {
