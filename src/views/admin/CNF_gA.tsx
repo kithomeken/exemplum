@@ -21,6 +21,7 @@ export const CNF_gA = () => {
         data: {
             email: '',
             display_name: '',
+            provider: 'google',
             emailVerified: false,
         },
         input: {
@@ -57,6 +58,7 @@ export const CNF_gA = () => {
                 data.email = currentUser.email
                 data.display_name = currentUser.displayName
                 data.emailVerified = currentUser.emailVerified
+                data.provider = currentUser.providerData[0].providerId
 
                 let verifiedA = currentUser.emailVerified ? '0' : '1'
                 StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
@@ -66,6 +68,8 @@ export const CNF_gA = () => {
                     input.first_name = auth0.identity.first_name
                     input.last_name = auth0.identity.last_name
                 }
+
+                keepName = data.provider === 'password' ? false : keepName
 
                 setstate({
                     ...state, status: 'fulfilled', data, input, keepName
@@ -244,7 +248,7 @@ export const CNF_gA = () => {
         }
     }
 
-    const checkEmailVerification = () => {
+    const checkEmailVerification = async () => {
         let { process } = state
         let { data } = state
 
@@ -256,17 +260,21 @@ export const CNF_gA = () => {
                 ...state, process
             })
 
-            onAuthStateChanged(firebaseAuth,
-                currentUser => {
-                    data.email = currentUser.email
-                    data.display_name = currentUser.displayName
-                    data.emailVerified = currentUser.emailVerified
+            try {
+                const currentUser = firebaseAuth.currentUser;
+                await currentUser.reload()
 
-                    let verifiedA = currentUser.emailVerified ? '0' : '1'
-                    StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
+                data.email = currentUser.email
+                data.display_name = currentUser.displayName
+                data.emailVerified = currentUser.emailVerified
 
-                    process.state = false
+                let verifiedA = currentUser.emailVerified ? '0' : '1'
+                StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
+                process.state = false
+                console.log('cusers', verifiedA);
+
+                if (currentUser.emailVerified) {
                     toast.success("Email verification complete", {
                         position: "top-right",
                         autoClose: 5000,
@@ -276,17 +284,8 @@ export const CNF_gA = () => {
                         draggable: true,
                         progress: undefined,
                     });
-
-                    setstate({
-                        ...state, process, data
-                    })
-                },
-                error => {
-                    console.error(error)
-                    process.state = false
-                    const errorMessage = 'Email verification failed. Try again later...'
-
-                    toast.error(errorMessage, {
+                } else {
+                    toast.error("Email has not been verified. Please verify it to proceed.", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -295,12 +294,30 @@ export const CNF_gA = () => {
                         draggable: true,
                         progress: undefined,
                     });
-
-                    setstate({
-                        ...state, process, data
-                    })
                 }
-            );
+
+                setstate({
+                    ...state, process, data
+                })
+            } catch (error) {
+                console.error(error)
+                process.state = false
+                const errorMessage = 'Email verification failed. Try again later...'
+
+                toast.error(errorMessage, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+                setstate({
+                    ...state, process, data
+                })
+            }
         }
     }
 
