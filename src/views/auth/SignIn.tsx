@@ -480,14 +480,16 @@ export const SignIn = () => {
                         </section>
                     </div>
                 ) : (
-                    <div className="flex flex-col md:h-screen md:flex-row justify-center items-center">
-                        <div className="w-full form-group px-12 mb-14">
-                            <div className="w-full">
-                                <div className="pt-10">
-                                    <Loading />
+                    <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
+                        <section className="gx-container md:h-screen h-auto rounded-md w-full flex items-center justify-center">
+                            <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
+                                <div className="w-full h-1/2 flex flex-col justify-center">
+                                    <div className="flex-grow pt-8">
+                                        <Loading />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 )
             }

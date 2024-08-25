@@ -4,17 +4,16 @@ import { Link, Navigate, useLocation } from "react-router-dom"
 import { applyActionCode, confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth"
 
 import { ERR_500 } from "../errors/ERR_500"
+import { AUTH } from "../../api/API_Registry"
 import { PasswordPolicy } from "./PasswordPolicy"
 import { GenericError } from "../errors/GenericError"
+import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
-import emptyBox from "../../assets/images/12704364_5041143.svg"
 import rockOn from "../../assets/images/6f666c6b94695e15346964a4aa2532e8.svg"
 import { CONFIG_MAX_WIDTH, APPLICATION } from "../../global/ConstantsRegistry"
 import { classNames, passwordValidator } from "../../lib/modules/HelperFunctions"
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
-import { AUTH } from "../../api/API_Registry"
-import HttpServices from "../../services/HttpServices"
 
 export const EmailActions = () => {
     const [state, setstate] = useState({
@@ -325,7 +324,7 @@ export const EmailActions = () => {
         }
     }
 
-    const accessTokenInvalidation = async() => {
+    const accessTokenInvalidation = async () => {
         let { input } = state
 
         try {
@@ -367,21 +366,19 @@ export const EmailActions = () => {
                             </Helmet>
 
                             <div className="w-full h-screen flex flex-col justify-center align-middle items-center">
-                                <div className="mx-auto my-2 px-4 flex flex-col">
-                                    <img src={emptyBox} alt="broken_robot" width="auto" className="block text-center m-auto w-68" />
-
-                                    <div className="text-center m-auto text-slate-600 py-2 md:w-96">
-                                        <span className="text-orange-600 mb-2 block">
+                                <div className="mx-auto my-2 px-4 flex flex-col md:w-96">
+                                    <div className="text-center m-auto text-slate-600 py-2">
+                                        <span className="text-orange-600 mb-4 block text-xl">
                                             Verification Successful
                                         </span>
 
-                                        <div className="text-sm">
+                                        <div className="text-base py-4">
                                             Your email has been successfully verified. You can now enjoy full access to our services
                                         </div>
                                     </div>
 
-                                    <span className="text-sm text-stone-500 block py-3">
-                                        In case of any issue,reach out to our support team at <span className="text-orange-600">support@email.com</span>
+                                    <span className="text-sm text-stone-500 block py-6 text-center">
+                                        In case of any issue,reach out to our support team at <span className="text-orange-600">support@bigfan.co.ke</span>
                                     </span>
 
                                     <div className="mx-auto md:py-4 py-6 text-center block w-full">
@@ -424,9 +421,8 @@ export const EmailActions = () => {
                                                 </div>
 
                                                 <div className="mx-auto md:py-4 py-6 text-center block w-full">
-                                                    <p className="text-sm text-stone-500 pb-4">
-                                                        <span className="text-orange-600">{APPLICATION.NAME}</span> © {new Date().getFullYear()}.
-                                                        Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                                    <p className="text-sm text-stone-500">
+                                                        © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -512,13 +508,12 @@ export const EmailActions = () => {
 
 
                                                     <span className="text-sm text-stone-500 block py-3">
-                                                        In case of any issue,reach out to our support team at <span className="text-orange-600">support@email.com</span>
+                                                        In case of any issue,reach out to our support team at <span className="text-orange-600">support@bigfan.co.ke</span>
                                                     </span>
 
                                                     <div className="mx-auto md:py-4 py-6 text-center block w-full">
-                                                        <p className="text-sm text-stone-500 pb-4">
-                                                            <span className="text-orange-600">{APPLICATION.NAME}</span> © {new Date().getFullYear()}.
-                                                            Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                                        <p className="text-sm text-stone-500">
+                                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                                         </p>
                                                     </div>
                                                 </div>

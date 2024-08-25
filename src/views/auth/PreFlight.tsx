@@ -13,11 +13,12 @@ import { postAuthRoutes } from "../../routes/routes"
 import AxiosServices from "../../services/AxiosServices"
 import { Loading } from "../../components/modules/Loading"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
-import { classNames } from "../../lib/modules/HelperFunctions"
 import smallAsset from "../../assets/images/illustration_178786105.svg"
-import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions"
 import { APPLICATION, AUTH_, CONFIG_MAX_WIDTH, STYLE } from "../../global/ConstantsRegistry"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions"
+import { Alt_FirebaseSSO_SignIn, Alt_FirebaseSSO_SignUp, resetAuth0 } from "../../store/auth/firebaseAuthActions"
+import { toast } from "react-toastify"
 
 export const PreFlight = () => {
     const [state, setstate] = React.useState({
@@ -252,7 +253,7 @@ export const PreFlight = () => {
             } else if (popUpErrors.includes(errorCode)) {
                 errorMessage = 'Google sign-in process cancelled by user'
             } else {
-                errorMessage = null
+                errorMessage = 'Something went wrong, could not complete action'
             }
 
             dispatch({
@@ -260,7 +261,77 @@ export const PreFlight = () => {
                 response: errorMessage,
             });
 
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
             return null;
+        }
+    };
+
+    const validateForm = () => {
+        let valid = true
+        let { input } = state
+        let { errors } = state;
+
+        if (!input.email) {
+            errors.email = 'Please provide a email address'
+            valid = false
+        } else if (!emailValidator(input.email)) {
+            errors.email = 'Please provide a valid email address'
+            valid = false
+        }
+
+        if (!input.password) {
+            errors.password = 'Please provide a password';
+            valid = false
+        } else if (input.password !== input.confirm) {
+            errors.password = 'Passwords do not match';
+            valid = false
+        } else if (!passwordValidator(input.password)) {
+            errors.password = 'Kindly set a strong password'
+            valid = false
+        }
+
+        setstate({
+            ...state, errors
+        })
+
+        return valid;
+    };
+
+    const passwordSignUpFormHandler = (e: any) => {
+        e.preventDefault();
+
+        if (!auth0.processing) {
+            let validity = validateForm()
+
+            if (validity) {
+                setstate({
+                    ...state, errors: {
+                        email: '',
+                        password: '',
+                        confirm: ''
+                    }
+                })
+
+                const authProps = {
+                    identity: 'password',
+                    deviceInfo: DeviceInfo(),
+                    credentials: {
+                        email: state.input.email,
+                        password: state.input.password,
+                    }
+                }
+
+                dispatch(Alt_FirebaseSSO_SignUp(authProps))
+            }
         }
     };
 
@@ -331,7 +402,7 @@ export const PreFlight = () => {
                                     {
                                         state.password.form ? (
                                             <div className="w-full block m-auto py-3">
-                                                <form className="w-full m-auto md:w-2/3 flex flex-col" /* onSubmit={passwordEmailInvitationHandler} */>
+                                                <form className="w-full m-auto md:w-2/3 flex flex-col" onSubmit={passwordSignUpFormHandler}>
                                                     <span className="block text-sm pb-4 text-stone-500">Enter your email and preferred password</span>
 
                                                     <div className="shadow-none mb-3 pb-3">
@@ -354,7 +425,7 @@ export const PreFlight = () => {
 
                                                         {
                                                             auth0.error && (
-                                                                <span className='invalid-feedback text-xs text-red-600 pl-0'>
+                                                                <span className={`invalid-feedback text-xs text-red-600 pl-0`} hidden={state.errors.email.length > 0 ? true : false}>
                                                                     {auth0.error}
                                                                 </span>
                                                             )
@@ -407,15 +478,14 @@ export const PreFlight = () => {
                                                     </div>
 
                                                     <div className="pt-3 flex justify-center">
-                                                        <button type="submit" className="w-44 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
+                                                        <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                             {
                                                                 auth0.processing && auth0.provider === 'password' ? (
-                                                                    <span className="flex flex-row items-center">
-                                                                        <i className="fad fa-spinner-third fa-xl fa-spin mr-2"></i>
-                                                                        <span>Creating...</span>
-                                                                    </span>
+                                                                    <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
                                                                 ) : (
-                                                                    <span>Create</span>
+                                                                    <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                        Create
+                                                                    </div>
                                                                 )
                                                             }
                                                         </button>
