@@ -83,23 +83,26 @@ export function Alt_FirebaseSSO_SignUp(propsIn: FirebaseProps) {
 }
 
 async function googleProviderSignInWithPopUp(dispatch: any, _firebaseProps: any) {
-    firebaseAuth.useDeviceLanguage();
-    const provider = new GoogleAuthProvider();
-    const popupResponse: any = await signInWithPopup(firebaseAuth, provider);
-
-    if (popupResponse.user.stsTokenManager.accessToken) {
-        const firebaseUser: any = popupResponse.user;
-
-        dispatch({
-            type: AUTH_.FIREBASE_TOKEN,
-            response: {
-                accessToken: firebaseUser.accessToken,
-                refreshToken: firebaseUser.stsTokenManager.refreshToken,
-                expirationTime: firebaseUser.stsTokenManager.expirationTime,
-            },
-        });
-    } else {
-        const error: any = popupResponse
+    try {
+        firebaseAuth.useDeviceLanguage();
+        const provider = new GoogleAuthProvider();
+        const popupResponse: any = await signInWithPopup(firebaseAuth, provider)
+    
+        if (popupResponse.user.stsTokenManager.accessToken) {
+            const firebaseUser: any = popupResponse.user;
+    
+            dispatch({
+                type: AUTH_.FIREBASE_TOKEN,
+                response: {
+                    accessToken: firebaseUser.accessToken,
+                    refreshToken: firebaseUser.stsTokenManager.refreshToken,
+                    expirationTime: firebaseUser.stsTokenManager.expirationTime,
+                },
+            });
+        } else {
+            console.log('EMPT');
+        }
+    } catch (error: any) {
         const errorCode = error.code;
         let errorMessage = error.message;
         let popUpErrors = [
@@ -129,6 +132,7 @@ async function googleProviderSignInWithPopUp(dispatch: any, _firebaseProps: any)
             response: errorMessage,
         });
     }
+
 }
 
 async function emailPasswordSignIn(dispatch: any, firebaseProps: any) {
