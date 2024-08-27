@@ -61,7 +61,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                 data.nominated = paymentResponse.data.payload.nomi
                 data.payment = paymentResponse.data.payload.payment
                 data.trans = paymentResponse.data.payload.trans
-                data.meta = paymentResponse.data.payload.meta
+                data.meta = paymentResponse.data.payload.meta.meta
 
                 data.payment.gross = formatAmount(parseFloat(data.payment.gross))
                 data.payment.nett = formatAmount(parseFloat(data.payment.nett))
@@ -564,13 +564,25 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                             !state.show.rejection ? (
                                                 state.data.payment.status === 'P' ? (
                                                     <div className="flex-none flex flex-row-reverse align-middle items-center py-2 mx-6 gap-x-3 mb-3 border-b-2 border-dashed">
-                                                        <span onClick={showOrHideRejectionInput} className="text-sm flex-none shadow-none py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
-                                                            Reject Request
-                                                        </span>
+                                                        {
+                                                            state.data.meta.all === state.data.meta.app ? (
+                                                                <>
+                                                                    <span onClick={showOrHideRejectionInput} className="text-sm flex-none shadow-none py-1 bg-inherit text-red-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                                        Reject Request
+                                                                    </span>
 
-                                                        <span onClick={() => paymentRequestAction('A')} className="text-sm flex-none shadow-none py-1 bg-inherit text-green-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
-                                                            Approve Request
-                                                        </span>
+                                                                    <span onClick={() => paymentRequestAction('A')} className="text-sm flex-none shadow-none py-1 bg-inherit text-green-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
+                                                                        Approve Request {state.data.meta.all} /{state.data.meta.all}
+                                                                    </span>
+                                                                </>
+                                                            ) : (
+                                                                <div className="flex flex-row rounded-md w-full align-middle items-center bg-orange-100 py-2 my-2 px-6 transition-transform ease-in-out duration-500">
+                                                                    <span className="py-2 block text-orange-600">
+                                                                        Request approved by {state.data.meta.app} out of {state.data.meta.all} members
+                                                                    </span>
+                                                                </div>
+                                                            )
+                                                        }
                                                     </div>
                                                 ) : (
                                                     state.data.trans === null ? (
