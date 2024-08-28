@@ -264,11 +264,22 @@ export const EntityPayIn = () => {
                         <div className="w-full bg-orange-100 bg-opacity-70">
                             <section className="px-6 py-6 gx-container w-full flex flex-col gap-y-4" style={STYLE.W850}>
                                 <h2 className="text-xl text-orange-600">
-                                    Who we are
+                                    {
+                                        state.data.entity.max === 1 ? (
+                                            'Who am I?'
+                                        ) : (
+                                            'Who we are?'
+                                        )
+                                    }
+                                    
                                 </h2>
 
                                 <p className="mt-2 pb-2 text-gray-700">
-                                    Faucibus euismod ultricies ultricies bibendum nascetur phasellus. Vel elit aptent interdum posuere eget senectus. Neque sagittis consequat per scelerisque imperdiet diam lacinia volutpat. Euismod pretium ullamcorper non ligula convallis quam est mauris. Habitasse dictum facilisi efficitur fames fusce duis.
+                                    <strong>{state.data.entity.name}</strong> creates dynamic and passionate music, known for their unique blend of sounds and heartfelt lyrics. With a deep love for storytelling through music, they has captivated audiences with their soulful voice and captivating performances.
+                                </p>
+
+                                <p className="pb-2 text-gray-700">
+                                    Drawing inspiration from personal experiences and a wide range of musical influences, {state.data.entity.name} has created a distinct sound that resonates with listeners worldwide.
                                 </p>
                             </section>
                         </div>
