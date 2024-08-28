@@ -4,14 +4,15 @@ import { useDispatch } from "react-redux"
 
 import { useAppSelector } from "../../store/hooks"
 import { Loading } from "../../components/modules/Loading"
+import CookieServices from "../../services/CookieServices"
 import StorageServices from "../../services/StorageServices"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { classNames } from "../../lib/modules/HelperFunctions"
 import mainAsset from "../../assets/images/illustration_3647294.svg"
 import { captainIdentityLog } from "../../store/identityCheckActions"
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth"
-import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers"
+import { APPLICATION, CONFIG_MAX_WIDTH, COOKIE_KEYS, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 
 export const CNF_gA = () => {
     const [state, setstate] = React.useState({
@@ -60,7 +61,40 @@ export const CNF_gA = () => {
                 data.emailVerified = currentUser.emailVerified
                 data.provider = currentUser.providerData[0].providerId
 
-                let verifiedA = currentUser.emailVerified ? '0' : '1'
+                let verifiedA = '0'
+
+                if (!currentUser.emailVerified) {
+                    /* 
+                     * Send a mail verification email
+                     * Set the coookie after it has sent verification mail
+                     * Remove the cookie after the verification
+                    */
+
+                    verifiedA = '1'
+                    const RSN_ = CookieServices.get(COOKIE_KEYS.MAIL_VRF)
+
+                    if (RSN_ === undefined || RSN_ === null) {
+                        sendEmailVerification(firebaseAuth.currentUser)
+                            .then(() => {
+                                console.log('Email verification sent');
+                                CookieServices.setTimed(COOKIE_KEYS.MAIL_VRF, 'RSN_', 20, COOKIE_KEYS.OPTIONS)
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                
+                                toast.error('Something went wrong. Kindly try again later', {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                });
+                            });
+                    }
+                }
+
                 StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
                 if (auth0.identity.first_name) {
@@ -204,6 +238,7 @@ export const CNF_gA = () => {
             sendEmailVerification(firebaseAuth.currentUser)
                 .then(() => {
                     process.state = false
+                    CookieServices.setTimed(COOKIE_KEYS.MAIL_VRF, 'RSN_', 20, COOKIE_KEYS.OPTIONS)
 
                     setstate({
                         ...state, process
@@ -244,7 +279,7 @@ export const CNF_gA = () => {
                     setstate({
                         ...state, process, httpStatus
                     })
-                });;
+                });
         }
     }
 
@@ -268,13 +303,13 @@ export const CNF_gA = () => {
                 data.display_name = currentUser.displayName
                 data.emailVerified = currentUser.emailVerified
 
+                process.state = false
                 let verifiedA = currentUser.emailVerified ? '0' : '1'
                 StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
-                process.state = false
-                console.log('cusers', verifiedA);
-
                 if (currentUser.emailVerified) {
+                    CookieServices.remove(COOKIE_KEYS.MAIL_VRF)
+
                     toast.success("Email verification complete", {
                         position: "top-right",
                         autoClose: 5000,
