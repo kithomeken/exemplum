@@ -4,8 +4,9 @@ export const CONFIG_MAX_WIDTH = { maxWidth: '1024px' }
 export const CONFIG_MARGIN_TOP = { marginTop: '64px' }
 
 export const STYLE = {
-    MAX_WIDTH:  { maxWidth: '1024px' },
-    MARGIN_TOP: { marginTop: '64px' }
+    W850        :{ maxWidth: '850px' },
+    MAX_WIDTH   :{ maxWidth: '1024px' },
+    MARGIN_TOP  :{ marginTop: '64px' }
 }
 
 /*
