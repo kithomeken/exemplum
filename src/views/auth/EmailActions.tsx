@@ -367,24 +367,25 @@ export const EmailActions = () => {
 
                             <div className="w-full h-screen flex flex-col justify-center align-middle items-center">
                                 <div className="mx-auto my-2 px-4 flex flex-col md:w-96">
-                                    <div className="text-center m-auto text-slate-600 py-2">
-                                        <span className="text-orange-600 mb-4 block text-xl">
-                                            Verification Successful
-                                        </span>
+                                    <div className="border-b-2 border-dashed">
+                                        <div className="text-center m-auto text-slate-600 py-2">
+                                            <span className="text-orange-600 mb-4 block text-xl">
+                                                Verification Successful
+                                            </span>
 
-                                        <div className="text-base py-4">
-                                            Your email has been successfully verified. You can now enjoy full access to our services
+                                            <div className="text-base py-4">
+                                                Your email has been successfully verified. You can now enjoy full access to our services
+                                            </div>
                                         </div>
+
+                                        <span className="text-xs text-stone-500 block py-6 text-center">
+                                            In case of any issue,reach out to our support team at <span className="text-orange-600">support@bigfan.co.ke</span>
+                                        </span>
                                     </div>
 
-                                    <span className="text-sm text-stone-500 block py-6 text-center">
-                                        In case of any issue,reach out to our support team at <span className="text-orange-600">support@bigfan.co.ke</span>
-                                    </span>
-
-                                    <div className="mx-auto md:py-4 py-6 text-center block w-full">
+                                    <div className="mx-auto md:py-3 py-6 text-center">
                                         <p className="text-sm text-stone-500 pb-4">
-                                            <span className="text-orange-600">{APPLICATION.NAME}</span> © {new Date().getFullYear()}.
-                                            Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
                                         </p>
                                     </div>
                                 </div>

@@ -8,11 +8,12 @@ import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
 import { standardRoutes } from "../../routes/routes"
 import { Loading } from "../../components/modules/Loading"
+import CookieServices from "../../services/CookieServices"
 import StorageServices from "../../services/StorageServices"
 import { firebaseAuth } from "../../firebase/firebaseConfigs"
 import { revokeAuthSession } from "../../store/auth/firebaseAuthActions"
-import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
+import { APPLICATION, CONFIG_MAX_WIDTH, COOKIE_KEYS, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 
 export const IdentityVerification = () => {
     const [state, setstate] = useState({
@@ -47,11 +48,43 @@ export const IdentityVerification = () => {
         */
         onAuthStateChanged(firebaseAuth,
             currentUser => {
-                let verifiedA = currentUser.emailVerified ? '0' : '1'
-                StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
+                let verifiedA = '0'
 
-                setVerified(verifiedA)
+                if (!currentUser.emailVerified) {
+                    /* 
+                     * Send a mail verification email
+                     * Set the coookie after it has sent verification mail
+                     * Remove the cookie after the verification
+                    */
+
+                    verifiedA = '1'
+                    const RSN_ = CookieServices.get(COOKIE_KEYS.MAIL_VRF)
+
+                    if (RSN_ === undefined || RSN_ === null) {
+                        sendEmailVerification(firebaseAuth.currentUser)
+                            .then(() => {
+                                console.log('Email verification sent');
+                                CookieServices.setTimed(COOKIE_KEYS.MAIL_VRF, 'RSN_', 20, COOKIE_KEYS.OPTIONS)
+                            })
+                            .catch((error) => {
+                                console.log(error);
+
+                                toast.error('Something went wrong. Kindly try again later', {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                });
+                            });
+                    }
+                }
+
                 status = 'fulfilled'
+                setVerified(verifiedA)
+                StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
 
                 setstate({
                     ...state, status
@@ -130,6 +163,76 @@ export const IdentityVerification = () => {
         dispatch(revokeAuthSession())
     }
 
+    const checkEmailVerification = async () => {
+        let { process } = state
+
+        if (!process.state) {
+            process.state = true
+            process.type = 'verify'
+
+            setstate({
+                ...state, process
+            })
+
+            try {
+                const currentUser = firebaseAuth.currentUser;
+                await currentUser.reload()
+
+                process.state = false
+                let verifiedA = currentUser.emailVerified ? '0' : '1'
+                StorageServices.setLocalStorage(STORAGE_KEYS.ACC_VERIFIED, verifiedA)
+
+                if (currentUser.emailVerified) {
+                    CookieServices.remove(COOKIE_KEYS.MAIL_VRF)
+
+                    window.location.reload()
+
+                    toast.success("Email verification complete", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                } else {
+                    toast.error("Email has not been verified. Please verify it to proceed.", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+
+                setstate({
+                    ...state, process
+                })
+            } catch (error) {
+                console.error(error)
+                process.state = false
+                const errorMessage = 'Email verification failed. Try again later...'
+
+                toast.error(errorMessage, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+                setstate({
+                    ...state, process
+                })
+            }
+        }
+    }
+
     return (
         <React.Fragment>
             {
@@ -171,31 +274,44 @@ export const IdentityVerification = () => {
                                             <span className="block py-4 text-xl md:text-2xl">
                                                 Verification pending
 
-                                                <span className="text-base pt-4 text-stone-500 block">
+                                                <span className="text-base pt-4 text-stone-600 md:text-stone-800 block">
                                                     <span className="block pt-2">
-                                                        A verification email was sent to <span className="text-slate-800">{firebaseAuth.currentUser.email}</span>, kindly check your email to complete the update.
-
-                                                        <span className="text-sm block pt-3 mt-3">
-                                                            In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
-                                                        </span>
+                                                        A verification email was sent to <span className="text-orange-600">{firebaseAuth.currentUser.email}</span>, kindly check your email to complete verification.
                                                     </span>
                                                 </span>
                                             </span>
                                         </div>
 
-                                        <div className="w-full flex flex-row-reverse pt-4 md:pb-8 pb-4 px-3 md:px-0 md:border-b-2 border-dashed">
-                                            <button onClick={resendEmailVerification} className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
-                                                {
-                                                    state.process.type === 'resend' && state.process.state ? (
-                                                        <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
-                                                    ) : (
-                                                        <div className="flex justify-center align-middle items-center gap-x-3">
-                                                            Resend Mail
-                                                            <i className="fa-solid text-white fa-paper-plane fa-lg"></i>
-                                                        </div>
-                                                    )
-                                                }
-                                            </button>
+                                        <div className="w-full flex flex-row-reverse pt-4 md:pb-8 pb-4 md:px-3 px-0 border-b-2 border-dashed">
+                                            <div className="flex-grow flex flex-row-reverse align-middle gap-x-3 items-center text-stone-600 md:px-2 pt-1 pb-2">
+                                                <button type="button" onClick={checkEmailVerification} className="disabled:cursor-not-allowed disabled:hover:no-underline text-sm flex-none md:px-2 disabled:hover:text-inherit shadow-none hover:text-orange-600 py-2 md:py-1 bg-inherit hover:underline hover:cursor-pointer sm:w-auto sm:text-sm" disabled={state.process.state}>
+                                                    {
+                                                        state.process.type === 'verify' && state.process.state ? (
+                                                            <div className="flex justify-center align-middle items-center text-orange-600 animate-pulse">
+                                                                Verifying...
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex justify-center align-middle items-center">
+                                                                Check Verification
+                                                            </div>
+                                                        )
+                                                    }
+                                                </button>
+
+                                                <button type="button" onClick={resendEmailVerification} className="disabled:cursor-not-allowed text-sm flex-none md:px-2 shadow-none hover:text-orange-600 py-2 md:py-1 bg-inherit disabled:hover:text-inherit hover:underline disabled:hover:no-underline hover:cursor-pointer sm:w-auto sm:text-sm" disabled={state.process.state}>
+                                                    {
+                                                        state.process.type === 'resend' && state.process.state ? (
+                                                            <div className="flex justify-center align-middle items-center text-orange-600 animate-pulse">
+                                                                Resending...
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex justify-center align-middle items-center">
+                                                                Resend Mail
+                                                            </div>
+                                                        )
+                                                    }
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div className="w-full flex flex-row-reverse pt-6 pb-4 px-3 md:px-0">
@@ -204,17 +320,22 @@ export const IdentityVerification = () => {
                                             </span>
                                         </div>
 
+                                        <div className="w-full text-stone-600 pb-4 pt-2 px-3 md:px-0">
+                                            <p className="text-xs text-center block">
+                                                In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
+                                            </p>
+                                        </div>
+
+                                        <div className="mx-auto md:py-3 py-6 text-center">
+                                            <p className="text-sm text-stone-500 pb-4">
+                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                            </p>
+                                        </div>
                                     </div>
 
                                     <div className="md:basis-1/2 hidden md:block px-4 pt-8">
                                         <img className="h-full rounded-2xl" src={invitation} alt={"invitation"} loading="lazy" />
                                     </div>
-                                </div>
-
-                                <div className="mx-auto md:py-3 py-6 text-center">
-                                    <p className="text-sm text-stone-500 pb-4">
-                                        © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
-                                    </p>
                                 </div>
                             </section>
                         </div>
