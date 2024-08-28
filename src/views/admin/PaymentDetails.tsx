@@ -572,7 +572,7 @@ export const PaymentDetails: FC<Basic_Modal_Props> = ({ uuid, show, showOrHide }
                                                                     </span>
 
                                                                     <span onClick={() => paymentRequestAction('A')} className="text-sm flex-none shadow-none py-1 bg-inherit text-green-600 hover:underline hover:cursor-pointer sm:w-auto sm:text-sm">
-                                                                        Approve Request {state.data.meta.all} /{state.data.meta.all}
+                                                                        Approve Request
                                                                     </span>
                                                                 </>
                                                             ) : (
