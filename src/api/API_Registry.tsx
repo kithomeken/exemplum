@@ -36,6 +36,12 @@ export const AUTH = {
     ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/confirmation',
 };
 
+export const GUEST = {
+    ENTITY_DATA         :'/v1/entity/contr/:uuid',
+    ENTITY_DONATION     :'/v1/contribution/stk-push/notification',
+    DONATION_GRATITUDE  :'/v1/entities/:uuid/donations/:donation/gratitude-notes',
+}
+
 /***************************
 * Account Profile API Routes
 ***************************/
@@ -43,7 +49,6 @@ export const AUTH = {
 export const ACCOUNT = {
     PROFILE:                    '/v1/account/auth/profile',
     ARTIST_DETAILS:             '/v1/account/artist/details',
-    STK_PUSH_NOFITICATION:      '/v1/contribution/stk-push/notification',
     MONEY_IN_TRANSACTIONS:      '/v1/account/entity/mpesa/transactions/list/money-in',
     MONEY_OUT_TRANSACTIONS:     '/v1/account/entity/mpesa/transactions/list/money-out',
     VALIDATE_WITHDRAWAL:        '/v1/account/entity/mpesa/transactions/withdrawal/check',
@@ -53,15 +58,12 @@ export const ACCOUNT = {
     
     MSISDN_CHANGE:              '/v1/account/settings/artist/msisdn/change',
     DSPLY_NAME_CHANGE:          '/v1/account/settings/artist/display_name/update',
-    ENTITY_CONTR_DATA:          '/v1/entity/contr/:uuid',
     ENTITY_DETAILS:             '/v1/account/settings/entity/details',
     GET_NOMINATED:              '/v1/account/settings/entity/nominated/member',
     SET_NOMINATED:              '/v1/account/settings/entity/nominated/member/set-own',
     NMNTD_MMBR_ACTION:          '/v1/account/settings/entity/nominated/member/action',
     MEMBER_NOMINTATION:         '/v1/account/settings/entity/nominated/member/set-other',
     EMAIL_HISTORY:              '/v1/account/settings/artist/email/history',
-    
-    // Other routes to be reviewed later on
 };
 
 /***************************
