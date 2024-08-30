@@ -1,9 +1,4 @@
 
-export const AUTH_SIGN_IN = '/v1/account/auth/sign-in';
-export const AUTH_SIGN_OUT = '/v1/account/auth/0-token/invalidate';
-export const AUTH_FORGOT_PASSWORD = '';
-export const CSRF_COOKIE_ROUTE = '/sanctum/csrf-cookie';
-
 /***************************
 * Pre-Flight API Routes
 ***************************/
@@ -41,38 +36,30 @@ export const AUTH = {
     ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/confirmation',
 };
 
-export const SIGN_UP = {
-    ONBOARD: '/v1/account/auth/sign-up',
-    CHECK_EMAIL: '/v1/account/auth/sign-up/check/email',
-    CHECK_IDENTIFIER: '/v1/account/auth/sign-up/check/identifier',
-    CHECK_STAGE_NAME: '/v1/account/auth/sign-up/check/stage-name',
-    ACCOUNT_ACTIVATION: '/u/account/:uuid/email/verification/:hash'
-};
-
 /***************************
 * Account Profile API Routes
 ***************************/
 
 export const ACCOUNT = {
-    PROFILE: '/v1/account/auth/profile',
-    ARTIST_DETAILS: '/v1/account/artist/details',
-    STK_PUSH_NOFITICATION: '/v1/contribution/stk-push/notification',
-    MONEY_IN_TRANSACTIONS: '/v1/account/entity/mpesa/transactions/list/money-in',
-    MONEY_OUT_TRANSACTIONS: '/v1/account/entity/mpesa/transactions/list/money-out',
-    VALIDATE_WITHDRAWAL: '/v1/account/entity/mpesa/transactions/withdrawal/check',
-    REQUEST_WITHDRAWAL: '/v1/account/entity/mpesa/transactions/withdrawal/request',
-    REQUEST_APPROVAL: '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/approve',
-    REQUEST_REJECTION: '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/reject',
+    PROFILE:                    '/v1/account/auth/profile',
+    ARTIST_DETAILS:             '/v1/account/artist/details',
+    STK_PUSH_NOFITICATION:      '/v1/contribution/stk-push/notification',
+    MONEY_IN_TRANSACTIONS:      '/v1/account/entity/mpesa/transactions/list/money-in',
+    MONEY_OUT_TRANSACTIONS:     '/v1/account/entity/mpesa/transactions/list/money-out',
+    VALIDATE_WITHDRAWAL:        '/v1/account/entity/mpesa/transactions/withdrawal/check',
+    REQUEST_WITHDRAWAL:         '/v1/account/entity/mpesa/transactions/withdrawal/request',
+    REQUEST_APPROVAL:           '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/approve',
+    REQUEST_REJECTION:          '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/reject',
     
-    MSISDN_CHANGE:          '/v1/account/settings/artist/msisdn/change',
-    DSPLY_NAME_CHANGE:      '/v1/account/settings/artist/display_name/update',
-    ENTITY_CONTR_DATA:      '/v1/entity/contr/:uuid',
-    ENTITY_DETAILS:         '/v1/account/settings/entity/details',
-    GET_NOMINATED:          '/v1/account/settings/entity/nominated/member',
-    SET_NOMINATED:          '/v1/account/settings/entity/nominated/member/set-own',
-    NMNTD_MMBR_ACTION:      '/v1/account/settings/entity/nominated/member/action',
-    MEMBER_NOMINTATION:     '/v1/account/settings/entity/nominated/member/set-other',
-    EMAIL_HISTORY:          '/v1/account/settings/artist/email/history',
+    MSISDN_CHANGE:              '/v1/account/settings/artist/msisdn/change',
+    DSPLY_NAME_CHANGE:          '/v1/account/settings/artist/display_name/update',
+    ENTITY_CONTR_DATA:          '/v1/entity/contr/:uuid',
+    ENTITY_DETAILS:             '/v1/account/settings/entity/details',
+    GET_NOMINATED:              '/v1/account/settings/entity/nominated/member',
+    SET_NOMINATED:              '/v1/account/settings/entity/nominated/member/set-own',
+    NMNTD_MMBR_ACTION:          '/v1/account/settings/entity/nominated/member/action',
+    MEMBER_NOMINTATION:         '/v1/account/settings/entity/nominated/member/set-other',
+    EMAIL_HISTORY:              '/v1/account/settings/artist/email/history',
     
     // Other routes to be reviewed later on
 };
