@@ -32,6 +32,7 @@ export const AUTH = {
     PRE_META_03:        '/v1/identity/account/meta/artist_name/check',
     PRE_META_E:         '/v1/identity/account/meta/entity/check',
     ID_META_01:         '/v1/identity/account/meta/display_name',
+    ID_META_UPLOAD:     '/v1/identity/account/upload/doc/identity',
     ID_META_02:         '/v1/identity/account/meta/msisdn',
     ARTIST_TYPES:       '/v1/identity/account/meta/artist/types',
     ID_META_03:         '/v1/identity/account/meta/artist',
