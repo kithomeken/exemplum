@@ -47,6 +47,7 @@ export const COOKIE_KEYS = {
     UAID:       '__bgfUa1D',
     SANCTUM:    '__bgfSnC7',
     MAIL_VRF:   '__bgfXRs0',
+    DONATION:   '__bgfDn0Q',
     OPTIONS:    { path: '/', secure: true, sameSite: 'none' },
 }
 
