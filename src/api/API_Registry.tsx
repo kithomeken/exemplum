@@ -37,7 +37,7 @@ export const AUTH = {
 };
 
 export const GUEST = {
-    ENTITY_DATA         :'/v1/entity/contr/:uuid',
+    ENTITY_DATA         :'/v1/entities/:uuid/donations',
     ENTITY_DONATION     :'/v1/contribution/stk-push/notification',
     DONATION_GRATITUDE  :'/v1/entities/:uuid/donations/:donation/gratitude-notes',
 }
