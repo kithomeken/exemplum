@@ -6,13 +6,28 @@ import ReactTable from "../../lib/hooks/ReactTable"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import { humanReadableDate } from "../../lib/modules/HelperFunctions"
+import { InformationalModal } from "../../lib/hooks/InformationalModal"
 
 export const MoneyIn = () => {
     const [state, setstate] = useState({
         status: 'pending',
         data: {
             money_in: null
+        },
+        gratitude: {
+            note: '',
+            date: '',
+            msisdn: '',
+            amount: '',
         }
+    })
+
+    const [showGratitude, setShowGratitude] = useState(false)
+    const [noteDetails, setNoteDetails] = useState({
+        note: '',
+        date: '',
+        msisdn: '',
+        amount: '',
     })
 
     React.useEffect(() => {
@@ -42,6 +57,17 @@ export const MoneyIn = () => {
         })
     }
 
+    const showOrHideGratitudenote = (data: any) => {
+        setShowGratitude(!showGratitude)
+
+        noteDetails.amount = data.amount
+        noteDetails.msisdn = data.msisdn
+        noteDetails.note = data.gratitude
+        noteDetails.date = data.gratitude_date
+
+        setNoteDetails(noteDetails)
+    }
+
     const columns = React.useMemo(
         () => [
             {
@@ -59,33 +85,21 @@ export const MoneyIn = () => {
                                     <span className="md:block mb-0 text-sm text-slate-500 text-start hidden">
                                         {humanReadableDate(data.tran_date)}
                                     </span>
+                                </span>
 
-                                    <div className="md:w-auto basis-1/2 md:hidden">
+                                <span className="text-stone-600 flex flex-col gap-y-1">
+                                    {data.msisdn}
+
+                                    <div className="block text-xs">
                                         {
-                                            data.result_code === null || data.result_code === undefined ? (
-                                                <span className="bg-yellow-100 text-yellow-800 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
-                                                    <span className="hidden md:inline-block">Pending Payment</span>
-                                                    <span className="md:hidden">Pending</span>
+                                            data.gratitude && (
+                                                <span onClick={() => showOrHideGratitudenote(data)} className="flex cursor-pointer flex-row gap-x-2 align-middle items-center text-orange-500">
+                                                    <span className="fal fa-note fa-lg"></span>
+                                                    <span>Note from fan</span>
                                                 </span>
-                                            ) : (
-                                                data.result_code === '0' ? (
-                                                    <span className="bg-emerald-100 text-emerald-700 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
-                                                        <span className="hidden md:inline-block">Payment Fulfilled</span>
-                                                        <span className="md:hidden">Payment Fulfilled</span>
-                                                    </span>
-                                                ) : (
-                                                    <span className="bg-yellow-100 text-yellow-800 text-xs py-1 px-2 rounded float-right gap-x-2 align-middle items-center w-auto">
-                                                        <span className="hidden md:inline-block">Pending Payment</span>
-                                                        <span className="md:hidden">Pending Payment</span>
-                                                    </span>
-                                                )
                                             )
                                         }
                                     </div>
-                                </span>
-
-                                <span className="text-stone-600">
-                                    {data.msisdn}
                                 </span>
 
                                 <div className="w-auto">
@@ -161,6 +175,22 @@ export const MoneyIn = () => {
                                 </div>
                             )
                         }
+
+                        <InformationalModal
+                            size={"lg"}
+                            show={showGratitude}
+                            showOrHide={showOrHideGratitudenote}
+                            title={"Note From Fan"}
+                            details={
+                                <>
+                                    <p className="text-sm text-gray-700 mb-6">
+                                        {noteDetails.note}
+                                    </p>
+
+
+                                </>
+                            }
+                        />
                     </div>
                 ) : (
                     <div className="py-4">
