@@ -113,7 +113,7 @@ export const genericRoutes: Array<Routes_Interface> = [
         name: 'EMAIL_ACTION_'
     },
     {
-        path: "/entity/:uuid",
+        path: "/entity/:uuid/donations",
         element: <EntityPayIn />,
         caseSensitive: true,
         name: 'ENTITY_0_'

@@ -88,6 +88,8 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                     },
                 });
 
+                identityDocUpload(propsIn)
+
                 dispatch({
                     type: IDENTITY_.PRc0_UPDATE,
                     response: 'PRc0',
@@ -104,6 +106,25 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                 response: error,
             });
         }
+    }
+}
+
+async function identityDocUpload(propsIn: IdentityProps) {
+    const IdentityProps = { ...propsIn }
+
+    try {
+        let formData = new FormData()
+        const dataDump = IdentityProps.dataDump
+
+        formData.append('id_type', dataDump.id_type)
+        formData.append('docPhoto', dataDump.docPhoto)
+        formData.append('identifier', dataDump.identifier)
+
+        const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_UPLOAD, formData)
+
+        console.log('Identity Doc Upload', identityResponse);
+    } catch (error) {
+        console.log('Identity Doc Upload', error);
     }
 }
 
