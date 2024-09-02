@@ -13,7 +13,6 @@ import { InputWithLoadingIcon } from "../../components/lib/InputWithLoadingIcon"
 import artisticForm from "../../assets/images/7e33b86cfb1293b8c7a101e9b1011e5d.svg"
 import { artistEntityCreation, resetIdentity } from "../../store/identityCheckActions"
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
-import { TipEditor } from "@minhdra/react-tip-tap"
 
 export const Identity_03 = () => {
     const [state, setstate] = useState({
