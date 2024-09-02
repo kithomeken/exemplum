@@ -6,13 +6,14 @@ import { MoneyIn } from './MoneyIn';
 import { MoneyOut } from './MoneyOut';
 import { ERR_404 } from '../errors/ERR_404';
 import { ERR_500 } from '../errors/ERR_500';
+import { FanMessages } from './FanMessages';
 import { WithdrawModal } from './WithdrawModal';
 import { ACCOUNT } from '../../api/API_Registry';
+import { genericRoutes } from '../../routes/routes';
 import HttpServices from '../../services/HttpServices';
 import { Loading } from "../../components/modules/Loading"
 import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import { API_RouteReplace, classNames, formatAmount } from '../../lib/modules/HelperFunctions';
-import { genericRoutes } from '../../routes/routes';
 
 export const ArtistHome = () => {
     const [qrCode, setQRCode] = useState({
@@ -140,6 +141,9 @@ export const ArtistHome = () => {
 
             case "out":
                 return <MoneyOut />
+
+            case "fan":
+                return <FanMessages />
 
             default:
                 return null
@@ -282,6 +286,15 @@ export const ArtistHome = () => {
                                                     "text-sm items-center block p-2 px-6 rounded-t rounded-b-none text-center w-full md:w-auto"
                                                 )}>
                                                     <span className="lolrtn robot">Money Out</span>
+                                                </button>
+                                            </div>
+
+                                            <div className="md:flex-none cursor-pointer basis-1/2 border-b" onClick={() => activateTab('fan')}>
+                                                <button className={classNames(
+                                                    state.activeTab === 'fan' ? 'text-orange-700 bg-orange-200 border-orange-400' : 'hover:text-gray-700 text-gray-500 hover:bg-gray-100 ',
+                                                    "text-sm items-center block p-2 px-6 rounded-t rounded-b-none text-center w-full md:w-auto"
+                                                )}>
+                                                    <span className="lolrtn robot">Fan Messages</span>
                                                 </button>
                                             </div>
 
