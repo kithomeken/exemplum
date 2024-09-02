@@ -51,6 +51,7 @@ export const ACCOUNT = {
     ARTIST_DETAILS:             '/v1/account/artist/details',
     MONEY_IN_TRANSACTIONS:      '/v1/account/entity/mpesa/transactions/list/money-in',
     MONEY_OUT_TRANSACTIONS:     '/v1/account/entity/mpesa/transactions/list/money-out',
+    FAN_MESSAGES:               '/v1/account/entity/mpesa/transactions/list/fan-messages',
     VALIDATE_WITHDRAWAL:        '/v1/account/entity/mpesa/transactions/withdrawal/check',
     REQUEST_WITHDRAWAL:         '/v1/account/entity/mpesa/transactions/withdrawal/request',
     REQUEST_APPROVAL:           '/v1/account/entity/mpesa/transactions/withdrawal/request/:request/approve',

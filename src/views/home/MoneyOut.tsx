@@ -106,7 +106,6 @@ export const MoneyOut = () => {
         }
     }
 
-
     const approvePendingRequest = async (actionR: string) => {
         console.log('IU3D30', 'posting');
     }

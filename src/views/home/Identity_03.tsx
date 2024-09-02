@@ -17,16 +17,19 @@ import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/l
 export const Identity_03 = () => {
     const [state, setstate] = useState({
         status: 'pending',
+        selectedType: null,
         data: {
             artistTypes: null,
             entity: null,
         },
         input: {
+            bio: '',
             entity: '',
             artist_name: '',
             artist_type: 'SOLO',
         },
         errors: {
+            bio: '',
             entity: '',
             artist_name: '',
             artist_type: '',
@@ -47,8 +50,67 @@ export const Identity_03 = () => {
     }, [])
 
     const dispatch: any = useDispatch();
-    const idC_State: any = useAppSelector(state => state.idC)
     const auth0: any = useAppSelector(state => state.auth0)
+    const idC_State: any = useAppSelector(state => state.idC)
+
+    const fetchArtistTypeData = async () => {
+        let { selectedType } = state
+        let { status } = state
+        let { input } = state
+        let { data } = state
+
+        try {
+            const typesResponse: any = await HttpServices.httpGet(AUTH.ARTIST_TYPES)
+
+            if (typesResponse.data.success) {
+                status = 'fulfilled'
+                data.artistTypes = typesResponse.data.payload.types
+                data.entity = typesResponse.data.payload.entity
+
+                if (data.entity !== null) {
+                    input.artist_type = data.entity.type
+                    input.entity = data.entity.name
+                }
+
+                selectedType = data.artistTypes.find(
+                    (type: { key: string }) => type.key === "SOLO"
+                )
+            } else {
+                status = 'rejected'
+            }
+        } catch (error) {
+            console.log(error);
+
+            status = 'rejected'
+        }
+
+        setstate({
+            ...state, status, data, input, selectedType
+        })
+    }
+
+    const targetLength = (name: string) => {
+        switch (name) {
+            case 'entity':
+            case 'artist_name':
+                return {
+                    min: 2,
+                    max: 20
+                };
+
+            case 'bio':
+                return {
+                    min: 150,
+                    max: 500
+                };
+
+            default:
+                return {
+                    min: 5,
+                    max: 30
+                };
+        }
+    }
 
     const onChangeHandler = (e: any) => {
         if (!idC_State.processing) {
@@ -67,7 +129,9 @@ export const Identity_03 = () => {
 
     const onInputBlur = (e: any) => {
         if (!idC_State.processing) {
-            let output: any = G_onInputBlurHandler(e, idC_State.processing, '')
+            const target0 = targetLength(e.target.name)
+            let output: any = G_onInputBlurHandler(e, idC_State.processing, '', target0.min, target0.max)
+
             let { input } = state
             let { errors }: any = state
 
@@ -97,6 +161,7 @@ export const Identity_03 = () => {
                     break;
 
                 default:
+                    output.error = output.error.replace('Bio', 'Your bio')
                     break;
             }
 
@@ -110,11 +175,18 @@ export const Identity_03 = () => {
     }
 
     const onChangeListBoxHandler = (e: any) => {
+        let { data } = state
         let { input } = state
+        let { selectedType } = state
+
         input.artist_type = e
 
+        selectedType = data.artistTypes.find(
+            (type: { key: string }) => type.key === e
+        )
+
         setstate({
-            ...state, input
+            ...state, input, selectedType
         })
     }
 
@@ -182,6 +254,7 @@ export const Identity_03 = () => {
 
     const artistEntityFormHandler = (e: any) => {
         e.preventDefault()
+        let { input } = state
 
         if (!idC_State.processing) {
             const specificObject = state.data.artistTypes.find(
@@ -192,8 +265,9 @@ export const Identity_03 = () => {
 
             const identProps = {
                 dataDump: {
-                    artist: state.input.artist_name,
-                    type: state.input.artist_type,
+                    artist: input.artist_name,
+                    type: input.artist_type,
+                    bio: input.bio,
                     entity: entity,
                     specificObject: JSON.stringify(specificObject),
                 }
@@ -201,37 +275,6 @@ export const Identity_03 = () => {
 
             dispatch(artistEntityCreation(identProps))
         }
-    }
-
-    const fetchArtistTypeData = async () => {
-        let { status } = state
-        let { input } = state
-        let { data } = state
-
-        try {
-            const typesResponse: any = await HttpServices.httpGet(AUTH.ARTIST_TYPES)
-
-            if (typesResponse.data.success) {
-                status = 'fulfilled'
-                data.artistTypes = typesResponse.data.payload.types
-                data.entity = typesResponse.data.payload.entity
-
-                if (data.entity !== null) {
-                    input.artist_type = data.entity.type
-                    input.entity = data.entity.name
-                }
-            } else {
-                status = 'rejected'
-            }
-        } catch (error) {
-            console.log(error);
-
-            status = 'rejected'
-        }
-
-        setstate({
-            ...state, status, data, input
-        })
     }
 
     const getMaxMembersForEntity = () => {
@@ -282,7 +325,7 @@ export const Identity_03 = () => {
                                 state.status === 'rejected' ? (
                                     <></>
                                 ) : state.status === 'fulfilled' ? (
-                                    <div className="flex flex-col w-full md:w-4/5 mb-4">
+                                    <div className="flex flex-col w-full mb-4">
                                         {
                                             state.data.entity && (
                                                 <>
@@ -338,7 +381,7 @@ export const Identity_03 = () => {
                                             )
                                         }
 
-                                        <form className="space-y-4 mb-3 w-full text-sm md:w-4/5" onSubmit={artistEntityFormHandler}>
+                                        <form className="space-y-4 mb-3 w-full text-sm" onSubmit={artistEntityFormHandler}>
                                             {
                                                 !state.data.entity && (
                                                     <>
@@ -455,6 +498,53 @@ export const Identity_03 = () => {
                                                     checkForStatus={state.artist_name.checking}
                                                 />
                                             </div>
+
+                                            {
+                                                !state.data.entity && (
+                                                    <div className="w-full ">
+                                                        <div className="relative rounded">
+                                                            <label htmlFor="description" className="block text-sm leading-6 text-stone-600 mb-1">
+                                                                {
+                                                                    state.selectedType.max === 1 ? (
+                                                                        'Share a bit about yourself and your journey:'
+                                                                    ) : (
+                                                                        'Share a bit about your ' + state.selectedType.value + ':'
+                                                                    )
+                                                                }
+                                                            </label>
+
+                                                            <textarea name="bio" id="bio" placeholder="Let your fans know who you are" autoComplete="off" rows={4} cols={1}
+                                                                className={classNames(
+                                                                    state.errors.bio.length > 0 ?
+                                                                        'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 focus:outline-red-500 hover:border-red-400 border border-red-300' :
+                                                                        'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
+                                                                    'block w-full rounded-md py-2 pl-3 pr-8 border border-gray-300 resize-none text-sm focus:outline-none disabled:cursor-not-allowed focus:border-0'
+                                                                )} onChange={onChangeHandler} disabled={idC_State.processing} value={state.input.bio} onBlur={onInputBlur} required />
+                                                            <div className="absolute inset-y-0 right-0 flex items-center w-8">
+                                                                {
+                                                                    state.errors.bio.length > 0 ? (
+                                                                        <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
+                                                                    ) : null
+                                                                }
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="w-full">
+                                                            <div className="w-full flex flex-col-reverse md:flex-row-reverse py-1">
+                                                                <div className="flex-1">
+                                                                    {
+                                                                        state.errors.bio.length > 0 ? (
+                                                                            <span className='invalid-feedback text-xs text-red-600 pl-0 float-start'>
+                                                                                {state.errors.bio}
+                                                                            </span>
+                                                                        ) : null
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
 
                                             <div className="mb-3 pt-3 px-0">
                                                 <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">

@@ -297,9 +297,10 @@ export function artistEntityCreation(propsIn: IdentityProps) {
             const dataDump = IdentityProps.dataDump
             const entityHash = StorageServices.getLocalStorage(STORAGE_KEYS.ENTITY_HASH)
 
-            formData.append('artist', dataDump.artist)
+            formData.append('bio', dataDump.bio)
             formData.append('type', dataDump.type)
             formData.append('entity', dataDump.entity)
+            formData.append('artist', dataDump.artist)
 
             if (entityHash !== null && entityHash !== undefined) {
                 formData.append('hash', entityHash);
