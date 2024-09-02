@@ -16,7 +16,7 @@ import StorageServices from "../../services/StorageServices";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import connecting from '../../assets/images/53059e12f79a42c5e4b259b50d1412c1.svg'
 import { APPLICATION, AUTH_, STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry";
-import { Alt_FirebaseSSO_SignIn, resetAuth0 } from "../../store/auth/firebaseAuthActions";
+import { Alt_FirebaseSSO_SignIn, Alt_FirebaseSSO_SignUp, resetAuth0 } from "../../store/auth/firebaseAuthActions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
 import { DeviceInfo, classNames, emailValidator, passwordValidator } from "../../lib/modules/HelperFunctions";
 
@@ -254,7 +254,7 @@ export const Invitation = () => {
                     }
                 }
 
-                dispatch(Alt_FirebaseSSO_SignIn(invitationProps))
+                dispatch(Alt_FirebaseSSO_SignUp(invitationProps))
             }
         }
     };
