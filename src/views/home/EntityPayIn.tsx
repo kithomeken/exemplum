@@ -163,6 +163,22 @@ export const EntityPayIn = () => {
         })
     }
 
+    const targetLength = (name: string) => {
+        switch (name) {
+            case 'gratitude':
+                return {
+                    min: 150,
+                    max: 500
+                };
+
+            default:
+                return {
+                    min: 5,
+                    max: 30
+                };
+        }
+    }
+
     const onChangeHandler = (e: any) => {
         let { posting } = state
 
@@ -187,7 +203,8 @@ export const EntityPayIn = () => {
 
         if (!posting) {
             setIsFocused(false)
-            let output: any = G_onInputBlurHandler(e, state.posting, '')
+            const target0 = targetLength(e.target.name)
+            let output: any = G_onInputBlurHandler(e, state.posting, '', target0.min, target0.max)
 
             switch (e.target.name) {
                 case 'amount':
@@ -371,14 +388,16 @@ export const EntityPayIn = () => {
             let { input } = state
             let { errors } = state
 
+            const target0 = targetLength('gratitude')
+
             if (input.gratitude.length < 1) {
                 errors.gratitude = "Kindly add your message"
                 valid = false
-            } else if (input.gratitude.length < 5) {
-                errors.gratitude = "Your message cannot be less than 5 characters"
+            } else if (input.gratitude.length < target0.min) {
+                errors.gratitude = `Your message cannot be less than ${target0.min} characters`
                 valid = false
-            } else if (input.gratitude.length > 200) {
-                errors.gratitude = "Your message cannot be more than 200 characters"
+            } else if (input.gratitude.length > 500) {
+                errors.gratitude = `Your message cannot be more than ${target0.max} characters`
                 valid = false
             }
 
