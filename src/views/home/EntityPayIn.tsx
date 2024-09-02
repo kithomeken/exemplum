@@ -369,7 +369,7 @@ export const EntityPayIn = () => {
         if (!gratitude.posting) {
             let valid = true
             let { input } = state
-            let { errors } = state            
+            let { errors } = state
 
             if (input.gratitude.length < 1) {
                 errors.gratitude = "Kindly add your message"
@@ -381,7 +381,7 @@ export const EntityPayIn = () => {
                 errors.gratitude = "Your message cannot be more than 200 characters"
                 valid = false
             }
-            
+
             if (valid) {
                 gratitude.posting = true
 
@@ -460,7 +460,7 @@ export const EntityPayIn = () => {
                     </div>
                 ) : state.status === 'fulfilled' ? (
                     <div className="relative overflow-hidden">
-                        <div className="w-full md:h-[40vh] h-[40vh] bg-cover bg-center" style={{ backgroundImage: `url(${artist.backgroundImage})` }}>
+                        <div className="w-full md:h-[40vh] h-[27vh] bg-cover bg-center" style={{ backgroundImage: `url(${artist.backgroundImage})` }}>
                             <div className="w-full h-full bg-black bg-opacity-50 flex justify-center">
                                 <section className="gx-container h-full w-full flex items-end justif-center" style={STYLE.W850}>
                                     <h1 className="text-orange-300 text-4xl font-medium p-4 mb-4 px-4">{state.data.entity.name}</h1>
@@ -481,13 +481,27 @@ export const EntityPayIn = () => {
 
                                 </h2>
 
-                                <p className="mt-2 pb-2 text-gray-700">
-                                    <strong>{state.data.entity.name}</strong> creates dynamic and passionate music, known for their unique blend of sounds and heartfelt lyrics. With a deep love for storytelling through music, they has captivated audiences with their soulful voice and captivating performances.
-                                </p>
+                                {
+                                    state.data.entity.bio.length > 1 ? (
+                                        <>
+                                            <p className="mt-2 pb-2 text-gray-700">
+                                                {state.data.entity.bio}
+                                            </p>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="mt-2 pb-2 text-gray-700">
+                                                <strong>{state.data.entity.name}</strong> creates dynamic and passionate music, known for their unique blend of sounds and heartfelt lyrics. With a deep love for storytelling through music, they has captivated audiences with their soulful voice and captivating performances.
+                                            </p>
 
-                                <p className="pb-2 text-gray-700">
-                                    Drawing inspiration from personal experiences and a wide range of musical influences, {state.data.entity.name} has created a distinct sound that resonates with listeners worldwide.
-                                </p>
+                                            <p className="pb-2 text-gray-700">
+                                                Drawing inspiration from personal experiences and a wide range of musical influences, {state.data.entity.name} has created a distinct sound that resonates with listeners worldwide.
+                                            </p>
+                                        </>
+                                    )
+                                }
+
+
                             </section>
                         </div>
 
@@ -540,6 +554,102 @@ export const EntityPayIn = () => {
                                                 </div>
                                             </div>
                                         )
+                                    )
+                                }
+
+                                {
+                                    state.donation && (
+                                        state.donation.entity === params.uuid ? (
+                                            <>
+                                                {
+                                                    state.donation.completed ? (
+                                                        <>
+                                                            {
+                                                                state.gratitude.show ? (
+                                                                    <div className="w-full border-t-2 border-dashed py-3">
+                                                                        <span className="block font-medium text-orange-500 py-2 mb-3">
+                                                                            Send a message to the {state.data.entity.max > 1 ? 'artists' : 'artist'}
+                                                                        </span>
+
+                                                                        <form className={classNames(
+                                                                            isFocused ? 'border-orange-500' : '',
+                                                                            state.errors.gratitude.length > 0 ? 'border-red-500' : '',
+                                                                            "flex w-full flex-col border rounded-md items-end align-middle px-2 pt-2"
+                                                                        )} onSubmit={onGratitudeSubmit}>
+                                                                            <div className="w-full">
+                                                                                <div className="relative rounded">
+                                                                                    <textarea name="gratitude" id="gratitude" placeholder="Enter a message" autoComplete="off" rows={4} cols={1}
+                                                                                        className={classNames(
+                                                                                            state.errors.gratitude.length > 0 ?
+                                                                                                'text-red-900 ring-slate-300 placeholder:text-red-400' :
+                                                                                                'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:border-0 focus:outline-none',
+                                                                                            'block w-full rounded-md py-2 pl-3 pr-8 border-0 resize-none text-sm focus:outline-none disabled:cursor-not-allowed'
+                                                                                        )} onChange={onChangeHandler} disabled={state.gratitude.posting} value={state.input.gratitude} onBlur={onInputBlur} required onFocus={() => setIsFocused(true)} />
+                                                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
+                                                                                        {
+                                                                                            state.errors.gratitude.length > 0 ? (
+                                                                                                <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
+                                                                                            ) : null
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div className="w-full px-4">
+                                                                                    <div className="w-full py-4 flex flex-col-reverse md:flex-row-reverse border-t">
+                                                                                        <button type="submit" className="w-auto min-w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-1-5 bg-orange-600 text-white disabled:bg-orange-600 hover:bg-orange-700 focus:outline-none" disabled={state.gratitude.posting}>
+                                                                                            {
+                                                                                                state.gratitude.posting ? (
+                                                                                                    <span className="flex flex-row items-center h-5 justify-center">
+                                                                                                        <i className="fad fa-spinner-third fa-xl fa-spin"></i>
+                                                                                                    </span>
+                                                                                                ) : (
+                                                                                                    <span>Send Message</span>
+                                                                                                )
+                                                                                            }
+                                                                                        </button>
+
+                                                                                        <div className="flex-1">
+                                                                                            {
+                                                                                                state.errors.gratitude.length > 0 ? (
+                                                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0 float-start md:pb-0 pb-4'>
+                                                                                                        {state.errors.gratitude}
+                                                                                                    </span>
+                                                                                                ) : null
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="flex flex-col md:flex-row items-center align-middle px-4 py-4 my-4 md:gap-x-3 gap-y-3 bg-green-10 rounded-md border-2 border-dashed border-green-500">
+                                                                        <div className="md:w-32 w-full flex justify-center">
+                                                                            <img className="w-12 h-12 md:my-0 mt-2" src={confetti} loading="lazy" alt="google logo" />
+                                                                        </div>
+
+                                                                        <div className="md:flex-1 w-full">
+                                                                            <span className="block font-medium text-stone-700 py-2 text-center md:text-start">
+                                                                                <span className="hidden md:inline-block">Your payment of <span className="font-medium">KES {formatAmount(parseFloat(donationDetail.amount))}</span> was received.</span>
+                                                                                <span className="md:hidden">Payment of <span className="font-medium">KES {formatAmount(parseFloat(donationDetail.amount))}</span> received.</span>
+                                                                            </span>
+
+                                                                            <span className="text-sm text-stone-500 block text-center md:text-start">
+                                                                                Would you like to send a message to the {state.data.entity.max > 1 ? 'artists' : 'artist'}?
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <button onClick={showGratitudeForm} className="md:ml-4 my-2 md:my-0 px-3 text-sm py-2 text-white bg-green-500 rounded hover:bg-green-600">
+                                                                            Send Message
+                                                                        </button>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        </>
+                                                    ) : null
+                                                }
+                                            </>
+                                        ) : null
                                     )
                                 }
 
@@ -631,104 +741,6 @@ export const EntityPayIn = () => {
                                             {state.errors.amount}
                                         </span>
                                     ) : null
-                                }
-
-                                {
-                                    state.donation && (
-                                        state.donation.entity === params.uuid ? (
-                                            <>
-                                                {
-                                                    state.donation.completed ? (
-                                                        <>
-                                                            {
-                                                                state.gratitude.show ? (
-                                                                    <div className="w-full border-t-2 border-dashed py-3">
-                                                                        <span className="block font-medium text-orange-500 py-2 mb-3">
-                                                                            Send a message to the {state.data.entity.max > 1 ? 'artists' : 'artist'}
-                                                                        </span>
-
-                                                                        <form className={classNames(
-                                                                            isFocused ? 'border-orange-500' : '',
-                                                                            state.errors.gratitude.length > 0 ? 'border-red-500' : '',
-                                                                            "flex w-full flex-col border rounded-md items-end align-middle px-2 pt-2"
-                                                                        )} onSubmit={onGratitudeSubmit}>
-                                                                            <div className="w-full">
-                                                                                <div className="relative rounded">
-                                                                                    <textarea name="gratitude" id="gratitude" placeholder="Enter a message" autoComplete="off" rows={4} cols={1}
-                                                                                        className={classNames(
-                                                                                            state.errors.gratitude.length > 0 ?
-                                                                                                'text-red-900 ring-slate-300 placeholder:text-red-400' :
-                                                                                                'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:border-0 focus:outline-none',
-                                                                                            'block w-full rounded-md py-2 pl-3 pr-8 border-0 resize-none text-sm focus:outline-none disabled:cursor-not-allowed'
-                                                                                        )} onChange={onChangeHandler} disabled={state.gratitude.posting} value={state.input.gratitude} onBlur={onInputBlur} required onFocus={() => setIsFocused(true)} />
-                                                                                    <div className="absolute inset-y-0 right-0 flex items-center w-8">
-                                                                                        {
-                                                                                            state.errors.gratitude.length > 0 ? (
-                                                                                                <span className="fa-duotone text-red-500 fa-circle-exclamation fa-lg"></span>
-                                                                                            ) : null
-                                                                                        }
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div className="w-full px-4">
-                                                                                    <div className="w-full py-4 flex flex-col-reverse md:flex-row-reverse border-t">
-                                                                                        <button type="submit" className="w-auto min-w-24 justify-center disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-1-5 bg-orange-600 text-white disabled:bg-orange-600 hover:bg-orange-700 focus:outline-none" disabled={state.gratitude.posting}>
-                                                                                            {
-                                                                                                state.gratitude.posting ? (
-                                                                                                    <span className="flex flex-row items-center h-5 justify-center">
-                                                                                                        <i className="fad fa-spinner-third fa-xl fa-spin"></i>
-                                                                                                    </span>
-                                                                                                ) : (
-                                                                                                    <span>Send Message</span>
-                                                                                                )
-                                                                                            }
-                                                                                        </button>
-
-                                                                                        <div className="flex-1">
-                                                                                            {
-                                                                                                state.errors.gratitude.length > 0 ? (
-                                                                                                    <span className='invalid-feedback text-xs text-red-600 pl-0 float-start md:pb-0 pb-4'>
-                                                                                                        {state.errors.gratitude}
-                                                                                                    </span>
-                                                                                                ) : null
-                                                                                            }
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className="flex flex-col md:flex-row items-center align-middle px-4 py-4 my-4 md:gap-x-3 gap-y-3 bg-green-10 rounded-md border-2 border-dashed border-green-500">
-                                                                        <div className="md:w-32 w-full flex justify-center">
-                                                                            <img className="w-12 h-12 md:my-0 mt-2" src={confetti} loading="lazy" alt="google logo" />
-                                                                        </div>
-
-                                                                        <div className="md:flex-1 w-full">
-                                                                            <span className="block font-medium text-stone-700 py-2 text-center md:text-start">
-                                                                                <span className="hidden md:inline-block">Your payment of <span className="font-medium">KES {formatAmount(parseFloat(donationDetail.amount))}</span> was received.</span>
-                                                                                <span className="md:hidden">Payment of <span className="font-medium">KES {formatAmount(parseFloat(donationDetail.amount))}</span> received.</span>
-                                                                            </span>
-
-                                                                            <span className="text-sm text-stone-500 block text-center md:text-start">
-                                                                                Would you like to send a message to the {state.data.entity.max > 1 ? 'artists' : 'artist'}?
-                                                                            </span>
-                                                                        </div>
-
-                                                                        <button onClick={showGratitudeForm} className="md:ml-4 my-2 md:my-0 px-3 text-sm py-2 text-white bg-green-500 rounded hover:bg-green-600">
-                                                                            Send Message
-                                                                        </button>
-                                                                    </div>
-                                                                )
-                                                            }
-                                                        </>
-                                                    ) : null
-                                                }
-                                            </>
-                                        ) : null
-                                    )
                                 }
 
                                 <div className="mx-auto md:py-3 py-6 text-center">
