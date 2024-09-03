@@ -71,10 +71,6 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                 formData.append('first_name', dataDump.first_name)
             }
 
-            formData.append('id_type', dataDump.id_type)
-            formData.append('docPhoto', dataDump.docPhoto)
-            formData.append('identifier', dataDump.identifier)
-
             const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_01, formData)
 
             if (identityResponse.data.success) {

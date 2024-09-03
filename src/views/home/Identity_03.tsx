@@ -16,6 +16,7 @@ import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/l
 
 export const Identity_03 = () => {
     const [state, setstate] = useState({
+        wordCount: 0,
         status: 'pending',
         selectedType: null,
         data: {
@@ -116,13 +117,24 @@ export const Identity_03 = () => {
         if (!idC_State.processing) {
             let output: any = G_onInputChangeHandler(e, idC_State.processing)
             let { input } = state
-            let { errors }: any = state
+            let { errors } = state
+            let { wordCount } = state
+
+            switch (e.target.name) {
+                case 'bio':
+                    const targetValue = e.target.value
+                    wordCount = targetValue.length
+                    break;
+
+                default:
+                    break;
+            }
 
             input[e.target.name] = output.value
             errors[e.target.name] = output.error
 
             setstate({
-                ...state, input, errors
+                ...state, input, errors, wordCount
             })
         }
     }
@@ -531,6 +543,10 @@ export const Identity_03 = () => {
 
                                                         <div className="w-full">
                                                             <div className="w-full flex flex-col-reverse md:flex-row-reverse py-1">
+                                                            <span className='text-xs text-stone-600 py-1 float-start'>
+                                                                                {state.wordCount}/500
+                                                                            </span>
+
                                                                 <div className="flex-1">
                                                                     {
                                                                         state.errors.bio.length > 0 ? (
