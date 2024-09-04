@@ -51,6 +51,7 @@ export const Identity_03 = () => {
     }, [])
 
     const dispatch: any = useDispatch();
+    const [isFocused, setIsFocused] = useState(false);
     const auth0: any = useAppSelector(state => state.auth0)
     const idC_State: any = useAppSelector(state => state.idC)
 
@@ -124,6 +125,7 @@ export const Identity_03 = () => {
                 case 'bio':
                     const targetValue = e.target.value
                     wordCount = targetValue.length
+                    output.value = e.target.value.slice(0, 499);
                     break;
 
                 default:
@@ -531,7 +533,7 @@ export const Identity_03 = () => {
                                                                         'text-red-900 ring-slate-300 placeholder:text-red-400 focus:ring-red-600 focus:outline-red-500 hover:border-red-400 border border-red-300' :
                                                                         'text-gray-900 ring-slate-300 placeholder:text-gray-400 focus:ring-orange-600 focus:outline-orange-500 hover:border-stone-400 border border-stone-300',
                                                                     'block w-full rounded-md py-2 pl-3 pr-8 border border-gray-300 resize-none text-sm focus:outline-none disabled:cursor-not-allowed focus:border-0'
-                                                                )} onChange={onChangeHandler} disabled={idC_State.processing} value={state.input.bio} onBlur={onInputBlur} required />
+                                                                )} onChange={onChangeHandler} disabled={idC_State.processing} value={state.input.bio} onBlur={onInputBlur} required onFocus={() => setIsFocused(true)} />
                                                             <div className="absolute inset-y-0 right-0 flex items-center w-8">
                                                                 {
                                                                     state.errors.bio.length > 0 ? (
@@ -543,9 +545,9 @@ export const Identity_03 = () => {
 
                                                         <div className="w-full">
                                                             <div className="w-full flex flex-col-reverse md:flex-row-reverse py-1">
-                                                            <span className='text-xs text-stone-600 py-1 float-start'>
-                                                                                {state.wordCount}/500
-                                                                            </span>
+                                                                <span className={`text-sm ${state.wordCount > 450 && isFocused ? 'text-red-600 animate-bounce' : 'text-stone-600'} py-1-5 px-4 float-end`}>
+                                                                    {state.wordCount}/500
+                                                                </span>
 
                                                                 <div className="flex-1">
                                                                     {
