@@ -70,13 +70,13 @@ export const FanMessages = () => {
                                 </span>
 
                                 <span className="text-stone-600 flex flex-col gap-y-1">
-                                    {data.msisdn}
+                                    Phone: {data.msisdn}
                                 </span>
 
                                 <div className="w-auto">
                                     <div className="flex flex-row align-middle items-center gap-x-1.5">
                                         <span className="text-stone-500 text-xs">
-                                            Donated KES.
+                                            Donation | KES.
                                         </span>
 
                                         <span className="text-lg">
