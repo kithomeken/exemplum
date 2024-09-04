@@ -16,6 +16,7 @@ import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/l
 
 export const EntityPayIn = () => {
     const [state, setstate] = useState({
+        wordCount: 0,
         httpStatus: 200,
         status: 'pending',
         stkResponse: null,
@@ -185,13 +186,29 @@ export const EntityPayIn = () => {
         if (!posting) {
             let output: any = G_onInputChangeHandler(e, state.posting)
             let { input } = state
-            let { errors }: any = state
+            let { errors } = state
+            let { wordCount } = state
+
+            switch (e.target.name) {
+                case 'gratitude':
+                    const targetValue = e.target.value
+                    wordCount = targetValue.length
+                    output.value = e.target.value.slice(0, 499);
+                    break;
+
+                case 'msisdn':
+                    output.error = output.error.replace('Msisdn', 'Phone number')
+                    break;
+
+                default:
+                    break;
+            }
 
             input[e.target.name] = output.value
-            errors[e.target.name] = output.error.replace('Msisdn', 'Phone number')
+            errors[e.target.name] = output.error
 
             setstate({
-                ...state, input, errors
+                ...state, input, errors, wordCount
             })
         }
     }
@@ -503,7 +520,7 @@ export const EntityPayIn = () => {
                                 {
                                     state.data.entity.bio.length > 1 ? (
                                         <>
-                                            <p className="mt-2 pb-2 text-gray-700">
+                                            <p className="mt-2 pb-2 text-gray-700" style={{ whiteSpace: 'pre-wrap' }}>
                                                 {state.data.entity.bio}
                                             </p>
                                         </>
@@ -612,6 +629,10 @@ export const EntityPayIn = () => {
                                                                                         }
                                                                                     </div>
                                                                                 </div>
+
+                                                                                <span className={`text-sm ${state.wordCount > 450 && isFocused ? 'text-red-600 animate-bounce' : 'text-stone-600'} py-1-5 px-4 float-end`}>
+                                                                                    {state.wordCount}/500
+                                                                                </span>
 
                                                                                 <div className="w-full px-4">
                                                                                     <div className="w-full py-4 flex flex-col-reverse md:flex-row-reverse border-t">
