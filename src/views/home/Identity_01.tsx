@@ -108,9 +108,16 @@ export const Identity_01 = () => {
                     let { identifier } = state
                     output.value = output.value.toUpperCase()
 
-                    if (output.error.length > 1) {
+                    if (e.target.value.length < 1) {
                         identifier.checking = false
                         output.error = input.id_type === 'ID' ? 'National ID number cannot be empty' : 'Passport number cannot be empty';
+                    } else if (output.error.length > 1) {
+                        identifier.checking = false
+                        let identifierDoc = input.id_type === 'ID' ? 'National ID' : 'Passport number';
+
+                        output.error = output.error.replace(' identifier', '')
+                        output.error = output.error.replace('ID', identifierDoc)
+                        output.error = output.error.replace('PP', identifierDoc)
                     } else {
                         if (state.input.id_type === 'ID') {
                             if (isNaN(output.value)) {
@@ -235,44 +242,6 @@ export const Identity_01 = () => {
         })
     }
 
-    function formValidation() {
-        let valid = true;
-
-        let { input } = state
-        let { errors } = state
-        let { keepName } = state
-        let { identifier } = state
-
-        if (!keepName) {
-            if (!input.first_name.trim()) {
-                errors.first_name = 'First name cannot be empty';
-                valid = false
-            }
-
-            if (!input.last_name.trim()) {
-                errors.last_name = 'Last name cannot be empty';
-                valid = false
-            }
-        }
-
-        if (!input.identifier.trim()) {
-            errors.identifier = input.id_type === 'ID' ? 'ID number cannot be empty' : 'Passport number cannot be empty';
-            valid = false
-        }
-
-        if (!input.docPhoto === null) {
-            errors.docFile = 'Kindly upload ID/Passport photo'
-            valid = false
-        }
-
-        if (identifier.exists) {
-            errors.identifier = input.id_type === 'ID' ? 'ID number already exists' : 'Passport number already exists';
-            valid = false
-        }
-
-        return valid
-    }
-
     const onFormSubmitHandler = (e: any) => {
         e.preventDefault()
 
@@ -280,7 +249,110 @@ export const Identity_01 = () => {
             let { identifier } = state
 
             if (!identifier.checking) {
-                let validity = formValidation()
+                let validity = true
+                let { input } = state
+                let { errors } = state
+                let { keepName } = state
+                let { identifier } = state
+
+                const inputArray = Object.keys(input)
+                const errorArray = Object.keys(errors)
+
+                inputArray.forEach(async (inputObject) => {
+                    const makeShiftE = {
+                        target: {
+                            required: true,
+                            name: inputObject,
+                            value: String(input[inputObject]).trim(),
+                        }
+                    }
+
+                    let handlerTitle = inputObject === 'identifier' ? input.id_type : ''
+                    let output: any = G_onInputBlurHandler(makeShiftE, idC_State.processing, handlerTitle)
+
+                    switch (inputObject) {
+                        case 'docFile':
+                        case 'id_type':
+                            output.error = ''
+                            break
+
+                        case 'identifier':
+                            let { identifier } = state
+                            output.value = output.value.toUpperCase()
+
+                            if (makeShiftE.target.value.length < 1) {
+                                validity = false
+                                identifier.checking = false
+                                output.error = input.id_type === 'ID' ? 'National ID number cannot be empty' : 'Passport number cannot be empty';
+                            } else if (output.error.length > 1) {
+                                validity = false
+                                identifier.checking = false
+                                let identifierDoc = input.id_type === 'ID' ? 'National ID' : 'Passport number';
+
+                                output.error = output.error.replace(' identifier', '')
+                                output.error = output.error.replace('ID', identifierDoc)
+                                output.error = output.error.replace('PP', identifierDoc)
+                            } else {
+                                if (state.input.id_type === 'ID') {
+                                    if (isNaN(output.value)) {
+                                        validity = false
+                                        output.error = 'Kindly add a valid National ID number'
+                                    }
+                                }
+
+                                if (output.error.length < 1) {
+                                    identifier.checking = true
+
+                                    try {
+                                        let formData = new FormData()
+                                        formData.append('identifier', input.identifier)
+
+                                        const identifierCheckResp: any = await HttpServices.httpPost(AUTH.PRE_META_01, formData)
+
+                                        if (identifierCheckResp.data.available) {
+                                            output.error = ''
+                                            identifier.exists = false
+                                        } else {
+                                            validity = false
+                                            identifier.exists = true
+                                            output.error = 'Document with this identification number already exists';
+                                        }
+                                    } catch (error) {
+                                        validity = false
+                                        identifier.exists = true
+                                        output.error = 'Document with this identification number already exists';
+                                    }
+
+                                    identifier.checking = false
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    errors[inputObject] = output.error
+
+                    setstate({
+                        ...state, errors, identifier
+                    })
+                })
+
+                if (!input.docPhoto === null) {
+                    errors.docFile = 'Kindly upload ID/Passport photo'
+                    validity = false
+                }
+
+                errorArray.forEach((errorPnk) => {
+                    if (errors[errorPnk].length > 0) {
+                        validity = false
+                    }
+                })
+
+                setstate({
+                    ...state, errors
+                })
 
                 if (validity) {
                     let identProps = null
@@ -288,22 +360,22 @@ export const Identity_01 = () => {
                     if (state.keepName) {
                         identProps = {
                             dataDump: {
-                                keepName: state.keepName,
-                                id_type: state.input.id_type,
-                                docPhoto: state.input.docPhoto,
-                                identifier: state.input.identifier,
+                                keepName: keepName,
+                                id_type: input.id_type,
+                                docPhoto: input.docPhoto,
+                                identifier: input.identifier,
                                 display_name: auth0.identity.display_name,
                             }
                         }
                     } else {
                         identProps = {
                             dataDump: {
-                                keepName: state.keepName,
-                                id_type: state.input.id_type,
-                                docPhoto: state.input.docPhoto,
-                                last_name: state.input.last_name,
-                                first_name: state.input.first_name,
-                                identifier: state.input.identifier,
+                                keepName: keepName,
+                                id_type: input.id_type,
+                                docPhoto: input.docPhoto,
+                                last_name: input.last_name,
+                                first_name: input.first_name,
+                                identifier: input.identifier,
                             }
                         }
                     }
@@ -531,7 +603,7 @@ export const Identity_01 = () => {
                                     }
 
                                     <div className="mb-3 pt-3 px-3 md:px-0">
-                                        <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                        <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700 disabled:cursor-not-allowed disabled:bg-orange-400" type="submit" disabled={state.identifier.checking}>
                                             {
                                                 idC_State.processing ? (
                                                     <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
