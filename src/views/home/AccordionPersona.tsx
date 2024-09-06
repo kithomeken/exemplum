@@ -28,7 +28,7 @@ export const AccordionPersona: FC<props> = ({ activeElement, persona, attachment
     return (
         <React.Fragment>
             <TECollapse show={activeElement === "persona"} className="!mt-0 !rounded-b-none !shadow-none">
-                <div className="md:px-5 pb-4">
+                <div className="pb-4">
                     <div className="flex flex-col">
                         <div className="px-4 sm:px-0">
                             <p className="mt-1 max-w-2xl text-sm leading-6 text-stone-500">
