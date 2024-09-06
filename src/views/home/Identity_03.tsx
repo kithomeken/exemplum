@@ -174,8 +174,12 @@ export const Identity_03 = () => {
                     }
                     break;
 
-                default:
+                case 'bio':
+                    setIsFocused(false)
                     output.error = output.error.replace('Bio', 'Your bio')
+                    break
+
+                default:
                     break;
             }
 
@@ -565,13 +569,13 @@ export const Identity_03 = () => {
                                             }
 
                                             <div className="mb-3 pt-3 px-0">
-                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                <button className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                                     {
                                                         idC_State.processing ? (
                                                             <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
                                                         ) : (
                                                             <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                Complete
+                                                                Review & Confirm
                                                                 <i className="fa-duotone fa-circle-check fa-lg"></i>
                                                             </div>
                                                         )
