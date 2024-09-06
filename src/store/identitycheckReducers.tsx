@@ -1,10 +1,11 @@
-import { IDENTITY_, PREFLIGHT_, STORAGE_KEYS } from "../global/ConstantsRegistry";
 import StorageServices from "../services/StorageServices";
+import { encryptAndStoreLS } from "../lib/modules/HelperFunctions";
+import { IDENTITY_, PREFLIGHT_, STORAGE_KEYS } from "../global/ConstantsRegistry";
 
 const identityState = {
     error: null,
     PFg0: 'CNF_gQ',
-    PRc0: 'META_00',
+    PRc0: 'META_gS',
     processing: false,
 }
 
@@ -60,10 +61,12 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0_OVRD:
             let overrideDump = action.response.dataDump
             let PRc1_ = overrideDump.stage
+            let metaData = overrideDump.data
 
+            encryptAndStoreLS(STORAGE_KEYS.PRc0_DATA, metaData)
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, PRc1_)
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, PRc1_)
-
+            
             return {
                 ...state,
                 error: null,
