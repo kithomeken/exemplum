@@ -14,7 +14,7 @@ import { addIdentityToProfile, resetIdentity } from "../../store/identityCheckAc
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
 import { CONFIG_MAX_WIDTH, APPLICATION } from '../../global/ConstantsRegistry';
 
-export const Identity_01 = () => {
+export const IdentityPersona = () => {
     const [state, setstate] = useState({
         keepName: true,
         input: {
