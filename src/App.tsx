@@ -2,6 +2,7 @@ import { ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 
+import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import './App.css';
 import './assets/css/beska.css'
 import "react-toastify/dist/ReactToastify.css"
