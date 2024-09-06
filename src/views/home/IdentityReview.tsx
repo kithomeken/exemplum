@@ -3,6 +3,7 @@ import React from "react"
 import { AUTH } from "../../api/API_Registry"
 import { AccordionEntity } from "./AccordionEntity"
 import { AccordionPersona } from "./AccordionPersona"
+import { AccordionContact } from "./AccordionContact"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import { APPLICATION } from "../../global/ConstantsRegistry"
@@ -127,6 +128,51 @@ export const IdentityReview = () => {
                                     attachment={state.data.attachment}
                                 />
                             </div>
+                        </div>
+
+                        <div className="rounded-b-lg border-0 border-t border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+                            <h2 className="accordion-header mb-0" id="contactHeading">
+                                <button
+                                    className={
+                                        classNames(
+                                            activeElement === "contact" ? `text-orange-600 border-b-0` : 'text-stone-600',
+                                            'group relative flex w-full items-center rounded-t-[15px] border-0 bg-white py-4 text-left text-base transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none font-medium'
+                                        )
+                                    }
+                                    type="button"
+                                    onClick={() => handleClick("contact")}
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                >
+                                    Contact Details
+                                    <span
+                                        className={`${activeElement === "contact"
+                                            ? `rotate-[-180deg] -mr-1`
+                                            : `rotate-0 fill-[#212529] dark:fill-white`
+                                            } ml-auto h-5 w-5 shrink-0 fill-[#336dec] transition-transform duration-200 ease-in-out motion-reduce:transition-none dark:fill-blue-300`}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="h-6 w-6"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                            />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </h2>
+
+                            <AccordionContact
+                                persona={state.data.identity}
+                                activeElement={activeElement}
+                            />
                         </div>
 
                         <div className="rounded-b-lg border-0 border-t border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
