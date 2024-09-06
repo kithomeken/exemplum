@@ -1,6 +1,9 @@
 import React, { FC } from "react"
+import { useDispatch } from "react-redux";
 import { TECollapse } from "tw-elements-react"
 import PhoneInput from 'react-phone-number-input'
+
+import { overridePRc0MetaStage } from "../../store/identityCheckActions";
 
 interface props {
     persona: any,
@@ -9,7 +12,18 @@ interface props {
 
 export const AccordionContact: FC<props> = ({ activeElement, persona }) => {
 
+    const dispatch: any = useDispatch();
     const emptyOnChangeHandler = () => { }
+
+    const modifyContactDetails = () => {
+        const props = {
+            dataDump: {
+                stage: 'META_02',
+            },
+        }
+
+        dispatch(overridePRc0MetaStage(props))
+    }
 
     return (
         <React.Fragment>
@@ -41,7 +55,7 @@ export const AccordionContact: FC<props> = ({ activeElement, persona }) => {
                         </div>
 
                         <div className="px-4 sm:gap-4 sm:px-0">
-                            <button className="text-orange-600 float-right relative min-w-28 text-sm rounded-md bg-white hover:text-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:text-orange-700 disabled:cursor-not-allowed disabled:bg-orange-400" type="submit">
+                            <button onClick={() => modifyContactDetails()} className="text-orange-600 float-right relative min-w-28 text-sm rounded-md bg-white hover:text-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:text-orange-700 disabled:cursor-not-allowed disabled:bg-orange-400" type="button">
                                 Modify Contact Detail
                             </button>
                         </div>
