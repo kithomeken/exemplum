@@ -33,6 +33,7 @@ export const STORAGE_KEYS = {
     ONBOARDING_STATUS:  '__bgf0nBg',
     PFg0_OVERRIDE:      '__bgf0PFg1',
     PRc0_OVERRIDE:      '__bgf0PRc1',
+    PRc0_DATA:          '__bgf0dmPU',
 
     FIREBASE_RFSH:      '__RfhS',
     ENTITY_TYPE:        '__enTY',
