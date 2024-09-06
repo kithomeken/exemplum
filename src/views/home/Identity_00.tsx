@@ -21,7 +21,6 @@ export const Identity_00 = () => {
     const [state, setstate] = useState({
         show: false,
         toastERR: '',
-        modify: true,
         posting: false,
         emailInvite: '',
         httpStatus: 200,
@@ -391,7 +390,7 @@ export const Identity_00 = () => {
                                             <>
                                                 <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
                                                     {
-                                                        state.modify ? (
+                                                        state.data.identity.reviewed !== 'P' ? (
                                                             <IdentityReview />
                                                         ) : (
                                                             <>
@@ -732,7 +731,7 @@ export const Identity_00 = () => {
                                                 </div>
 
                                                 <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                                                    <img className="h-full bg-orange-100 rounded-2xl" src={completed} alt={"completed"} loading="lazy" />
+                                                    <img className="h-full rounded-2xl" src={completed} alt={"completed"} loading="lazy" />
                                                 </div>
                                             </>
                                         )
