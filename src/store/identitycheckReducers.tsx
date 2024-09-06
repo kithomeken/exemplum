@@ -17,7 +17,6 @@ export const identityCheckReducer = (state = identityState, action: any) => {
         case IDENTITY_.PRc0:
             const metaPRc0 = action.response.dataDump.PRc0
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, metaPRc0)
-            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, metaPRc0)
 
             return {
                 ...state,
@@ -59,18 +58,17 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             }
 
         case IDENTITY_.PRc0_OVRD:
-            const currPRc0 = metaPRc0State.charAt(metaPRc0State.length - 1)
-            const prevPRc0 = 'META_0' + (parseInt(currPRc0) - 1)
+            let overrideDump = action.response.dataDump
+            let PRc1_ = overrideDump.stage
 
-            const PRc0_CHK = prevPRc0 === 'META_03' ? 'META_00' : prevPRc0
-
-            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, PRc0_CHK)
-            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, PRc0_CHK)
+            console.log('PRc0_OVRD', action.response);
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, PRc1_)
+            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, PRc1_)
 
             return {
                 ...state,
                 error: null,
-                PRc0: PRc0_CHK,
+                PRc0: PRc1_,
                 processing: false,
                 PFg0: metaPFg0State,
             }
