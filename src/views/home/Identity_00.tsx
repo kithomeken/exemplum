@@ -390,7 +390,7 @@ export const Identity_00 = () => {
                                             <>
                                                 <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
                                                     {
-                                                        state.data.identity.reviewed !== 'P' ? (
+                                                        state.data.identity.reviewed === 'P' ? (
                                                             <IdentityReview />
                                                         ) : (
                                                             <>
