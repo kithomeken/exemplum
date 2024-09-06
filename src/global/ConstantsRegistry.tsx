@@ -73,6 +73,7 @@ export const IDENTITY_ = {
     PRc0_OVRD:          'PRc0_OVRD',
     PRc0_UPDATE:        'PRc0_UPDATE',
     PROCESSING:         'PRc0_EXECUTING',
+    PRc0_OVRD_END:      'PRc0_OVRD_END',
     PRc0_EXCEPTION:     'PRc0_EXCEPTION',
     PRc0_COMPLETED:     'PRc0_COMPLETED',
 }
