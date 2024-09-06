@@ -5,9 +5,10 @@ import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-nu
 
 import { useAppSelector } from "../../store/hooks"
 import '../../assets/css/react_phone_number_input.css'
-import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
+import StorageServices from "../../services/StorageServices"
 import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
-import { addMSISDN_ToProfile, resetIdentity } from "../../store/identityCheckActions"
+import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry"
+import { addMSISDN_ToProfile, modifyMSISDN_, resetIdentity } from "../../store/identityCheckActions"
 
 export const IdentityContact = () => {
     const [state, setstate] = useState({
@@ -24,11 +25,25 @@ export const IdentityContact = () => {
     })
 
     React.useEffect(() => {
-        dispatch(resetIdentity())
+        overrideCheck()
     }, [])
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
+    const auth0: any = useAppSelector(state => state.auth0)
+    const PRc1_ = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE)
+
+    const overrideCheck = () => {
+        dispatch(resetIdentity())
+
+        setstate(prev => ({
+            ...prev,
+            input: {
+                ...prev.input,
+                msisdn: PRc1_ ? auth0.identity.msisdn : ''
+            }
+        }));
+    }
 
     const onPhoneInputChange = (e: any) => {
         if (!idC_State.processing) {
@@ -104,11 +119,13 @@ export const IdentityContact = () => {
 
             const identProps = {
                 dataDump: {
-                    msisdn: state.input.msisdn,
+                    msisdn: input.msisdn,
+                    msisdn_: auth0.identity.msisdn,
                 }
             }
 
-            dispatch(addMSISDN_ToProfile(identProps))
+            PRc1_ ? dispatch(modifyMSISDN_(identProps))
+                : dispatch(addMSISDN_ToProfile(identProps))
         }
     }
 
@@ -117,7 +134,7 @@ export const IdentityContact = () => {
             <div className="wrapper md:align-middle align-baseline w-full overflow-auto md:h-screen h-auto">
                 <section className="gx-container md:h-screen rounded-md w-full flex items-center justify-center" style={CONFIG_MAX_WIDTH}>
                     <div className="flex md:flex-row flex-col align-middle items-center w-full md:pb-0 pb-10">
-                        <div className="md:basis-3/5 md:px-6 px-8 w-full py-6 overflow-auto">
+                        <div className="md:basis-3/5 md:px-8 px-8 w-full py-6 overflow-auto">
                             <span className="text-2xl self-start text-orange-500 tracking-wider leading-7 block mb-2 md:pt-0 pt-4">{APPLICATION.NAME}</span>
 
                             <div className="flex flex-row w-full align-middle justitfy-between items-center md:hidden">
@@ -126,24 +143,28 @@ export const IdentityContact = () => {
                                 </div>
                             </div>
 
-                            <div className="w-32 md:float-start float-right">
-                                <div className="w-full py-4 grid grid-cols-3 gap-x-2">
-                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
-                                    <div className="rounded-md h-2 shadow-lg bg-orange-400"></div>
-                                </div>
+                            {
+                                !PRc1_ ? (
+                                    <div className="w-32 md:float-start float-right">
+                                        <div className="w-full py-4 grid grid-cols-3 gap-x-2">
+                                            <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                            <div className="rounded-md h-2 shadow-lg bg-orange-600"></div>
+                                            <div className="rounded-md h-2 shadow-lg bg-orange-400"></div>
+                                        </div>
 
-                                <span className="text-sm text-stone-500 md:text-start text-right block">
-                                    2 of 3
-                                </span>
-                            </div>
+                                        <span className="text-sm text-stone-500 md:text-start text-right block">
+                                            2 of 3
+                                        </span>
+                                    </div>
+                                ) : null
+                            }
 
                             <div className="w-full text-sm text-stone-600 float-right mb-3">
                                 <span className="block py-4 text-xl md:text-2xl">
                                     Secure Your Account
 
-                                    <span className="text-sm pt-4 pb-2 text-stone-500 block">
-                                        Add your phone number for secure cash withdrawals and easy contact in case of issues.
+                                    <span className="text-sm pt-4 pb-2 text-stone-600 block">
+                                        {PRc1_ ? 'Modify ' : 'Add '} your phone number for secure cash withdrawals and easy contact in case of issues.
                                     </span>
                                 </span>
                             </div>
@@ -181,15 +202,21 @@ export const IdentityContact = () => {
                                     </div>
 
                                     <div className="mb-3 pt-3 px-0">
-                                        <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                        <button className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
                                             {
                                                 idC_State.processing ? (
                                                     <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
                                                 ) : (
-                                                    <div className="flex justify-center align-middle items-center gap-x-3">
-                                                        Next
-                                                        <i className="fa-duotone fa-arrow-right fa-lg"></i>
-                                                    </div>
+                                                    PRc1_ ? (
+                                                        <div className="flex justify-center align-middle items-center gap-x-3">
+                                                            Apply Changes
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex justify-center align-middle items-center gap-x-3">
+                                                            Next
+                                                            <i className="fa-duotone fa-arrow-right fa-lg"></i>
+                                                        </div>
+                                                    )
                                                 )
                                             }
                                         </button>
@@ -205,7 +232,7 @@ export const IdentityContact = () => {
                         </div>
 
                         <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                            <img className="h-full bg-orange-100 rounded-2xl" src={serviceCenter} alt={"pana_calling"} loading="lazy" />
+                            <img className="h-full rounded-2xl" src={serviceCenter} alt={"pana_calling"} loading="lazy" />
                         </div>
                     </div>
                 </section>

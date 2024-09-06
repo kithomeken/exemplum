@@ -204,7 +204,7 @@ export function addMSISDN_ToProfile(propsIn: IdentityProps) {
 
             formData.append('msisdn', dataDump.msisdn)
 
-            const identityResponse: any = await HttpServices.httpPut(AUTH.ID_META_02, formData)
+            const identityResponse: any = await HttpServices.httpPost(AUTH.ID_META_02, formData)
 
             if (identityResponse.data.success) {
                 dispatch({
@@ -214,6 +214,52 @@ export function addMSISDN_ToProfile(propsIn: IdentityProps) {
 
                 dispatch({
                     type: IDENTITY_.PRc0_UPDATE,
+                    response: 'PRc0',
+                });
+            } else {
+                let errorMsg = identityResponse.data.msisdn[0]
+                errorMsg = errorMsg.replace('msisdn', 'phone number')
+
+                dispatch({
+                    type: IDENTITY_.PRc0_EXCEPTION,
+                    response: errorMsg,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: IDENTITY_.PRc0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
+
+export function modifyMSISDN_(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: IDENTITY_.PROCESSING,
+            response: {
+                redirect: false,
+            },
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+            formData.append('msisdn', dataDump.msisdn)
+
+            const identityResponse: any = await HttpServices.httpPut(AUTH.ID_META_02, formData)
+
+            if (identityResponse.data.success) {
+                dispatch({
+                    type: AUTH_.ID_META_02,
+                    response: dataDump,
+                });
+
+                dispatch({
+                    type: IDENTITY_.PRc0_OVRD_END,
                     response: 'PRc0',
                 });
             } else {
