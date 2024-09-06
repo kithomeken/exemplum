@@ -5,15 +5,16 @@ import { useDispatch } from "react-redux"
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
 import { Identity_00 } from "./Identity_00"
-import { Identity_03 } from "./Identity_03"
-import { Identity_02 } from "./Identity_02"
 import { Identity_01 } from "./Identity_01"
+import { IdentityContact } from "./IdentityContact"
+import { Identity_03 } from "./Identity_03"
 import { AUTH } from "../../api/API_Registry"
 import { useAppSelector } from "../../store/hooks"
-import { STYLE } from "../../global/ConstantsRegistry"
+import { STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
 import { resetIdentity, setPRc0MetaStage } from "../../store/identityCheckActions"
+import StorageServices from "../../services/StorageServices"
 
 export const IdentityOnboarding = () => {
     const [state, setstate] = useState({
@@ -27,6 +28,7 @@ export const IdentityOnboarding = () => {
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
+    const PRc1_ = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE)
 
     const identityProcessStateCheck = async () => {
         let { status } = state
@@ -38,13 +40,16 @@ export const IdentityOnboarding = () => {
             httpStatus = metaCheckResp.status
 
             if (metaCheckResp.data.success) {
-                const PRc0 = metaCheckResp.data.payload.PRc0
+                // Check if PRc1 is set else revert to PRc0
+                let PRc0 = PRc1_ || metaCheckResp.data.payload.PRc0;
 
                 const metaCheckProps = {
                     dataDump: {
                         PRc0: PRc0,
                     }
                 }
+
+                console.log('PRc0 | PRc1', PRc0);
 
                 dispatch(setPRc0MetaStage(metaCheckProps))
                 status = 'fulfilled'
@@ -71,7 +76,7 @@ export const IdentityOnboarding = () => {
                 return <Identity_01 />
 
             case "META_02":
-                return <Identity_02 />
+                return <IdentityContact />
 
             case "META_03":
                 return <Identity_03 />
