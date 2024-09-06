@@ -112,6 +112,7 @@ async function identityDocUpload(propsIn: IdentityProps) {
         let formData = new FormData()
         const dataDump = IdentityProps.dataDump
 
+        formData.append('file', dataDump.docFile)
         formData.append('id_type', dataDump.id_type)
         formData.append('docPhoto', dataDump.docPhoto)
         formData.append('identifier', dataDump.identifier)

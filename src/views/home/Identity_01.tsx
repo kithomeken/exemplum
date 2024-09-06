@@ -362,6 +362,7 @@ export const Identity_01 = () => {
                             dataDump: {
                                 keepName: keepName,
                                 id_type: input.id_type,
+                                docFile: input.docFile,
                                 docPhoto: input.docPhoto,
                                 identifier: input.identifier,
                                 display_name: auth0.identity.display_name,
@@ -372,6 +373,7 @@ export const Identity_01 = () => {
                             dataDump: {
                                 keepName: keepName,
                                 id_type: input.id_type,
+                                docFile: input.docFile,
                                 docPhoto: input.docPhoto,
                                 last_name: input.last_name,
                                 first_name: input.first_name,
@@ -379,7 +381,7 @@ export const Identity_01 = () => {
                             }
                         }
                     }
-
+                    
                     dispatch(addIdentityToProfile(identProps))
                 }
             }
