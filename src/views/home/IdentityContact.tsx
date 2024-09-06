@@ -9,7 +9,7 @@ import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import serviceCenter from "../../assets/images/306d5d0d0d19094f8a82a61578f3e9a9.svg"
 import { addMSISDN_ToProfile, resetIdentity } from "../../store/identityCheckActions"
 
-export const Identity_02 = () => {
+export const IdentityContact = () => {
     const [state, setstate] = useState({
         status: 'pending',
         data: {
