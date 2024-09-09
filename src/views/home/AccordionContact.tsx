@@ -11,7 +11,6 @@ interface props {
 }
 
 export const AccordionContact: FC<props> = ({ activeElement, persona }) => {
-
     const dispatch: any = useDispatch();
     const emptyOnChangeHandler = () => { }
 

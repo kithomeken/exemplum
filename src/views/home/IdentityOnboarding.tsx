@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
 import { Identity_00 } from "./Identity_00"
-import { Identity_01 } from "./Identity_01"
+import { IdentityPersona } from "./IdentityPersona"
 import { IdentityContact } from "./IdentityContact"
 import { Identity_03 } from "./Identity_03"
 import { AUTH } from "../../api/API_Registry"
@@ -73,7 +73,7 @@ export const IdentityOnboarding = () => {
                 return <Identity_00 />
 
             case "META_01":
-                return <Identity_01 />
+                return <IdentityPersona />
 
             case "META_02":
                 return <IdentityContact />
