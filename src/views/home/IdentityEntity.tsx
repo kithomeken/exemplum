@@ -7,15 +7,15 @@ import { useAppSelector } from "../../store/hooks"
 import HttpServices from "../../services/HttpServices"
 import { ListBoxZero } from "../../lib/hooks/ListBoxZero"
 import { Loading } from "../../components/modules/Loading"
-import { classNames, readDecryptAndParseLS } from "../../lib/modules/HelperFunctions"
-import { CONFIG_MAX_WIDTH, APPLICATION, STORAGE_KEYS } from "../../global/ConstantsRegistry"
+import StorageServices from "../../services/StorageServices"
 import { InputWithLoadingIcon } from "../../components/lib/InputWithLoadingIcon"
 import artisticForm from "../../assets/images/7e33b86cfb1293b8c7a101e9b1011e5d.svg"
-import { artistEntityCreation, artistEntityModification, resetIdentity } from "../../store/identityCheckActions"
+import { classNames, readDecryptAndParseLS } from "../../lib/modules/HelperFunctions"
+import { CONFIG_MAX_WIDTH, APPLICATION, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
-import StorageServices from "../../services/StorageServices"
+import { artistEntityCreation, artistEntityModification, resetIdentity } from "../../store/identityCheckActions"
 
-export const Identity_03 = () => {
+export const IdentityEntity = () => {
     const [state, setstate] = useState({
         wordCount: 0,
         status: 'pending',
