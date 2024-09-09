@@ -73,7 +73,7 @@ class HttpServices {
         }
     }
 
-    async httpMultipartForm(url: string, data: any, options: any = null) {
+    async httpPostMultipartForm(url: string, data: any, options: any = null) {
         try {
             const finalOptions = Object.assign(this.axiosInstanceMultipartHeaders(), options)
             const POST_API_URL = API_DOMAIN + url
