@@ -72,11 +72,15 @@ export function encryptAndStoreLS(key: string, data: any) {
 };
 
 export function readDecryptAndParseLS(key: string) {
-    const encryptedKeyString = StorageServices.getLocalStorage(key)
-    const storageObject = JSON.parse(encryptedKeyString)
-
-    const deStorageObject = Crypto.decryptDataUsingAES256(storageObject)
-    return JSON.parse(deStorageObject)
+    try {
+        const encryptedKeyString = StorageServices.getLocalStorage(key)
+        const storageObject = JSON.parse(encryptedKeyString)
+    
+        const deStorageObject = Crypto.decryptDataUsingAES256(storageObject)
+        return JSON.parse(deStorageObject)   
+    } catch (error) {
+        return null
+    }
 }
 
 export function getRandomObjectFromArray(array: any[]) {
