@@ -43,7 +43,7 @@ export function overridePFg0MetaStage(propsIn: IdentityProps) {
 export function overridePRc0MetaStage(propsIn: IdentityProps) {
     return (dispatch: (arg0: { type: string; response: any }) => void) => {
         const override = { ...propsIn }
-        
+
         dispatch({
             type: IDENTITY_.PRc0_OVRD,
             response: override,
@@ -71,7 +71,7 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                 formData.append('first_name', dataDump.first_name)
             }
 
-            const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_01, formData)
+            const identityResponse: any = await HttpServices.httpPost(AUTH.ID_META_01, formData)
 
             if (identityResponse.data.success) {
                 dispatch({
@@ -84,10 +84,15 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                     },
                 });
 
-                identityDocUpload(propsIn)
+                if (dataDump.docPhoto) {
+                    identityDocUpload(propsIn)
+                }
+
+                const reduxReduxer = dataDump.PRc1_ ? IDENTITY_.PRc0_OVRD_END
+                    : IDENTITY_.PRc0_UPDATE
 
                 dispatch({
-                    type: IDENTITY_.PRc0_UPDATE,
+                    type: reduxReduxer,
                     response: 'PRc0',
                 });
             } else {
@@ -109,15 +114,16 @@ async function identityDocUpload(propsIn: IdentityProps) {
     const IdentityProps = { ...propsIn }
 
     try {
+        let identityResponse: any = null
         let formData = new FormData()
         const dataDump = IdentityProps.dataDump
 
         formData.append('file', dataDump.docFile)
         formData.append('id_type', dataDump.id_type)
         formData.append('docPhoto', dataDump.docPhoto)
-        formData.append('identifier', dataDump.identifier)
+        formData.append('identifier', dataDump.identifier)        
 
-        const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_UPLOAD, formData)
+        identityResponse = await HttpServices.httpPostMultipartForm(AUTH.ID_META_UPLOAD, formData)
 
         console.log('Identity Doc Upload', identityResponse);
     } catch (error) {

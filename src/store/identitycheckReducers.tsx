@@ -79,6 +79,7 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             let correctStage = 'META_00'
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, correctStage)
             StorageServices.removeLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE)
+            StorageServices.removeLocalStorage(STORAGE_KEYS.PRc0_DATA)
 
             return {
                 ...state,
