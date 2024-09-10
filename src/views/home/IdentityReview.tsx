@@ -1,4 +1,5 @@
 import React from "react"
+import { toast } from "react-toastify";
 
 import { AUTH } from "../../api/API_Registry"
 import { AccordionEntity } from "./AccordionEntity"
@@ -12,6 +13,7 @@ import completed from "../../assets/images/illustration_050914148.svg"
 
 export const IdentityReview = () => {
     const [state, setstate] = React.useState({
+        posting: false,
         httpStatus: 200,
         status: 'pending',
         data: {
@@ -59,6 +61,52 @@ export const IdentityReview = () => {
 
         setstate({
             ...state, data, status
+        })
+    }
+
+    const metaDataConfirmation = async () => {
+        let { posting } = state
+
+        setstate({
+            ...state, posting: true
+        })
+
+        try {
+            const reviewResponse: any = await HttpServices.httpPost(AUTH.META_CONFIRMATION, null)
+
+            if (reviewResponse.data.success) {
+                posting = false
+
+                window.location.reload()
+            } else {
+                posting = false
+
+                toast.error(APPLICATION.ERR_MSG, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        } catch (error) {
+            posting = false
+
+            toast.error(APPLICATION.ERR_MSG, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+
+        setstate({
+            ...state, posting
         })
     }
 
@@ -225,7 +273,7 @@ export const IdentityReview = () => {
                             activeElement.length < 1 ? (
                                 <div className="flex flex-col">
                                     <div className="mb-3 pt-3 px-0 mx-auto">
-                                        <button className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
+                                        <button onClick={() => metaDataConfirmation()} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
                                             Finish & Submit
                                         </button>
                                     </div>
