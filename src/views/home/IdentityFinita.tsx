@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { Navigate } from "react-router";
+import { useDispatch } from "react-redux";
 
 import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
@@ -16,6 +17,7 @@ import completed from "../../assets/images/fd0b0ed18a34962f80d77c6e6ff42e7b.svg"
 import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg"
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 import { classNames, emailValidator, getColorForLetter } from "../../lib/modules/HelperFunctions";
+import { revokeAuthSession } from "../../store/auth/firebaseAuthActions";
 
 export const IdentityFinita = () => {
     const [state, setstate] = useState({
@@ -38,6 +40,7 @@ export const IdentityFinita = () => {
         }]
     })
 
+    const dispatch: any = useDispatch()
     const auth0: any = useAppSelector(state => state.auth0)
 
     const homeRoute: any = (
@@ -361,6 +364,10 @@ export const IdentityFinita = () => {
         setstate({
             ...state, posting
         })
+    }
+
+    const accountSignOutHandler = () => {
+        dispatch(revokeAuthSession())
     }
 
     return (
@@ -713,6 +720,12 @@ export const IdentityFinita = () => {
                                                                                 <div className="w-full block mb-3 pb-4 border-b-2 border-dashed">
                                                                                     <span className="text-sm pt-3 mt-3 text-stone-500 block">
                                                                                         In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <div className="w-full flex flex-row-reverse pt-6 pb-4 px-3 md:px-0">
+                                                                                    <span onClick={accountSignOutHandler} className="text-sm flex flex-row gap-x-3align-middle items-center shadow-none bg-inherit text-red-600 hover:text-red-700 hover:cursor-pointer hover:underline mr-2 sm:w-auto sm:text-sm">
+                                                                                        Sign Out
                                                                                     </span>
                                                                                 </div>
 
