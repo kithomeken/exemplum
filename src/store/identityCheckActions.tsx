@@ -121,7 +121,7 @@ async function identityDocUpload(propsIn: IdentityProps) {
         formData.append('file', dataDump.docFile)
         formData.append('id_type', dataDump.id_type)
         formData.append('docPhoto', dataDump.docPhoto)
-        formData.append('identifier', dataDump.identifier)        
+        formData.append('identifier', dataDump.identifier)
 
         identityResponse = await HttpServices.httpPostMultipartForm(AUTH.ID_META_UPLOAD, formData)
 
