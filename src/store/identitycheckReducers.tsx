@@ -48,7 +48,6 @@ export const identityCheckReducer = (state = identityState, action: any) => {
             const nextPRc0 = 'META_0' + (parseInt(PRc0Code) + 1)
 
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, nextPRc0)
-            StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE, nextPRc0)
 
             return {
                 ...state,
@@ -103,8 +102,6 @@ export const identityCheckReducer = (state = identityState, action: any) => {
 
         case IDENTITY_.PRc0_COMPLETED:
             const metaPRc0_Complete = action.response.PRc0
-            console.log('COMP', metaPRc0_Complete);
-
             StorageServices.setLocalStorage(STORAGE_KEYS.PRc0_STATE, metaPRc0_Complete)
 
             return {
