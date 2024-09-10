@@ -88,18 +88,18 @@ export const IdentityPersona = () => {
                         last_name = metaData.preferred_name
                         first_name = auth0.identity.display_name.replace(new RegExp(`\\s*${last_name}$`), '')
                     }
-
-                    setstate(prev => ({
-                        ...prev, keepName, upload,
-                        input: {
-                            ...prev.input,
-                            last_name: PRc1_ ? last_name : '',
-                            first_name: PRc1_ ? first_name : '',
-                            id_type: PRc1_ ? metaData.type : 'ID',
-                            identifier: PRc1_ ? metaData.identifier : '',
-                        }
-                    }));
                 }
+
+                setstate(prev => ({
+                    ...prev, keepName, upload,
+                    input: {
+                        ...prev.input,
+                        last_name: PRc1_ ? last_name : '',
+                        first_name: PRc1_ ? first_name : '',
+                        id_type: PRc1_ ? metaData.type : 'ID',
+                        identifier: PRc1_ ? metaData.identifier : '',
+                    }
+                }));
             },
             error => {
                 console.error(error)
