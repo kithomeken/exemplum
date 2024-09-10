@@ -16,7 +16,7 @@ import StorageServices from "../../services/StorageServices"
 import { STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry"
 import { resetIdentity, setPRc0MetaStage } from "../../store/identityCheckActions"
 
-export const IdentityOnboarding = () => {
+export const IdentitySwitch = () => {
     const [state, setstate] = useState({
         httpStatus: 200,
         status: 'pending',
