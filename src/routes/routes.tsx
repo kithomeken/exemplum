@@ -13,6 +13,7 @@ import { EmailActions } from "../views/auth/EmailActions";
 import { IdentityCheck } from "../views/home/IdentityCheck";
 import { ChangeEmail } from "../views/settings/ChangeEmail";
 import { RedirectToHome } from "../views/home/RedirectToHome";
+import { IdentitySwitch } from "../views/home/IdentitySwitch";
 import { UserManagement } from "../views/admin/UserManagement";
 import { PreflightCheck } from "../views/admin/PreflightCheck";
 import { EntityProfile } from "../views/settings/EntityProfile";
@@ -22,7 +23,6 @@ import { PasswordRecovery } from "../views/auth/PasswordRecovery";
 import { TransactionPayIn } from "../views/admin/TransactionPayIn";
 import { AccountSuspended } from "../views/errors/AccountSuspended";
 import { PostAuthentication } from "../views/auth/PostAuthentication";
-import { IdentityOnboarding } from "../views/home/IdentityOnboarding";
 import { OnboardingRequests } from "../views/admin/OnboardingRequests";
 import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
 import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
@@ -93,7 +93,7 @@ export const commonRoutes: Array<Routes_Interface> = [
     },
     {
         path: "/u/artist/_/identity/onboarding",
-        element: <IdentityOnboarding />,
+        element: <IdentitySwitch />,
         caseSensitive: true,
         name: 'IDENTITY_ONBRD_'
     },
