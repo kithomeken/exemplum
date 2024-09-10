@@ -17,10 +17,11 @@ import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/l
 export const EntityPayIn = () => {
     const [state, setstate] = useState({
         wordCount: 0,
+        posting: false,
         httpStatus: 200,
         status: 'pending',
         stkResponse: null,
-        posting: false,
+        helmet: 'Big Fan',
         data: {
             entity: null,
             limits: null,
@@ -140,6 +141,7 @@ export const EntityPayIn = () => {
     const fetchEntityDetails = async () => {
         let { data } = state
         let { status } = state
+        let { helmet } = state
         let { donation } = state
 
         try {
@@ -152,6 +154,7 @@ export const EntityPayIn = () => {
                 data.limits = entityResponse.data.payload.limits
 
                 donation = donationDetail
+                helmet = data.entity.name
             } else {
                 status = 'rejected'
             }
@@ -160,7 +163,7 @@ export const EntityPayIn = () => {
         }
 
         setstate({
-            ...state, status, data, donation
+            ...state, status, data, donation, helmet
         })
     }
 
@@ -478,7 +481,9 @@ export const EntityPayIn = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>{APPLICATION.NAME}</title>
+                <title>
+                    {state.helmet}
+                </title>
             </Helmet>
 
             {
