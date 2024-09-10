@@ -17,7 +17,7 @@ import invitation from "../../assets/images/1bb38b1912d0c7dbfb5b02cb3d30e0ad.svg
 import { APPLICATION, CONFIG_MAX_WIDTH, STORAGE_KEYS } from "../../global/ConstantsRegistry";
 import { classNames, emailValidator, getColorForLetter } from "../../lib/modules/HelperFunctions";
 
-export const Identity_00 = () => {
+export const IdentityFinita = () => {
     const [state, setstate] = useState({
         show: false,
         toastERR: '',
