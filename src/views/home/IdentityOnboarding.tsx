@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
-import { Identity_00 } from "./Identity_00"
+import { IdentityFinita } from "./IdentityFinita"
 import { AUTH } from "../../api/API_Registry"
 import { IdentityEntity } from "./IdentityEntity"
 import { useAppSelector } from "../../store/hooks"
@@ -49,8 +49,6 @@ export const IdentityOnboarding = () => {
                     }
                 }
 
-                console.log('PRc0 | PRc1', PRc0);
-
                 dispatch(setPRc0MetaStage(metaCheckProps))
                 status = 'fulfilled'
             } else {
@@ -70,7 +68,7 @@ export const IdentityOnboarding = () => {
     const loadIdentityModules = (tab: string = 'in') => {
         switch (tab) {
             case "META_00":
-                return <Identity_00 />
+                return <IdentityFinita />
 
             case "META_01":
                 return <IdentityPersona />
@@ -82,7 +80,7 @@ export const IdentityOnboarding = () => {
                 return <IdentityEntity />
 
             default:
-                return <Identity_00 />
+                return <IdentityFinita />
         }
     }
 
