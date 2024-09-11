@@ -373,7 +373,7 @@ export const IdentityEntity = () => {
 
                                                         <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
                                                             <div className="col-span-1">
-                                                                <span className="block text-sm text-stone-600">
+                                                                <span className="block pb-2 text-sm text-stone-700 font-medium">
                                                                     Artist Type:
                                                                 </span>
                                                             </div>
@@ -387,7 +387,7 @@ export const IdentityEntity = () => {
 
                                                         <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
                                                             <div className="col-span-1">
-                                                                <span className="block text-sm text-stone-600">
+                                                                <span className="block pb-2 text-sm text-stone-700 font-medium">
                                                                     Group Name:
                                                                 </span>
                                                             </div>
@@ -395,6 +395,18 @@ export const IdentityEntity = () => {
                                                             <div className="col-span-2">
                                                                 <span className="block text-sm text-orange-600">
                                                                     {state.data.entity.name}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="w-full">
+                                                            <span className="block pb-2 text-sm text-stone-700 font-medium">
+                                                                Bio:
+                                                            </span>
+
+                                                            <div className="col-span-2">
+                                                                <span className="block text-sm text-stone-600" style={{ whiteSpace: 'pre-wrap' }}>
+                                                                    {state.data.entity.bio}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -408,7 +420,7 @@ export const IdentityEntity = () => {
                                                                 <span className="text-sm block text-gray-600">
 
                                                                     <span className="block py-2">
-                                                                        Please note that the above aspects of your artist profile data are fixed and cannot be changed.
+                                                                        Please note that the above aspects of your artist profile data are fixed and cannot be changed at this time.
                                                                     </span>
                                                                 </span>
                                                             </div>
