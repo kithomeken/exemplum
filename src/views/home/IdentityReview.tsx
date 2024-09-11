@@ -273,8 +273,16 @@ export const IdentityReview = () => {
                             activeElement.length < 1 ? (
                                 <div className="flex flex-col">
                                     <div className="mb-3 pt-3 px-0 mx-auto">
-                                        <button onClick={() => metaDataConfirmation()} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="button">
-                                            Finish & Submit
+                                        <button onClick={() => metaDataConfirmation()} className="bg-orange-600 relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700 disabled:cursor-not-allowed" type="button" disabled={state.posting}>
+                                            {
+                                                state.posting ? (
+                                                    <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
+                                                ) : (
+                                                    <div className="flex justify-center align-middle items-center gap-x-3">
+                                                        Finish & Submit
+                                                    </div>
+                                                )
+                                            }
                                         </button>
                                     </div>
 
