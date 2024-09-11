@@ -1,10 +1,9 @@
 import { toast } from "react-toastify"
-import React, { FC, Fragment, useState } from "react"
+import React, { FC, Fragment } from "react"
 import { Transition, Dialog } from "@headlessui/react"
 
 import { Loading } from "../../components/modules/Loading"
 import { CommsBreakdown } from "../../views/errors/CommsBreakdown"
-import { classNames } from "../modules/HelperFunctions"
 
 interface Props {
     size: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl',
@@ -72,21 +71,7 @@ export const DynamicModal: FC<Props> = ({ show, size, showOrHideModal, title, on
                         leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                         leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
-                        <div
-                            className={
-                                classNames(
-                                    size === 'sm' ? 'sm:max-w-sm' : null,
-                                    size === 'md' ? 'sm:max-w-md' : null,
-                                    size === 'lg' ? 'sm:max-w-lg' : null,
-                                    size === 'xl' ? 'sm:max-w-xl' : null,
-                                    size === '2xl' ? 'sm:max-w-2xl' : null,
-                                    size === '3xl' ? 'sm:max-w-3xl' : null,
-                                    size === '4xl' ? 'sm:max-w-4xl' : null,
-                                    size === '5xl' ? 'sm:max-w-5xl' : null,
-                                    size === '6xl' ? 'sm:max-w-6xl' : null,
-                                    'inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full'
-                                )
-                            }>
+                        <div className={`inline-block align-bottom bg-white sm:max-w-${size} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full`}>
                             {
                                 // For items that pre load data
                                 status === 'rejected' ? (

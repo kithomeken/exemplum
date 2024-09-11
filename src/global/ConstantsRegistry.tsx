@@ -33,6 +33,7 @@ export const STORAGE_KEYS = {
     ONBOARDING_STATUS:  '__bgf0nBg',
     PFg0_OVERRIDE:      '__bgf0PFg1',
     PRc0_OVERRIDE:      '__bgf0PRc1',
+    PRc0_DATA:          '__bgf0dmPU',
 
     FIREBASE_RFSH:      '__RfhS',
     ENTITY_TYPE:        '__enTY',
@@ -73,6 +74,7 @@ export const IDENTITY_ = {
     PRc0_OVRD:          'PRc0_OVRD',
     PRc0_UPDATE:        'PRc0_UPDATE',
     PROCESSING:         'PRc0_EXECUTING',
+    PRc0_OVRD_END:      'PRc0_OVRD_END',
     PRc0_EXCEPTION:     'PRc0_EXCEPTION',
     PRc0_COMPLETED:     'PRc0_COMPLETED',
 }

@@ -7,14 +7,15 @@ import { useAppSelector } from "../../store/hooks"
 import HttpServices from "../../services/HttpServices"
 import { ListBoxZero } from "../../lib/hooks/ListBoxZero"
 import { Loading } from "../../components/modules/Loading"
-import { classNames } from "../../lib/modules/HelperFunctions"
-import { CONFIG_MAX_WIDTH, APPLICATION } from "../../global/ConstantsRegistry"
+import StorageServices from "../../services/StorageServices"
 import { InputWithLoadingIcon } from "../../components/lib/InputWithLoadingIcon"
 import artisticForm from "../../assets/images/7e33b86cfb1293b8c7a101e9b1011e5d.svg"
-import { artistEntityCreation, resetIdentity } from "../../store/identityCheckActions"
+import { classNames, readDecryptAndParseLS } from "../../lib/modules/HelperFunctions"
+import { CONFIG_MAX_WIDTH, APPLICATION, STORAGE_KEYS } from "../../global/ConstantsRegistry"
 import { G_onInputBlurHandler, G_onInputChangeHandler } from "../../components/lib/InputHandlers"
+import { artistEntityCreation, artistEntityModification, resetIdentity } from "../../store/identityCheckActions"
 
-export const Identity_03 = () => {
+export const IdentityEntity = () => {
     const [state, setstate] = useState({
         wordCount: 0,
         status: 'pending',
@@ -52,14 +53,19 @@ export const Identity_03 = () => {
 
     const dispatch: any = useDispatch();
     const [isFocused, setIsFocused] = useState(false);
+
     const auth0: any = useAppSelector(state => state.auth0)
     const idC_State: any = useAppSelector(state => state.idC)
 
+    const PRc1_ = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE)
+    const metaData: any = PRc1_ ? readDecryptAndParseLS(STORAGE_KEYS.PRc0_DATA) : null
+
     const fetchArtistTypeData = async () => {
-        let { selectedType } = state
-        let { status } = state
-        let { input } = state
         let { data } = state
+        let { input } = state
+        let { status } = state
+        let { wordCount } = state
+        let { selectedType } = state
 
         try {
             const typesResponse: any = await HttpServices.httpGet(AUTH.ARTIST_TYPES)
@@ -69,7 +75,7 @@ export const Identity_03 = () => {
                 data.artistTypes = typesResponse.data.payload.types
                 data.entity = typesResponse.data.payload.entity
 
-                if (data.entity !== null) {
+                if (data.entity) {
                     input.artist_type = data.entity.type
                     input.entity = data.entity.name
                 }
@@ -77,17 +83,29 @@ export const Identity_03 = () => {
                 selectedType = data.artistTypes.find(
                     (type: { key: string }) => type.key === "SOLO"
                 )
+
+                if (PRc1_) {
+                    selectedType = data.artistTypes.find(
+                        (type: { key: string }) => type.key === metaData.type
+                    )
+
+                    input.bio = metaData.bio
+                    input.entity = metaData.entity
+                    input.artist_type = metaData.type
+                    input.artist_name = metaData.artist
+
+                    wordCount = metaData.bio.length
+                }
             } else {
                 status = 'rejected'
             }
         } catch (error) {
             console.log(error);
-
             status = 'rejected'
         }
 
         setstate({
-            ...state, status, data, input, selectedType
+            ...state, status, data, input, selectedType, wordCount
         })
     }
 
@@ -174,8 +192,12 @@ export const Identity_03 = () => {
                     }
                     break;
 
-                default:
+                case 'bio':
+                    setIsFocused(false)
                     output.error = output.error.replace('Bio', 'Your bio')
+                    break
+
+                default:
                     break;
             }
 
@@ -287,7 +309,8 @@ export const Identity_03 = () => {
                 }
             }
 
-            dispatch(artistEntityCreation(identProps))
+            PRc1_ ? dispatch(artistEntityModification(identProps))
+                : dispatch(artistEntityCreation(identProps))
         }
     }
 
@@ -350,7 +373,7 @@ export const Identity_03 = () => {
 
                                                         <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
                                                             <div className="col-span-1">
-                                                                <span className="block text-sm text-stone-600">
+                                                                <span className="block pb-2 text-sm text-stone-700 font-medium">
                                                                     Artist Type:
                                                                 </span>
                                                             </div>
@@ -364,7 +387,7 @@ export const Identity_03 = () => {
 
                                                         <div className="w-full grid grid-cols-3 gap-x-3 pb-2">
                                                             <div className="col-span-1">
-                                                                <span className="block text-sm text-stone-600">
+                                                                <span className="block pb-2 text-sm text-stone-700 font-medium">
                                                                     Group Name:
                                                                 </span>
                                                             </div>
@@ -372,6 +395,18 @@ export const Identity_03 = () => {
                                                             <div className="col-span-2">
                                                                 <span className="block text-sm text-orange-600">
                                                                     {state.data.entity.name}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="w-full">
+                                                            <span className="block pb-2 text-sm text-stone-700 font-medium">
+                                                                Bio:
+                                                            </span>
+
+                                                            <div className="col-span-2">
+                                                                <span className="block text-sm text-stone-600" style={{ whiteSpace: 'pre-wrap' }}>
+                                                                    {state.data.entity.bio}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -385,7 +420,7 @@ export const Identity_03 = () => {
                                                                 <span className="text-sm block text-gray-600">
 
                                                                     <span className="block py-2">
-                                                                        Please note that the above aspects of your artist profile data are fixed and cannot be changed.
+                                                                        Please note that the above aspects of your artist profile data are fixed and cannot be changed at this time.
                                                                     </span>
                                                                 </span>
                                                             </div>
@@ -398,8 +433,8 @@ export const Identity_03 = () => {
                                         <form className="space-y-4 mb-3 w-full text-sm" onSubmit={artistEntityFormHandler}>
                                             {
                                                 !state.data.entity && (
-                                                    <>
-                                                        <div className="w-full pb-2 md:px-0">
+                                                    <div className="flex md:flex-row flex-col align-middle items-center gap-x-4">
+                                                        <div className="w-full md:flex-1 md:px-0">
                                                             <ListBoxZero
                                                                 onChangeListBoxHandler={(e: any) => onChangeListBoxHandler(e)}
                                                                 state={state}
@@ -458,7 +493,7 @@ export const Identity_03 = () => {
 
                                                         {
                                                             getMaxMembersForEntity() > 1 ? (
-                                                                <div className="shadow-none space-y-px mb-4 ">
+                                                                <div className="w-full md:flex-1 md:px-0">
                                                                     <label htmlFor="entity" className="block text-sm leading-6 text-stone-600 mb-1">
                                                                         {
                                                                             (state.data.artistTypes.find(
@@ -496,7 +531,7 @@ export const Identity_03 = () => {
                                                                 </div>
                                                             ) : null
                                                         }
-                                                    </>
+                                                    </div>
                                                 )
                                             }
 
@@ -565,15 +600,21 @@ export const Identity_03 = () => {
                                             }
 
                                             <div className="mb-3 pt-3 px-0">
-                                                <button className="bg-orange-600 float-right relative w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700" type="submit">
+                                                <button className="bg-orange-600 float-right relative min-w-28 py-1.5 px-4 border border-transparent text-sm rounded-md text-white hover:bg-orange-700 focus:outline-none focus:ring-0 focus:ring-offset-2 focus:bg-orange-700 disabled:cursor-not-allowed disabled:bg-orange-400" type="submit" disabled={idC_State.processing}>
                                                     {
                                                         idC_State.processing ? (
                                                             <i className="fad fa-spinner-third fa-xl fa-spin py-2.5"></i>
                                                         ) : (
-                                                            <div className="flex justify-center align-middle items-center gap-x-3">
-                                                                Complete
-                                                                <i className="fa-duotone fa-circle-check fa-lg"></i>
-                                                            </div>
+                                                            PRc1_ ? (
+                                                                <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                    Apply Changes
+                                                                </div>
+                                                            ) : (
+                                                                <div className="flex justify-center align-middle items-center gap-x-3">
+                                                                    Review & Confirm
+                                                                    <i className="fa-duotone fa-circle-check fa-lg"></i>
+                                                                </div>
+                                                            )
                                                         )
                                                     }
                                                 </button>
@@ -597,7 +638,7 @@ export const Identity_03 = () => {
                         </div>
 
                         <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                            <img className="h-full bg-orange-100 rounded-2xl" src={artisticForm} alt={"i_am_an_artist"} loading="lazy" />
+                            <img className="h-full rounded-2xl" src={artisticForm} alt={"i_am_an_artist"} loading="lazy" />
                         </div>
                     </div>
                 </section>

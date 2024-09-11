@@ -33,7 +33,8 @@ export const AUTH = {
     ID_META_03:         '/v1/identity/account/meta/artist',
     ENTITY_EXPANSION:   '/v1/identity/account/meta/entity/expansion',
     ENT_RE_EXPANSION:   '/v1/identity/account/meta/entity/expansion/retry',
-    ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/confirmation',
+    META_CONFIRMATION:  '/v1/identity/account/meta/confirmation',
+    ENTITY_CONFIRMATION: '/v1/identity/account/meta/entity/status',
 };
 
 export const GUEST = {

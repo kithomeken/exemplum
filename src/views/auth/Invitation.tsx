@@ -553,7 +553,7 @@ export const Invitation = () => {
                                     </div>
 
                                     <div className="md:basis-2/5 hidden md:block h-screen px-4 py-6">
-                                        <img className="h-full bg-orange-100 rounded-2xl" src={connecting} alt={"connecting_teams_rafiki"} loading="lazy" />
+                                        <img className="h-full rounded-2xl" src={connecting} alt={"connecting_teams_rafiki"} loading="lazy" />
                                     </div>
                                 </>
                             ) : (

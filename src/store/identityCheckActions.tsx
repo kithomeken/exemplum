@@ -71,7 +71,7 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                 formData.append('first_name', dataDump.first_name)
             }
 
-            const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_01, formData)
+            const identityResponse: any = await HttpServices.httpPost(AUTH.ID_META_01, formData)
 
             if (identityResponse.data.success) {
                 dispatch({
@@ -84,10 +84,15 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
                     },
                 });
 
-                identityDocUpload(propsIn)
+                if (dataDump.docPhoto) {
+                    identityDocUpload(propsIn)
+                }
+
+                const reduxReduxer = dataDump.PRc1_ ? IDENTITY_.PRc0_OVRD_END
+                    : IDENTITY_.PRc0_UPDATE
 
                 dispatch({
-                    type: IDENTITY_.PRc0_UPDATE,
+                    type: reduxReduxer,
                     response: 'PRc0',
                 });
             } else {
@@ -109,14 +114,16 @@ async function identityDocUpload(propsIn: IdentityProps) {
     const IdentityProps = { ...propsIn }
 
     try {
+        let identityResponse: any = null
         let formData = new FormData()
         const dataDump = IdentityProps.dataDump
 
+        formData.append('file', dataDump.docFile)
         formData.append('id_type', dataDump.id_type)
         formData.append('docPhoto', dataDump.docPhoto)
         formData.append('identifier', dataDump.identifier)
 
-        const identityResponse: any = await HttpServices.httpMultipartForm(AUTH.ID_META_UPLOAD, formData)
+        identityResponse = await HttpServices.httpPostMultipartForm(AUTH.ID_META_UPLOAD, formData)
 
         console.log('Identity Doc Upload', identityResponse);
     } catch (error) {
@@ -203,7 +210,7 @@ export function addMSISDN_ToProfile(propsIn: IdentityProps) {
 
             formData.append('msisdn', dataDump.msisdn)
 
-            const identityResponse: any = await HttpServices.httpPut(AUTH.ID_META_02, formData)
+            const identityResponse: any = await HttpServices.httpPost(AUTH.ID_META_02, formData)
 
             if (identityResponse.data.success) {
                 dispatch({
@@ -213,6 +220,52 @@ export function addMSISDN_ToProfile(propsIn: IdentityProps) {
 
                 dispatch({
                     type: IDENTITY_.PRc0_UPDATE,
+                    response: 'PRc0',
+                });
+            } else {
+                let errorMsg = identityResponse.data.msisdn[0]
+                errorMsg = errorMsg.replace('msisdn', 'phone number')
+
+                dispatch({
+                    type: IDENTITY_.PRc0_EXCEPTION,
+                    response: errorMsg,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: IDENTITY_.PRc0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
+
+export function modifyMSISDN_(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: IDENTITY_.PROCESSING,
+            response: {
+                redirect: false,
+            },
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+            formData.append('msisdn', dataDump.msisdn)
+
+            const identityResponse: any = await HttpServices.httpPut(AUTH.ID_META_02, formData)
+
+            if (identityResponse.data.success) {
+                dispatch({
+                    type: AUTH_.ID_META_02,
+                    response: dataDump,
+                });
+
+                dispatch({
+                    type: IDENTITY_.PRc0_OVRD_END,
                     response: 'PRc0',
                 });
             } else {
@@ -316,6 +369,61 @@ export function artistEntityCreation(propsIn: IdentityProps) {
                 dispatch({
                     type: IDENTITY_.PRc0_COMPLETED,
                     response: identityResponse.data.payload,
+                });
+            } else {
+                dispatch({
+                    type: IDENTITY_.PRc0_EXCEPTION,
+                    response: identityResponse.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: IDENTITY_.PRc0_EXCEPTION,
+                response: error,
+            });
+        }
+    }
+}
+
+export function artistEntityModification(propsIn: IdentityProps) {
+    return async (dispatch: (arg0: { type: string; response: any }) => void) => {
+        const IdentityProps = { ...propsIn }
+
+        dispatch({
+            type: IDENTITY_.PROCESSING,
+            response: {
+                redirect: false,
+            },
+        });
+
+        try {
+            let formData = new FormData()
+            const dataDump = IdentityProps.dataDump
+            const entityHash = StorageServices.getLocalStorage(STORAGE_KEYS.ENTITY_HASH)
+
+            formData.append('bio', dataDump.bio)
+            formData.append('type', dataDump.type)
+            formData.append('entity', dataDump.entity)
+            formData.append('artist', dataDump.artist)
+
+            if (entityHash !== null && entityHash !== undefined) {
+                formData.append('hash', entityHash);
+            }
+
+            const identityResponse: any = await HttpServices.httpPut(AUTH.ID_META_03, formData)
+
+            if (identityResponse.data.success) {
+                // Save the entity type to local storage
+                StorageServices.setLocalStorage(STORAGE_KEYS.ENTITY_TYPE, dataDump.specificObject)
+
+                dispatch({
+                    type: AUTH_.ID_META_03,
+                    response: identityResponse.data.payload,
+                });
+
+                dispatch({
+                    type: IDENTITY_.PRc0_OVRD_END,
+                    response: 'PRc0',
                 });
             } else {
                 dispatch({

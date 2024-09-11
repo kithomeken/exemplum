@@ -4,18 +4,19 @@ import { useDispatch } from "react-redux"
 
 import { ERR_404 } from "../errors/ERR_404"
 import { ERR_500 } from "../errors/ERR_500"
-import { Identity_00 } from "./Identity_00"
-import { Identity_03 } from "./Identity_03"
-import { Identity_02 } from "./Identity_02"
-import { Identity_01 } from "./Identity_01"
+import { IdentityFinita } from "./IdentityFinita"
 import { AUTH } from "../../api/API_Registry"
+import { IdentityEntity } from "./IdentityEntity"
 import { useAppSelector } from "../../store/hooks"
-import { STYLE } from "../../global/ConstantsRegistry"
+import { IdentityPersona } from "./IdentityPersona"
+import { IdentityContact } from "./IdentityContact"
 import HttpServices from "../../services/HttpServices"
 import { Loading } from "../../components/modules/Loading"
+import StorageServices from "../../services/StorageServices"
+import { STORAGE_KEYS, STYLE } from "../../global/ConstantsRegistry"
 import { resetIdentity, setPRc0MetaStage } from "../../store/identityCheckActions"
 
-export const IdentityOnboarding = () => {
+export const IdentitySwitch = () => {
     const [state, setstate] = useState({
         httpStatus: 200,
         status: 'pending',
@@ -27,6 +28,7 @@ export const IdentityOnboarding = () => {
 
     const dispatch: any = useDispatch();
     const idC_State: any = useAppSelector(state => state.idC)
+    const PRc1_ = StorageServices.getLocalStorage(STORAGE_KEYS.PRc0_OVERRIDE)
 
     const identityProcessStateCheck = async () => {
         let { status } = state
@@ -38,7 +40,8 @@ export const IdentityOnboarding = () => {
             httpStatus = metaCheckResp.status
 
             if (metaCheckResp.data.success) {
-                const PRc0 = metaCheckResp.data.payload.PRc0
+                // Check if PRc1 is set else revert to PRc0
+                let PRc0 = PRc1_ || metaCheckResp.data.payload.PRc0;
 
                 const metaCheckProps = {
                     dataDump: {
@@ -65,19 +68,19 @@ export const IdentityOnboarding = () => {
     const loadIdentityModules = (tab: string = 'in') => {
         switch (tab) {
             case "META_00":
-                return <Identity_00 />
+                return <IdentityFinita />
 
             case "META_01":
-                return <Identity_01 />
+                return <IdentityPersona />
 
             case "META_02":
-                return <Identity_02 />
+                return <IdentityContact />
 
             case "META_03":
-                return <Identity_03 />
+                return <IdentityEntity />
 
             default:
-                return <Identity_00 />
+                return <IdentityFinita />
         }
     }
 
@@ -122,12 +125,6 @@ export const IdentityOnboarding = () => {
                     </div>
                 )
             }
-
-
-
-
-
-
         </React.Fragment >
     )
 }
