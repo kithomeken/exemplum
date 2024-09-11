@@ -693,6 +693,12 @@ export const IdentityFinita = () => {
                                                                                     )
                                                                                 }
 
+                                                                                <div className="w-full flex flex-row-reverse pt-2 pb-4 px-3 md:px-0">
+                                                                                    <span onClick={accountSignOutHandler} className="text-sm flex flex-row gap-x-3align-middle items-center shadow-none bg-inherit text-red-600 hover:text-red-700 hover:cursor-pointer hover:underline mr-2 sm:w-auto sm:text-sm">
+                                                                                        Sign Out
+                                                                                    </span>
+                                                                                </div>
+
                                                                                 <div className="mx-auto py-3 text-center">
                                                                                     <p className="text-sm text-stone-500 md:pb-0">
                                                                                         © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
