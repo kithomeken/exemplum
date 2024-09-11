@@ -63,7 +63,8 @@ export function addIdentityToProfile(propsIn: IdentityProps) {
         try {
             let formData = new FormData()
             const dataDump = IdentityProps.dataDump
-
+            formData.append('identifier', dataDump.identifier)
+            
             if (dataDump.keepName) {
                 formData.append('display_name', dataDump.display_name)
             } else {
