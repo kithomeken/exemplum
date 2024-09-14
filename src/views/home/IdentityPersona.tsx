@@ -179,11 +179,6 @@ export const IdentityPersona = () => {
                                 output.error = 'Kindly add a valid National ID number'
                             }
                         }
-
-                        if (output.error.length < 1) {
-                            identifier.checking = true
-                            checkIdentifierAvailability()
-                        }
                     }
                     break;
 
@@ -414,6 +409,11 @@ export const IdentityPersona = () => {
                             }
                             break;
 
+                        case 'last_name':
+                        case 'first_name':
+                            output.error = keepName ? '' : output.error
+                            break;
+
                         default:
                             break;
                     }
@@ -439,6 +439,9 @@ export const IdentityPersona = () => {
                 setstate({
                     ...state, errors
                 })
+
+                console.log('JEDBJ', errors);
+
 
                 if (validity) {
                     let identProps = null
@@ -469,7 +472,7 @@ export const IdentityPersona = () => {
                             }
                         }
                     }
-
+                    
                     dispatch(addIdentityToProfile(identProps))
                 }
             }
