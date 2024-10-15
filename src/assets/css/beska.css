@@ -266,9 +266,17 @@ body {
 }
 
 .wrapper-background {
-    background-color: #d6dbdf;
-    background-image: linear-gradient(135deg, #d6dbdf 0%, #ffffff 51%);
-    background: linear-gradient(135deg, #FFF 10%, #fef3c7 100%);
+    /* background-image: url('../images/0e4537779b99b50a40a4c70b5acdf857.svg'); */
+    /* background-color: #d6dbdf; */
+    /* background-image: linear-gradient(135deg, #d6dbdf 0%, #ffffff 51%); */
+    /* background: linear-gradient(135deg, #FFF 10%, #fef3c7 100%); */
+}
+
+.main-bg {
+    background-image: url('../images/main-bg-01.svg');
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .gx-container {
