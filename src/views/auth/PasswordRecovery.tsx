@@ -263,7 +263,7 @@ export const PasswordRecovery = () => {
                                             </div>
 
                                             <div className="pb-3 pt-3 mb-3">
-                                                <button type="submit" className="w-36 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-1.5 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
+                                                <button type="submit" className="w-36 disabled:cursor-not-allowed text-sm rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-white disabled:bg-orange-600 hover:bg-orange-600 focus:outline-none flex items-center justify-center" disabled={auth0.processing}>
                                                     {
                                                         state.posting ? (
                                                             <span className="flex flex-row items-center">
@@ -279,7 +279,7 @@ export const PasswordRecovery = () => {
                                         </form>
 
                                         <span className="text-sm text-stone-500 block">
-                                            In case of any issue, reach out to our admin at <span className="text-orange-600">admin@email.com</span>
+                                            In case of any issue, reach out to our admin at <span className="text-orange-600">support@bigfan.co.ke</span>
                                         </span>
 
                                         <div className="mx-auto md:py-4 py-6 text-center block w-full">
@@ -290,7 +290,7 @@ export const PasswordRecovery = () => {
                                     </div>
 
                                     <div className="md:basis-1/2 hidden md:block px-4 py-6 md:h-screen h-auto">
-                                        <img className="h-full rounded-2xl bg-orange-100" src={forgot} alt={"forgot_passwd"} loading="lazy" />
+                                        <img className="h-full rounded-2xl" src={forgot} alt={"forgot_passwd"} loading="lazy" />
                                     </div>
                                 </>
                             )
