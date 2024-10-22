@@ -4,6 +4,8 @@ import { Yeat } from "../views/home/Yeat";
 import { Home } from "../views/home/Home";
 import { SignIn } from "../views/auth/SignIn";
 import { SignUp } from "../views/auth/SignUp";
+import { CNF_m0 } from "../views/admin/CNF_m0";
+import { Landing } from "../views/ingress/Landing";
 import { Entity } from "../views/settings/Entity";
 import { PreFlight } from "../views/auth/PreFlight";
 import { Invitation } from "../views/auth/Invitation";
@@ -12,7 +14,6 @@ import { AllEntities } from "../views/admin/AllEntities";
 import { EmailActions } from "../views/auth/EmailActions";
 import { IdentityCheck } from "../views/home/IdentityCheck";
 import { ChangeEmail } from "../views/settings/ChangeEmail";
-import { RedirectToHome } from "../views/home/RedirectToHome";
 import { IdentitySwitch } from "../views/home/IdentitySwitch";
 import { UserManagement } from "../views/admin/UserManagement";
 import { PreflightCheck } from "../views/admin/PreflightCheck";
@@ -28,7 +29,6 @@ import { TransactionPayOuts } from "../views/admin/TransactionPayOuts";
 import { WithdrawalRequests } from "../views/admin/WithdrawalRequests";
 import { AccountManagement } from "../views/settings/AccountManagement";
 import { IdentityVerification } from "../views/home/IdentityVerification";
-import { CNF_m0 } from "../views/admin/CNF_m0";
 
 export const authenticationRoutes: Array<Routes_Interface> = [
     {
@@ -80,12 +80,6 @@ export const postAuthRoutes: Array<Routes_Interface> = [
 
 export const commonRoutes: Array<Routes_Interface> = [
     {
-        path: "/",
-        element: <RedirectToHome />,
-        caseSensitive: true,
-        name: 'INDEX_'
-    },
-    {
         path: "/home",
         element: <IdentityCheck />,
         caseSensitive: true,
@@ -106,6 +100,12 @@ export const commonRoutes: Array<Routes_Interface> = [
 ]
 
 export const genericRoutes: Array<Routes_Interface> = [
+    {
+        path: "/",
+        element: <Landing />,
+        caseSensitive: true,
+        name: 'INDEX_'
+    },
     {
         path: "_/auth/action/email",
         element: <EmailActions />,
