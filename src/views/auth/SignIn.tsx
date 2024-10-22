@@ -8,12 +8,13 @@ import { ERR_404 } from "../errors/ERR_404";
 import { ERR_500 } from "../errors/ERR_500";
 import { useAppSelector } from "../../store/hooks";
 import { PREFLIGHT } from "../../api/API_Registry";
+import { AUTH_ } from "../../global/ConstantsRegistry";
 import AxiosServices from "../../services/AxiosServices";
 import { Loading } from "../../components/modules/Loading";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
-import { AUTH_, APPLICATION } from "../../global/ConstantsRegistry";
+import test000 from '../../assets/images/Main Web Logo-01.svg'
 import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
-import Rock_Band_Image from '../../assets/images/a4f6dd9ebd724d8dcf29e1163ccf36cb.svg'
+import Rock_Band_Image from '../../assets/images/Guy on sign in-01.png'
 import { resetAuth0, Alt_FirebaseSSO_SignIn } from "../../store/auth/firebaseAuthActions";
 import { emailValidator, DeviceInfo, classNames } from "../../lib/modules/HelperFunctions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
@@ -363,7 +364,10 @@ export const SignIn = () => {
                         <section className="gx-container gx-900 h-screen sm:h-auto w-full flex items-center justify-center">
                             <div className="flex md:flex-row flex-col align-middle items-center w-full">
                                 <div className={`md:basis-2/5 py-4 md:px-6 px-8 w-full transform transition-transform duration-1000 ease-out ${isLoaded ? 'translate-x-0' : '-translate-x-full'}`}>
-                                    <span className="text-2xl self-start text-white tracking-wider leading-7 block">{APPLICATION.NAME}</span>
+                                    {/* <span className="text-2xl self-start text-white tracking-wider leading-7 block">{APPLICATION.NAME}</span> */}
+                                    <div className="w-full h-20 flex items-center -ml-3 align-middle">
+                                        <img className="h-20 mx-auto" src={test000} loading="lazy" alt="google logo" />
+                                    </div>
 
                                     {
                                         altSignIn ? (
@@ -462,7 +466,7 @@ export const SignIn = () => {
                                             </>
                                         ) : (
                                             <>
-                                                <div className="w-full py-6">
+                                                <div className="w-full">
                                                     <span className="text-white block text-lg">Sign In</span>
                                                     <span className="text-white block text-sm">Continue with Google or enter your details</span>
                                                 </div>
