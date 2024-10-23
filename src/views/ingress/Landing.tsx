@@ -1,11 +1,10 @@
 import React, { useEffect } from "react"
 
+import { Footer } from "./Footer"
 import { HowItWorks } from "./HowItWorks"
+import { GetStarted } from "./GetStarted"
 import { LandingHeader } from "./LandingHeader"
 import happMusic from "../../assets/images/YFAheV0zeqUnWn4BI.svg"
-import { OurVision } from "./OurVision"
-import { Footer } from "./Footer"
-import { GetStarted } from "./GetStarted"
 
 export const Landing = () => {
     let i = 0;
@@ -41,7 +40,16 @@ export const Landing = () => {
     }
 
     useEffect(() => {
-        typewriterEffect()
+        function handlePageLoad() {
+            console.log('Page fully loaded');
+            typewriterEffect()
+        }
+
+        window.addEventListener('load', handlePageLoad);
+
+        return () => {
+            window.removeEventListener('load', handlePageLoad);
+        };
     }, [])
 
     return (
@@ -99,13 +107,10 @@ export const Landing = () => {
                             <div className="mx-auto container md:text-xl text-base md:max-w-4xl lg:max-w-4xl xl:max-w-5xl pb-5">
                                 <h1 className="mt-2 text-2xl font-bold tracking-tight text-orange-600 sm:text-3xl">
                                     Your stage, their support
-                                    {/* Championing Creators, Empowering Fans */}
                                 </h1>
 
                                 <p className="mt-6 leading-8 text-gray-700">
-                                    <span className="text-orange-600">
-                                        <span className="font-bold text-xl md:text-2xl">B</span>igfan
-                                    </span> is a platform crafted to empower creatives—whether you're a musician, DJ, actor, influencer, content creator, or event organizer—by turning every interaction into a meaningful connection. It fosters a culture where creativity is recognized and celebrated, turning moments of connection into meaningful support for the artistry that inspires them.
+                                    <span className="text-orange-600 font-normal text-xl md:text-2xl">Bigfan</span> is a platform crafted to empower creatives—whether you're a musician, DJ, actor, influencer, content creator, or event organizer—by turning every interaction into a meaningful connection. It fosters a culture where creativity is recognized and celebrated, turning moments of connection into meaningful support for the artistry that inspires them.
                                 </p>
 
                                 <p className="mt-6 leading-8 text-gray-700">
