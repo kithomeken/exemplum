@@ -13,8 +13,8 @@ import AxiosServices from "../../services/AxiosServices";
 import { Loading } from "../../components/modules/Loading";
 import { firebaseAuth } from "../../firebase/firebaseConfigs";
 import test000 from '../../assets/images/Main Web Logo-01.svg'
+import Rock_Band_Image from '../../assets/images/ozxKsl3R991Y0nTyu.svg'
 import { authenticationRoutes, postAuthRoutes } from "../../routes/routes";
-import Rock_Band_Image from '../../assets/images/Guy on sign in-01.png'
 import { resetAuth0, Alt_FirebaseSSO_SignIn } from "../../store/auth/firebaseAuthActions";
 import { emailValidator, DeviceInfo, classNames } from "../../lib/modules/HelperFunctions";
 import { G_onInputChangeHandler, G_onInputBlurHandler } from "../../components/lib/InputHandlers";
@@ -358,7 +358,7 @@ export const SignIn = () => {
                 ) : state.status === 'fulfilled' ? (
                     <div className="wrapper md:align-middle align-baseline wrapper-background w-full overflow-auto h-screen relative">
                         <div className="wrapper main-bg w-full overflow-auto h-screen absolute  top-0 left-0">
-                            <div className="bg-black opacity-55 w-full"></div>
+                            <div className="bg-black opacity-65 w-full"></div>
                         </div>
 
                         <section className="gx-container gx-900 h-screen sm:h-auto w-full flex items-center justify-center">
