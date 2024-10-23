@@ -279,6 +279,13 @@ body {
     background-size: cover;
 }
 
+.main-ht-bg {
+    background-image: url('../images/Cs1nccZYEwsvUoOOQ.svg');
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 .gx-container {
     margin: 0 auto;
     z-index: 1;
