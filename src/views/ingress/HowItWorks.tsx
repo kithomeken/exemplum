@@ -9,93 +9,109 @@ export const HowItWorks = () => {
 
     return (
         <React.Fragment>
-            <div className="w-full px-3 text-gray-600">
-                <div className="mx-auto py-3 container md:text-xl text-base md:max-w-4xl lg:max-w-4xl xl:max-w-5xl">
-                    <h1 className="mt-2 text-2xl font-bold tracking-tight text-orange-600 sm:text-3xl">
+            <div className="w-full px-3 pb-4 text-gray-600">
+                <div className="mx-auto py-3 container md:text-xl text-base md:max-w-4xl lg:max-w-4xl xl:max-w-5xl flex flex-col">
+                    <h2 className="font-heading mb-3 lg:text-3xl mt-2 text-2xl font-bold tracking-tight text-orange-600 sm:text-3xl">
                         How it Works
-                    </h1>
+                    </h2>
 
-                    <p className="mt-6 mb-6 md:mb-0 leading-8 text-gray-700">
-                        Show your appreciation in just 4 simple steps.
+                    <p className="mb-6 leading-8 text-gray-700">
+                        Show your appreciation in just 3 simple steps.
                     </p>
 
-                    <div className="flex flex-col md:flex-row items-center align-middle">
-                        <div className="md:basis-2/3">
-                            <h1 className="mt-2 text-lg font-medium tracking-tight sm:text-2xl">
-                                1. Scan QR Code or Search Creator by Name
-
-                                <div className="w-48 pt-4 mx-auto pb-3 md:hidden">
-                                    <img src={scanQR} alt={"scan_qr_code"} width="auto" className="block text-center m-auto" />
+                    <div className="mx-auto">
+                        <div className="flex">
+                            <div className="mr-4 flex flex-col items-center">
+                                <div>
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-orange-700"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        className="h-6 w-6 text-orange-700">
+                                        <path d="M12 5l0 14"></path>
+                                        <path d="M18 13l-6 6"></path>
+                                        <path d="M6 13l6 6"></path>
+                                    </svg></div>
                                 </div>
-                            </h1>
+                                <div className="h-full w-px bg-gray-300"></div>
+                            </div>
+                            <div className="pt-1 pb-8">
+                                <p className="mb-2 text-xl font-bold text-gray-900">
+                                    Step 1
+                                </p>
 
-                            <p className="mt-6 md:text-lg text-base leading-8 text-gray-700 pb-3 md:py-0">
-                                Quickly find the creator you're supporting by either scanning their personalized QR code or searching by their name.
-                            </p>
+                                <p className="text-gray-600">
+                                    Scan QR code or search creator by name
+                                </p>
+                            </div>
                         </div>
 
-                        <div className="md:basis-1/3 md:block h-full px-4">
-                            <img className="h-full rounded-2xl" src={scanQR} alt={"scan_qr_code"} loading="lazy" />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row items-center align-middle">
-                        <div className="md:basis-1/3 md:block h-full px-4">
-                            <img className="h-full rounded-2xl" src={amount} alt={"scan_qr_code"} loading="lazy" />
-                        </div>
-
-                        <div className="md:basis-2/3">
-                            <h1 className="mt-2 text-lg font-medium tracking-tight sm:text-2xl">
-                                2. Set Amount
-
-                                <div className="w-48 pt-4 mx-auto pb-3 md:hidden">
-                                    <img src={amount} alt={"set_amount"} width="auto" className="block text-center m-auto" />
+                        <div className="flex">
+                            <div className="mr-4 flex flex-col items-center">
+                                <div>
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-orange-700"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        className="h-6 w-6 text-orange-700">
+                                        <path d="M12 5l0 14"></path>
+                                        <path d="M18 13l-6 6"></path>
+                                        <path d="M6 13l6 6"></path>
+                                    </svg></div>
                                 </div>
-                            </h1>
+                                <div className="h-full w-px bg-gray-300"></div>
+                            </div>
+                            <div className="pt-1 pb-8">
+                                <p className="mb-2 text-xl font-bold text-gray-900">
+                                    Step 2
+                                </p>
 
-                            <p className="mt-6 md:text-lg text-base leading-8 text-gray-700 pb-3 md:py-0">
-                                Choose how much you'd like to give—whether it's a small token or a big gesture, it all makes a difference.
-                            </p>
+                                <p className="text-gray-600">
+                                    Set how much you'd like to give then send
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex flex-col md:flex-row items-center align-middle">
-                        <div className="md:basis-2/3">
-                            <h1 className="mt-2 text-lg font-medium tracking-tight sm:text-2xl">
-                                3. Select Payment Method
-
-                                <div className="w-48 pt-4 mx-auto pb-3 md:hidden">
-                                    <img src={paymentMethod} alt={"payment_method"} width="auto" className="block text-center m-auto" />
+                        <div className="flex">
+                            <div className="mr-4 flex flex-col items-center">
+                                <div>
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-orange-700"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        className="h-6 w-6 text-orange-700">
+                                        <path d="M12 5l0 14"></path>
+                                        <path d="M18 13l-6 6"></path>
+                                        <path d="M6 13l6 6"></path>
+                                    </svg></div>
                                 </div>
-                            </h1>
-
-                            <p className="mt-6 md:text-lg text-base leading-8 text-gray-700 pb-3 md:py-0">
-                                Pick the payment option that suits you best for a smooth transaction.
-                            </p>
+                                <div className="h-full w-px bg-gray-300"></div>
+                            </div>
+                            <div className="pt-1 pb-8">
+                                <p className="mb-2 text-xl font-bold text-gray-900">
+                                    Step 3
+                                </p>
+                                <p className="text-gray-600">
+                                    Leave a personalized message of support or encouragement.
+                                </p>
+                            </div>
                         </div>
 
-                        <div className="md:basis-1/3 md:block h-full px-4">
-                            <img className="h-full rounded-2xl" src={paymentMethod} alt={"payment_method"} loading="lazy" />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row items-center align-middle">
-                        <div className="md:basis-1/3 md:block h-full px-4">
-                            <img className="h-full rounded-2xl" src={sendMessage} alt={"send_message"} loading="lazy" />
-                        </div>
-
-                        <div className="md:basis-2/3">
-                            <h1 className="mt-2 text-lg font-medium tracking-tight sm:text-2xl">
-                                4. Send a Personalized Message for the Creator
-
-                                <div className="w-48 pt-4 mx-auto pb-3 md:hidden">
-                                    <img src={sendMessage} alt={"send_message"} width="auto" className="block text-center m-auto" />
+                        <div className="flex">
+                            <div className="mr-4 flex flex-col items-center">
+                                <div>
+                                    <div
+                                        className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-orange-700 bg-orange-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            className="h-6 w-6 text-white">
+                                            <path d="M5 12l5 5l10 -10"></path>
+                                        </svg>
+                                    </div>
                                 </div>
-                            </h1>
-
-                            <p className="mt-6 md:text-lg text-base leading-8 text-gray-700 pb-3 md:py-0">
-                                Add a personal touch by writing a message of support or encouragement to let the creator know how much you appreciate their work.
-                            </p>
+                            </div>
+                            <div className="pt-1 ">
+                                <p className="mb-2 text-xl font-bold text-gray-900">
+                                    And Done!
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
