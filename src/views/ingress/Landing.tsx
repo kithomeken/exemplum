@@ -44,9 +44,9 @@ export const Landing = () => {
                     </div>
 
                     <div className="w-full flex-grow">
-                        <main className="h-[calc(100vh-80px)] px-3 pt-24 mx-auto flex flex-col md:flex-row items-center align-middle container md:max-w-4xl lg:max-w-4xl xl:max-w-5xl">
+                        <main className="md:h-[calc(100vh-80px)] h-[calc(100vh-40px)] px-3 pt-24 mx-auto flex flex-col md:flex-row items-center align-middle container md:max-w-4xl lg:max-w-4xl xl:max-w-5xl">
                             <div className="md:basis-1/2">
-                                <h1 className="mt-2 text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
+                                <h1 className="md:mt-2 mt-6 text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
                                     Elevated acts of appreciation
                                 </h1>
 
