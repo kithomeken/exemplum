@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { HowItWorks } from "./HowItWorks"
 import { LandingHeader } from "./LandingHeader"
@@ -7,7 +7,41 @@ import { OurVision } from "./OurVision"
 import { Footer } from "./Footer"
 
 export const Landing = () => {
+    let i = 0;
+    let j = 0;
+    let currentWord = "";
+    let isDeleting = false;
+    const words = [
+        "Elevate Acts of Appreciation",
+        "Live the Art and Feel the Love",
+        "Turn Applause into Action"
+    ];
 
+    function typewriterEffect() {
+        currentWord = words[i];
+        if (isDeleting) {
+            document.getElementById("typewriter").textContent = currentWord.substring(0, j - 1);
+            j--;
+            if (j == 0) {
+                isDeleting = false;
+                i++;
+                if (i == words.length) {
+                    i = 0;
+                }
+            }
+        } else {
+            document.getElementById("typewriter").textContent = currentWord.substring(0, j + 1);
+            j++;
+            if (j == currentWord.length) {
+                isDeleting = true;
+            }
+        }
+        setTimeout(typewriterEffect, 130);
+    }
+
+    useEffect(() => {
+        typewriterEffect()
+    }, [])
 
     return (
         <React.Fragment>
@@ -46,8 +80,8 @@ export const Landing = () => {
                     <div className="w-full flex-grow">
                         <main className="md:h-[calc(100vh-80px)] h-[calc(100vh-40px)] px-3 pt-24 mx-auto flex flex-col md:flex-row items-center align-middle container md:max-w-4xl lg:max-w-4xl xl:max-w-5xl">
                             <div className="md:basis-1/2">
-                                <h1 className="md:mt-2 mt-6 text-3xl font-bold tracking-tight text-orange-600 sm:text-4xl">
-                                    Elevated acts of appreciation
+                                <h1 className="md:mt-2 mt-6 text-xl font-bold tracking-tight text-gray-600 md:text-2xl">
+                                    Creating a Culture Where We <br /><span id="typewriter" className="text-xl md:text-3xl text-orange-600"></span>
                                 </h1>
 
                                 <p className="mt-6 md:text-xl text-lg leading-8 text-gray-700 pb-3 md:py-0">
