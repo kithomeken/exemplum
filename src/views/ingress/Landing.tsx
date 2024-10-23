@@ -5,6 +5,7 @@ import { LandingHeader } from "./LandingHeader"
 import happMusic from "../../assets/images/YFAheV0zeqUnWn4BI.svg"
 import { OurVision } from "./OurVision"
 import { Footer } from "./Footer"
+import { GetStarted } from "./GetStarted"
 
 export const Landing = () => {
     let i = 0;
@@ -114,6 +115,8 @@ export const Landing = () => {
                         </div>
 
                         <HowItWorks />
+
+                        <GetStarted />
 
                         <Footer />
 
