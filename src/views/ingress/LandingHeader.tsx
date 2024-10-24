@@ -91,27 +91,27 @@ export const LandingHeader = () => {
                             </div>
 
                             <div className="hidden sm:flex absolute inset-y-0 right-0 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-x-6">
-                                <Link to="#" className="text-gray-600 hover:text-gray-700">
+                                <Link to="#" className="text-gray-600 font-semibold hover:text-orange-600">
                                     How it Works
                                 </Link>
 
-                                <Link to="#" className="text-gray-600 hover:text-gray-700">
+                                <Link to="#" className="text-gray-600 font-semibold hover:text-orange-600">
                                     FAQs
                                 </Link>
 
-                                <Link to="#" className="text-gray-600 hover:text-gray-700">
+                                <Link to="#" className="text-gray-600 font-semibold hover:text-orange-600">
                                     About Us
                                 </Link>
 
-                                <Link to="#" className="text-gray-600 hover:text-gray-700">
+                                <Link to="#" className="text-gray-600 font-semibold hover:text-orange-600">
                                     Contact Us
                                 </Link>
 
-                                <Link to="#" className="text-gray-600 hover:text-gray-700 flex gap-x-3 items-center align-middle">
+                                <Link to="#" className="text-gray-600 font-semibold hover:text-orange-600 flex gap-x-3 items-center align-middle">
                                     <span className="fa-regular fa-search"></span> Search
                                 </Link>
 
-                                <Link to="/auth/sign-in" className="text-orange-600 hover:text-orange-700">
+                                <Link to="/auth/sign-in" className="bg-orange-600 text-white hover:bg-orange-700 py-1.5 px-4 rounded-md">
                                     Sign In
                                 </Link>
                             </div>
