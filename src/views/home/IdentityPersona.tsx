@@ -472,7 +472,7 @@ export const IdentityPersona = () => {
                             }
                         }
                     }
-                    
+
                     dispatch(addIdentityToProfile(identProps))
                 }
             }
@@ -858,7 +858,7 @@ export const IdentityPersona = () => {
 
                             <div className="mx-auto py-3 text-center">
                                 <p className="text-sm text-stone-500">
-                                    © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                    <span className="text-orange-600">Big Fan</span> © {new Date().getFullYear()} All Right Reserved.
                                 </p>
                             </div>
                         </div>

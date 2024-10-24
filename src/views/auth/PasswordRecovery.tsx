@@ -284,7 +284,7 @@ export const PasswordRecovery = () => {
 
                                         <div className="mx-auto md:py-4 py-6 text-center block w-full">
                                             <p className="text-sm text-stone-500 pb-4">
-                                                © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                                <span className="text-orange-600">Big Fan</span> © {new Date().getFullYear()} All Right Reserved.
                                             </p>
                                         </div>
                                     </div>

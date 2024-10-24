@@ -288,7 +288,7 @@ export const IdentityReview = () => {
 
                                     <div className="mx-auto py-3 text-center border-t-2 border-dashed w-full my-2">
                                         <p className="text-sm text-stone-500">
-                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                            <span className="text-orange-600">Big Fan</span> © {new Date().getFullYear()} All Right Reserved.
                                         </p>
                                     </div>
                                 </div>
