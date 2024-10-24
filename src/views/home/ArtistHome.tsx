@@ -16,11 +16,6 @@ import { APPLICATION, CONFIG_MAX_WIDTH } from "../../global/ConstantsRegistry"
 import { API_RouteReplace, classNames, formatAmount } from '../../lib/modules/HelperFunctions';
 
 export const ArtistHome = () => {
-    const [qrCode, setQRCode] = useState({
-        lowQuality: '',
-        highQuality: ''
-    });
-
     const [state, setstate] = useState({
         show: false,
         blurred: true,
@@ -35,6 +30,14 @@ export const ArtistHome = () => {
             qrCodeImageName: null,
         },
     })
+
+    const [qrLink, setQRLink] = useState(null)
+    const [copied, setCopied] = useState(false);
+
+    const [qrCode, setQRCode] = useState({
+        lowQuality: '',
+        highQuality: ''
+    });
 
     React.useEffect(() => {
         artistDetailsApiCall()
@@ -62,6 +65,8 @@ export const ArtistHome = () => {
 
                 entity0Route = API_RouteReplace(entity0Route, ':uuid', data.entity.uuid)
                 const qrCodeText = APPLICATION.URL + entity0Route
+
+                setQRLink(qrCodeText)
                 GenerateQRCode(qrCodeText)
 
                 data.entity.bal = formatAmount(parseFloat(data.entity.bal))
@@ -156,6 +161,16 @@ export const ArtistHome = () => {
         })
     }
 
+    const copyTextToClipboard = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
+
     return (
         <React.Fragment>
             <Helmet>
@@ -179,14 +194,45 @@ export const ArtistHome = () => {
                             </div>
                         </div>
                     ) : state.status === 'fulfilled' ? (
-                        <div className="w-full">
+                        <div className="w-full relative">
+
+                            <div className={`fixed inset-x-0 bottom-0 pb-2 sm:pb-5 z-50 transform transition-transform duration-500 ease-out ${copied ? 'translate-x-0' : '-translate-x-full'}`}>
+                                <div className="mx-auto max-w-7xl md:w-96 px-2 sm:px-6 lg:px-8">
+                                    <div className="rounded-lg bg-orange-600 p-2 shadow-lg sm:p-3 text-base">
+                                        <div className="flex flex-wrap items-center justify-between">
+                                            <div className="flex w-0 flex-1 items-center">
+                                                <span className="flex rounded-lg bg-orange-800 p-2">
+                                                    <div className="h-6 w-6">
+                                                        <span className="fa-duotone fa-badge-check fa-xl h-6 w-6 m-auto text-white"></span>
+                                                    </div>
+                                                </span>
+
+                                                <p className="ml-3 truncate font-normal text-white">
+                                                    <span className="">Copied to clipboard</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className={`w-full mb-3`}>
                                 <div className="kiOAkj" style={CONFIG_MAX_WIDTH}>
                                     <div className="w-full flex flex-col-reverse md:space-x-4 md:flex-row pb-6">
-                                        <div className="flex-none flex flex-col justify-center border-t md:border-t-0 md:pt-0 pt-3">
+                                        <div className="flex-none flex flex-col gap-y-3 justify-center border-t md:border-t-0 md:pt-0 pt-3">
                                             <img src={qrCode.lowQuality} alt="qr_code" className="block text-center m-auto" />
 
-                                            <a className="text-orange-600 w-40 py-2 m-auto px-4 flex flex-row items-center justify-center border border-orange-600 md:hidden text-sm text-center rounded-md bg-white hover:bg-orange-700 focus:outline-none" href={qrCode.highQuality} download={state.data.qrCodeImageName}>
+                                            <div className="flex items-center w-44 justify-center mx-auto text-gray-800 border border-gray-800 bg-white font-mono md:hidden text-sm py-2 px-4 rounded-md">
+                                                <div className="flex-grow gap-1">
+                                                    <span>Copy Link</span>
+                                                </div>
+
+                                                <button onClick={() => copyTextToClipboard(qrLink)} className="flex text-gray-800 cursor-pointer w-5 h-5 hover:text-gray-400 duration-200 align-middle items-center">
+                                                    <span className="fa-light fa-copy fa-lg"></span>
+                                                </button>
+                                            </div>
+
+                                            <a className="text-orange-600 w-44 py-2 m-auto px-4 flex flex-row items-center justify-center border border-orange-600 md:hidden text-sm text-center rounded-md bg-white hover:bg-orange-700 focus:outline-none" href={qrCode.highQuality} download={state.data.qrCodeImageName}>
                                                 <i className="fa-duotone fa-download mr-2 fa-lg"></i>
                                                 Download QR
                                             </a>
@@ -257,7 +303,17 @@ export const ArtistHome = () => {
                                                     ) : null
                                                 }
 
-                                                <div className="flex flex-col justify-center md:py-2">
+                                                <div className="flex flex-col justify-center md:py-2 gap-y-3">
+                                                    <div className="md:flex w-40 items-center justify-between text-gray-800 border border-gray-800 bg-white max-w-sm font-mono hidden text-sm py-2 px-4 rounded-md">
+                                                        <div className="flex gap-1">
+                                                            <span>Copy Link</span>
+                                                        </div>
+
+                                                        <button onClick={() => copyTextToClipboard(qrLink)} className="flex text-gray-800 cursor-pointer w-5 h-5 hover:text-gray-400 duration-200 align-middle items-center">
+                                                            <span className="fa-light fa-copy fa-lg"></span>
+                                                        </button>
+                                                    </div>
+
                                                     <a className="bg-orange-600 w-40 py-2 px-4 hidden text-sm md:flex flex-row items-center justify-center text-center rounded-md text-white hover:bg-orange-700 focus:outline-none" href={qrCode.highQuality} download={state.data.qrCodeImageName}>
                                                         <i className="fa-duotone fa-download mr-2 fa-lg"></i>
                                                         Download QR
