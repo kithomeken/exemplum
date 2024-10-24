@@ -168,23 +168,8 @@ export const SignUp = () => {
 
         if (!auth0.processing) {
             let passedValidation = validateForm()
-            let { acceptTerms } = state
 
             if (passedValidation) {
-                if (!acceptTerms) {
-                    toast.warning("Kindly read through and accept the terms and conditions", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-
-                    return
-                }
-
                 dispatch(resetAuth0())
                 setstate({
                     ...state, errors: {
@@ -210,22 +195,6 @@ export const SignUp = () => {
 
     const signUpWithGoogle = () => {
         if (!auth0.processing) {
-            let { acceptTerms } = state
-
-            if (!acceptTerms) {
-                toast.warning("Kindly read through and accept the terms and conditions", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-
-                return
-            }
-
             dispatch(resetAuth0())
             setstate({
                 ...state, errors: {
@@ -535,7 +504,7 @@ export const SignUp = () => {
 
                                     <div className="mx-auto py-3 text-center w-full border-t">
                                         <p className="text-sm text-stone-600">
-                                            © {new Date().getFullYear()}. Elevated Acts of Appreciation, <span className="text-orange-600 block">Tip by Tip.</span>
+                                            <span className="text-orange-600">Big Fan</span> © {new Date().getFullYear()} All Right Reserved.
                                         </p>
                                     </div>
                                 </div>
